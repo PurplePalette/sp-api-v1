@@ -1,6 +1,7 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -20,18 +21,13 @@ func NewFirebaseClient() *firebase.App {
 	if err != nil {
 		log.Print("Failed to load .env, using os environment")
 	}
-	cred := os.Getenv("FIREBASE_CREDENTIAL")
-	databaseUrl := os.Getenv("FIREBASE_DATABASE_URL")
-	storageBucket := os.Getenv("FIREBASE_STORAGE_BUCKET")
-	projectId := os.Getenv("FIREBASE_PROJECT_ID")
-	serviceAccountId := os.Getenv("FIREBASE_SERVICE_ACCOUNT_ID")
-	config := &firebase.Config{
-		DatabaseURL:      databaseUrl,
-		ProjectID:        projectId,
-		ServiceAccountID: serviceAccountId,
-		StorageBucket:    storageBucket,
+	envCred := os.Getenv("FIREBASE_CREDENTIAL")
+	opt := option.WithCredentialsJSON([]byte(envCred))
+	envConf := os.Getenv("FIREBASE_CONFIG")
+	var config *firebase.Config
+	if err := json.Unmarshal([]byte(envConf), &config); err != nil {
+		log.Fatal(err)
 	}
-	opt := option.WithCredentialsJSON([]byte(cred))
 	app, err := firebase.NewApp(context.Background(), config, opt)
 	if err != nil {
 		panic(fmt.Sprintf("error initializing app: %v", err))
