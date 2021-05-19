@@ -11,7 +11,6 @@ package potato
 
 // ServerInfo - Response / Request struct of getServerInfo
 type ServerInfo struct {
-
 	Levels []Level `json:"levels"`
 
 	Skins []Skin `json:"skins"`

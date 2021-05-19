@@ -11,12 +11,12 @@ package potato
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // BackgroundsApiService is a service that implents the logic for the BackgroundsApiServicer
-// This service should implement the business logic for every endpoint for the BackgroundsApi API. 
+// This service should implement the business logic for every endpoint for the BackgroundsApi API.
 // Include any external packages or services that will be required by this service.
 type BackgroundsApiService struct {
 }
@@ -93,4 +93,3 @@ func (s *BackgroundsApiService) GetBackgroundList(ctx context.Context, localizat
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetBackgroundList method not implemented")
 }
-

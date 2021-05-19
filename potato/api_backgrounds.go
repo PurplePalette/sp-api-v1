@@ -29,7 +29,7 @@ func NewBackgroundsApiController(s BackgroundsApiServicer) Router {
 
 // Routes returns all of the api route for the BackgroundsApiController
 func (c *BackgroundsApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"AddBackground",
 			strings.ToUpper("Post"),
@@ -61,7 +61,7 @@ func (c *BackgroundsApiController) Routes() Routes {
 func (c *BackgroundsApiController) AddBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	backgroundName := params["backgroundName"]
-	
+
 	background := &Background{}
 	if err := json.NewDecoder(r.Body).Decode(&background); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,7 +82,7 @@ func (c *BackgroundsApiController) AddBackground(w http.ResponseWriter, r *http.
 func (c *BackgroundsApiController) EditBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	backgroundName := params["backgroundName"]
-	
+
 	background := &Background{}
 	if err := json.NewDecoder(r.Body).Decode(&background); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -103,7 +103,7 @@ func (c *BackgroundsApiController) EditBackground(w http.ResponseWriter, r *http
 func (c *BackgroundsApiController) GetBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	backgroundName := params["backgroundName"]
-	
+
 	result, err := c.service.GetBackground(r.Context(), backgroundName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {

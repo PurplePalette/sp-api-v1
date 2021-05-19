@@ -11,7 +11,6 @@ package potato
 
 // GetBackgroundResponse - Response struct of getBackground
 type GetBackgroundResponse struct {
-
 	Item Background `json:"item"`
 
 	Description string `json:"description"`

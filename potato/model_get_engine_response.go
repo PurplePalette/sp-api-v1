@@ -11,7 +11,6 @@ package potato
 
 // GetEngineResponse - Response struct of getEngine
 type GetEngineResponse struct {
-
 	Item Engine `json:"item"`
 
 	Description string `json:"description"`

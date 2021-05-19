@@ -11,7 +11,6 @@ package potato
 
 // GetLevelResponse - Response struct of getLevel
 type GetLevelResponse struct {
-
 	Item Level `json:"item"`
 
 	Description string `json:"description"`

@@ -11,12 +11,12 @@ package potato
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // TestsApiService is a service that implents the logic for the TestsApiServicer
-// This service should implement the business logic for every endpoint for the TestsApi API. 
+// This service should implement the business logic for every endpoint for the TestsApi API.
 // Include any external packages or services that will be required by this service.
 type TestsApiService struct {
 }
@@ -102,4 +102,3 @@ func (s *TestsApiService) GetTestsSkins(ctx context.Context, testId string, loca
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetTestsSkins method not implemented")
 }
-

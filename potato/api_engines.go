@@ -29,7 +29,7 @@ func NewEnginesApiController(s EnginesApiServicer) Router {
 
 // Routes returns all of the api route for the EnginesApiController
 func (c *EnginesApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"AddEngine",
 			strings.ToUpper("Post"),
@@ -61,7 +61,7 @@ func (c *EnginesApiController) Routes() Routes {
 func (c *EnginesApiController) AddEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	engineName := params["engineName"]
-	
+
 	engine := &Engine{}
 	if err := json.NewDecoder(r.Body).Decode(&engine); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,7 +82,7 @@ func (c *EnginesApiController) AddEngine(w http.ResponseWriter, r *http.Request)
 func (c *EnginesApiController) EditEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	engineName := params["engineName"]
-	
+
 	engine := &Engine{}
 	if err := json.NewDecoder(r.Body).Decode(&engine); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -103,7 +103,7 @@ func (c *EnginesApiController) EditEngine(w http.ResponseWriter, r *http.Request
 func (c *EnginesApiController) GetEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	engineName := params["engineName"]
-	
+
 	result, err := c.service.GetEngine(r.Context(), engineName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {

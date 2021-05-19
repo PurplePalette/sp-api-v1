@@ -29,7 +29,7 @@ func NewTestsApiController(s TestsApiServicer) Router {
 
 // Routes returns all of the api route for the TestsApiController
 func (c *TestsApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"GetTestServerInfo",
 			strings.ToUpper("Get"),
@@ -79,7 +79,7 @@ func (c *TestsApiController) Routes() Routes {
 func (c *TestsApiController) GetTestServerInfo(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	testId := params["testId"]
-	
+
 	result, err := c.service.GetTestServerInfo(r.Context(), testId)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
@@ -96,7 +96,7 @@ func (c *TestsApiController) GetTestsBackgrounds(w http.ResponseWriter, r *http.
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -120,7 +120,7 @@ func (c *TestsApiController) GetTestsEffects(w http.ResponseWriter, r *http.Requ
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -144,7 +144,7 @@ func (c *TestsApiController) GetTestsEngines(w http.ResponseWriter, r *http.Requ
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -168,7 +168,7 @@ func (c *TestsApiController) GetTestsLevels(w http.ResponseWriter, r *http.Reque
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -192,7 +192,7 @@ func (c *TestsApiController) GetTestsParticles(w http.ResponseWriter, r *http.Re
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -216,7 +216,7 @@ func (c *TestsApiController) GetTestsSkins(w http.ResponseWriter, r *http.Reques
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {

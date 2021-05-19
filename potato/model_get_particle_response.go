@@ -11,7 +11,6 @@ package potato
 
 // GetParticleResponse - Response struct of getParticle
 type GetParticleResponse struct {
-
 	Item Particle `json:"item"`
 
 	Description string `json:"description"`

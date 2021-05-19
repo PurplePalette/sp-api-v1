@@ -11,12 +11,12 @@ package potato
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // InfoApiService is a service that implents the logic for the InfoApiServicer
-// This service should implement the business logic for every endpoint for the InfoApi API. 
+// This service should implement the business logic for every endpoint for the InfoApi API.
 // Include any external packages or services that will be required by this service.
 type InfoApiService struct {
 }
@@ -56,4 +56,3 @@ func (s *InfoApiService) GetServerInfo(ctx context.Context) (ImplResponse, error
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetServerInfo method not implemented")
 }
-

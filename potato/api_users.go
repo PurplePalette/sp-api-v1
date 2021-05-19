@@ -29,7 +29,7 @@ func NewUsersApiController(s UsersApiServicer) Router {
 
 // Routes returns all of the api route for the UsersApiController
 func (c *UsersApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"EditUser",
 			strings.ToUpper("Patch"),
@@ -97,7 +97,7 @@ func (c *UsersApiController) Routes() Routes {
 func (c *UsersApiController) EditUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
-	
+
 	user := &User{}
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -118,7 +118,7 @@ func (c *UsersApiController) EditUser(w http.ResponseWriter, r *http.Request) {
 func (c *UsersApiController) GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
-	
+
 	result, err := c.service.GetUser(r.Context(), userId)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
@@ -147,7 +147,7 @@ func (c *UsersApiController) GetUserList(w http.ResponseWriter, r *http.Request)
 func (c *UsersApiController) GetUserServerInfo(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
-	
+
 	result, err := c.service.GetUserServerInfo(r.Context(), userId)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
@@ -164,7 +164,7 @@ func (c *UsersApiController) GetUsersBackgrounds(w http.ResponseWriter, r *http.
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -188,7 +188,7 @@ func (c *UsersApiController) GetUsersEffects(w http.ResponseWriter, r *http.Requ
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -212,7 +212,7 @@ func (c *UsersApiController) GetUsersEngines(w http.ResponseWriter, r *http.Requ
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -236,7 +236,7 @@ func (c *UsersApiController) GetUsersLevels(w http.ResponseWriter, r *http.Reque
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -260,7 +260,7 @@ func (c *UsersApiController) GetUsersParticles(w http.ResponseWriter, r *http.Re
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {
@@ -284,7 +284,7 @@ func (c *UsersApiController) GetUsersSkins(w http.ResponseWriter, r *http.Reques
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
-	
+
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
 	if err != nil {

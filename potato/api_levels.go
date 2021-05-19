@@ -29,7 +29,7 @@ func NewLevelsApiController(s LevelsApiServicer) Router {
 
 // Routes returns all of the api route for the LevelsApiController
 func (c *LevelsApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"AddLevel",
 			strings.ToUpper("Post"),
@@ -61,7 +61,7 @@ func (c *LevelsApiController) Routes() Routes {
 func (c *LevelsApiController) AddLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	levelName := params["levelName"]
-	
+
 	level := &Level{}
 	if err := json.NewDecoder(r.Body).Decode(&level); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,7 +82,7 @@ func (c *LevelsApiController) AddLevel(w http.ResponseWriter, r *http.Request) {
 func (c *LevelsApiController) EditLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	levelName := params["levelName"]
-	
+
 	level := &Level{}
 	if err := json.NewDecoder(r.Body).Decode(&level); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -103,7 +103,7 @@ func (c *LevelsApiController) EditLevel(w http.ResponseWriter, r *http.Request) 
 func (c *LevelsApiController) GetLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	levelName := params["levelName"]
-	
+
 	result, err := c.service.GetLevel(r.Context(), levelName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {

@@ -11,7 +11,6 @@ package potato
 
 // GetEffectResponse - Response struct of getEffect
 type GetEffectResponse struct {
-
 	Item Effect `json:"item"`
 
 	Description string `json:"description"`

@@ -29,7 +29,7 @@ func NewInfoApiController(s InfoApiServicer) Router {
 
 // Routes returns all of the api route for the InfoApiController
 func (c *InfoApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"EditInfo",
 			strings.ToUpper("Put"),

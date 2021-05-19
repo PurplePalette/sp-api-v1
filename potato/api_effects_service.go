@@ -11,12 +11,12 @@ package potato
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // EffectsApiService is a service that implents the logic for the EffectsApiServicer
-// This service should implement the business logic for every endpoint for the EffectsApi API. 
+// This service should implement the business logic for every endpoint for the EffectsApi API.
 // Include any external packages or services that will be required by this service.
 type EffectsApiService struct {
 }
@@ -93,4 +93,3 @@ func (s *EffectsApiService) GetEffectList(ctx context.Context, localization stri
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetEffectList method not implemented")
 }
-

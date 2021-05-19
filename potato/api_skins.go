@@ -29,7 +29,7 @@ func NewSkinsApiController(s SkinsApiServicer) Router {
 
 // Routes returns all of the api route for the SkinsApiController
 func (c *SkinsApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"AddSkin",
 			strings.ToUpper("Post"),
@@ -61,7 +61,7 @@ func (c *SkinsApiController) Routes() Routes {
 func (c *SkinsApiController) AddSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	skinName := params["skinName"]
-	
+
 	skin := &Skin{}
 	if err := json.NewDecoder(r.Body).Decode(&skin); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,7 +82,7 @@ func (c *SkinsApiController) AddSkin(w http.ResponseWriter, r *http.Request) {
 func (c *SkinsApiController) EditSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	skinName := params["skinName"]
-	
+
 	skin := &Skin{}
 	if err := json.NewDecoder(r.Body).Decode(&skin); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -103,7 +103,7 @@ func (c *SkinsApiController) EditSkin(w http.ResponseWriter, r *http.Request) {
 func (c *SkinsApiController) GetSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	skinName := params["skinName"]
-	
+
 	result, err := c.service.GetSkin(r.Context(), skinName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {

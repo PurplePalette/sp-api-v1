@@ -11,12 +11,12 @@ package potato
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // SkinsApiService is a service that implents the logic for the SkinsApiServicer
-// This service should implement the business logic for every endpoint for the SkinsApi API. 
+// This service should implement the business logic for every endpoint for the SkinsApi API.
 // Include any external packages or services that will be required by this service.
 type SkinsApiService struct {
 }
@@ -93,4 +93,3 @@ func (s *SkinsApiService) GetSkinList(ctx context.Context, localization string, 
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetSkinList method not implemented")
 }
-

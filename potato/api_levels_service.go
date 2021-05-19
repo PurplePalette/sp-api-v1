@@ -11,12 +11,12 @@ package potato
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // LevelsApiService is a service that implents the logic for the LevelsApiServicer
-// This service should implement the business logic for every endpoint for the LevelsApi API. 
+// This service should implement the business logic for every endpoint for the LevelsApi API.
 // Include any external packages or services that will be required by this service.
 type LevelsApiService struct {
 }
@@ -93,4 +93,3 @@ func (s *LevelsApiService) GetLevelList(ctx context.Context, localization string
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetLevelList method not implemented")
 }
-

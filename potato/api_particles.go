@@ -29,7 +29,7 @@ func NewParticlesApiController(s ParticlesApiServicer) Router {
 
 // Routes returns all of the api route for the ParticlesApiController
 func (c *ParticlesApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"AddParticle",
 			strings.ToUpper("Post"),
@@ -61,7 +61,7 @@ func (c *ParticlesApiController) Routes() Routes {
 func (c *ParticlesApiController) AddParticle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	particleName := params["particleName"]
-	
+
 	particle := &Particle{}
 	if err := json.NewDecoder(r.Body).Decode(&particle); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,7 +82,7 @@ func (c *ParticlesApiController) AddParticle(w http.ResponseWriter, r *http.Requ
 func (c *ParticlesApiController) GetParticle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	particleName := params["particleName"]
-	
+
 	result, err := c.service.GetParticle(r.Context(), particleName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
@@ -119,7 +119,7 @@ func (c *ParticlesApiController) GetParticleList(w http.ResponseWriter, r *http.
 func (c *ParticlesApiController) PatchParticlesParticleName(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	particleName := params["particleName"]
-	
+
 	particle := &Particle{}
 	if err := json.NewDecoder(r.Body).Decode(&particle); err != nil {
 		w.WriteHeader(http.StatusBadRequest)

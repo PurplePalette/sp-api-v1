@@ -11,12 +11,12 @@ package potato
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // EnginesApiService is a service that implents the logic for the EnginesApiServicer
-// This service should implement the business logic for every endpoint for the EnginesApi API. 
+// This service should implement the business logic for every endpoint for the EnginesApi API.
 // Include any external packages or services that will be required by this service.
 type EnginesApiService struct {
 }
@@ -93,4 +93,3 @@ func (s *EnginesApiService) GetEngineList(ctx context.Context, localization stri
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetEngineList method not implemented")
 }
-

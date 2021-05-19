@@ -29,7 +29,7 @@ func NewEffectsApiController(s EffectsApiServicer) Router {
 
 // Routes returns all of the api route for the EffectsApiController
 func (c *EffectsApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"AddEffect",
 			strings.ToUpper("Post"),
@@ -61,7 +61,7 @@ func (c *EffectsApiController) Routes() Routes {
 func (c *EffectsApiController) AddEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	effectName := params["effectName"]
-	
+
 	effect := &Effect{}
 	if err := json.NewDecoder(r.Body).Decode(&effect); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,7 +82,7 @@ func (c *EffectsApiController) AddEffect(w http.ResponseWriter, r *http.Request)
 func (c *EffectsApiController) EditEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	effectName := params["effectName"]
-	
+
 	effect := &Effect{}
 	if err := json.NewDecoder(r.Body).Decode(&effect); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -103,7 +103,7 @@ func (c *EffectsApiController) EditEffect(w http.ResponseWriter, r *http.Request
 func (c *EffectsApiController) GetEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	effectName := params["effectName"]
-	
+
 	result, err := c.service.GetEffect(r.Context(), effectName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {

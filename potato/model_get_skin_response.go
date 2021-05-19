@@ -11,7 +11,6 @@ package potato
 
 // GetSkinResponse - Response struct of getSkin
 type GetSkinResponse struct {
-
 	Item Skin `json:"item"`
 
 	Description string `json:"description"`
