@@ -10,7 +10,6 @@
 package potato
 
 import (
-	"encoding/json"
 	"net/http"
 	"strings"
 
