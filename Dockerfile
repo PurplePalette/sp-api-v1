@@ -6,9 +6,9 @@ COPY main.go .
 ENV CGO_ENABLED=0
 RUN go get -d -v ./...
 
-RUN go build -a -installsuffix cgo -o gen .
+RUN go build -a -installsuffix cgo -o potato .
 
 FROM scratch AS runtime
-COPY --from=build /go/src/gen ./
+COPY --from=build /go/src/potato ./
 EXPOSE 8080/tcp
-ENTRYPOINT ["./gen"]
+ENTRYPOINT ["./potato"]

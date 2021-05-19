@@ -13,40 +13,40 @@ import (
 	"log"
 	"net/http"
 
-	gen "github.com/PurplePalette/sonolus-uploader-core/gen"
+	potato "github.com/PurplePalette/sonolus-uploader-core/go"
 )
 
 func main() {
 	log.Printf("Server started")
 
-	BackgroundsApiService := gen.NewBackgroundsApiService()
-	BackgroundsApiController := gen.NewBackgroundsApiController(BackgroundsApiService)
+	BackgroundsApiService := potato.NewBackgroundsApiService()
+	BackgroundsApiController := potato.NewBackgroundsApiController(BackgroundsApiService)
 
-	EffectsApiService := gen.NewEffectsApiService()
-	EffectsApiController := gen.NewEffectsApiController(EffectsApiService)
+	EffectsApiService := potato.NewEffectsApiService()
+	EffectsApiController := potato.NewEffectsApiController(EffectsApiService)
 
-	EnginesApiService := gen.NewEnginesApiService()
-	EnginesApiController := gen.NewEnginesApiController(EnginesApiService)
+	EnginesApiService := potato.NewEnginesApiService()
+	EnginesApiController := potato.NewEnginesApiController(EnginesApiService)
 
-	InfoApiService := gen.NewInfoApiService()
-	InfoApiController := gen.NewInfoApiController(InfoApiService)
+	InfoApiService := potato.NewInfoApiService()
+	InfoApiController := potato.NewInfoApiController(InfoApiService)
 
-	LevelsApiService := gen.NewLevelsApiService()
-	LevelsApiController := gen.NewLevelsApiController(LevelsApiService)
+	LevelsApiService := potato.NewLevelsApiService()
+	LevelsApiController := potato.NewLevelsApiController(LevelsApiService)
 
-	ParticlesApiService := gen.NewParticlesApiService()
-	ParticlesApiController := gen.NewParticlesApiController(ParticlesApiService)
+	ParticlesApiService := potato.NewParticlesApiService()
+	ParticlesApiController := potato.NewParticlesApiController(ParticlesApiService)
 
-	SkinsApiService := gen.NewSkinsApiService()
-	SkinsApiController := gen.NewSkinsApiController(SkinsApiService)
+	SkinsApiService := potato.NewSkinsApiService()
+	SkinsApiController := potato.NewSkinsApiController(SkinsApiService)
 
-	TestsApiService := gen.NewTestsApiService()
-	TestsApiController := gen.NewTestsApiController(TestsApiService)
+	TestsApiService := potato.NewTestsApiService()
+	TestsApiController := potato.NewTestsApiController(TestsApiService)
 
-	UsersApiService := gen.NewUsersApiService()
-	UsersApiController := gen.NewUsersApiController(UsersApiService)
+	UsersApiService := potato.NewUsersApiService()
+	UsersApiController := potato.NewUsersApiController(UsersApiService)
 
-	router := gen.NewRouter(BackgroundsApiController, EffectsApiController, EnginesApiController, InfoApiController, LevelsApiController, ParticlesApiController, SkinsApiController, TestsApiController, UsersApiController)
+	router := potato.NewRouter(BackgroundsApiController, EffectsApiController, EnginesApiController, InfoApiController, LevelsApiController, ParticlesApiController, SkinsApiController, TestsApiController, UsersApiController)
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
