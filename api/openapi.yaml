@@ -1797,7 +1797,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -1849,7 +1852,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -2104,7 +2110,10 @@ components:
           type: LevelData
           hash: hash
           url: url
-        data: '{}'
+        data:
+          type: LevelData
+          hash: hash
+          url: url
         author: author
         subtitle: subtitle
         name: name
@@ -2140,7 +2149,7 @@ components:
         thumbnail:
           $ref: '#/components/schemas/SonolusResourceLocator'
         data:
-          $ref: '#/components/schemas/EffectData'
+          $ref: '#/components/schemas/SonolusResourceLocator'
       required:
       - author
       - data
@@ -2262,7 +2271,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name
@@ -2485,7 +2497,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name
@@ -2495,7 +2510,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name
@@ -2560,7 +2578,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -2642,7 +2663,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -2803,7 +2827,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -2855,7 +2882,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -2978,7 +3008,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -3030,7 +3063,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -3286,7 +3322,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -3338,7 +3377,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -3463,7 +3505,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -3515,7 +3560,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -3638,7 +3686,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -3690,7 +3741,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -3818,7 +3872,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name
@@ -3830,7 +3887,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name
@@ -3840,7 +3900,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name
@@ -3904,7 +3967,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -3988,7 +4054,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -4070,7 +4139,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -4323,7 +4395,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name
@@ -4333,7 +4408,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name
@@ -4377,7 +4455,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -4459,7 +4540,10 @@ components:
               type: LevelData
               hash: hash
               url: url
-            data: '{}'
+            data:
+              type: LevelData
+              hash: hash
+              url: url
             author: author
             subtitle: subtitle
             name: name
@@ -4669,7 +4753,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -4721,7 +4808,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -4844,7 +4934,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -4896,7 +4989,10 @@ components:
                 type: LevelData
                 hash: hash
                 url: url
-              data: '{}'
+              data:
+                type: LevelData
+                hash: hash
+                url: url
               author: author
               subtitle: subtitle
               name: name
@@ -5116,7 +5212,10 @@ components:
             type: LevelData
             hash: hash
             url: url
-          data: '{}'
+          data:
+            type: LevelData
+            hash: hash
+            url: url
           author: author
           subtitle: subtitle
           name: name

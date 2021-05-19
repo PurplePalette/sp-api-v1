@@ -29,5 +29,5 @@ type Effect struct {
 
 	Thumbnail SonolusResourceLocator `json:"thumbnail"`
 
-	Data EffectData `json:"data"`
+	Data SonolusResourceLocator `json:"data"`
 }

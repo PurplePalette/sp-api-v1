@@ -13,7 +13,7 @@ import (
 	"log"
 	"net/http"
 
-	potato "github.com/PurplePalette/sonolus-uploader-core/go"
+	potato "github.com/PurplePalette/sonolus-uploader-core/potato"
 )
 
 func main() {
