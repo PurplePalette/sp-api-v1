@@ -18,6 +18,11 @@ For more information, please visit [https://discord.gg/KEfVkfC6Q9](https://disco
 
 ### Running the server
 To run the server, follow these simple steps:
+1. Copy example.env to .env
+2. Write environment value to .env or os environment
+3. Run server
+#### Note
+FIREBASE_CREDENTIAL must be double encoded json text.
 
 ```
 go run main.go
