@@ -13,17 +13,20 @@ import (
 	"context"
 	"errors"
 	"net/http"
+
+	"firebase.google.com/go/db"
 )
 
 // ParticlesApiService is a service that implents the logic for the ParticlesApiServicer
 // This service should implement the business logic for every endpoint for the ParticlesApi API.
 // Include any external packages or services that will be required by this service.
 type ParticlesApiService struct {
+	db *db.Client
 }
 
 // NewParticlesApiService creates a default api service
-func NewParticlesApiService() ParticlesApiServicer {
-	return &ParticlesApiService{}
+func NewParticlesApiService(db *db.Client) ParticlesApiServicer {
+	return &ParticlesApiService{db: db}
 }
 
 // AddParticle - Add particle

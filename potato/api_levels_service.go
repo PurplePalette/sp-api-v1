@@ -13,17 +13,20 @@ import (
 	"context"
 	"errors"
 	"net/http"
+
+	"firebase.google.com/go/db"
 )
 
 // LevelsApiService is a service that implents the logic for the LevelsApiServicer
 // This service should implement the business logic for every endpoint for the LevelsApi API.
 // Include any external packages or services that will be required by this service.
 type LevelsApiService struct {
+	db *db.Client
 }
 
 // NewLevelsApiService creates a default api service
-func NewLevelsApiService() LevelsApiServicer {
-	return &LevelsApiService{}
+func NewLevelsApiService(db *db.Client) LevelsApiServicer {
+	return &LevelsApiService{db: db}
 }
 
 // AddLevel - Add level

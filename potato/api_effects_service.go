@@ -13,17 +13,20 @@ import (
 	"context"
 	"errors"
 	"net/http"
+
+	"firebase.google.com/go/db"
 )
 
 // EffectsApiService is a service that implents the logic for the EffectsApiServicer
 // This service should implement the business logic for every endpoint for the EffectsApi API.
 // Include any external packages or services that will be required by this service.
 type EffectsApiService struct {
+	db *db.Client
 }
 
 // NewEffectsApiService creates a default api service
-func NewEffectsApiService() EffectsApiServicer {
-	return &EffectsApiService{}
+func NewEffectsApiService(db *db.Client) EffectsApiServicer {
+	return &EffectsApiService{db: db}
 }
 
 // AddEffect - Add effect

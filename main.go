@@ -14,36 +14,39 @@ import (
 	"net/http"
 
 	potato "github.com/PurplePalette/sonolus-uploader-core/potato"
+	"github.com/PurplePalette/sonolus-uploader-core/utils/server"
 )
 
 func main() {
+	firebase := server.NewFirebaseClient()
+	db := server.NewFirebaseDatabaseClient(firebase)
 	log.Printf("Server started")
 
-	BackgroundsApiService := potato.NewBackgroundsApiService()
+	BackgroundsApiService := potato.NewBackgroundsApiService(db)
 	BackgroundsApiController := potato.NewBackgroundsApiController(BackgroundsApiService)
 
-	EffectsApiService := potato.NewEffectsApiService()
+	EffectsApiService := potato.NewEffectsApiService(db)
 	EffectsApiController := potato.NewEffectsApiController(EffectsApiService)
 
-	EnginesApiService := potato.NewEnginesApiService()
+	EnginesApiService := potato.NewEnginesApiService(db)
 	EnginesApiController := potato.NewEnginesApiController(EnginesApiService)
 
-	InfoApiService := potato.NewInfoApiService()
+	InfoApiService := potato.NewInfoApiService(db)
 	InfoApiController := potato.NewInfoApiController(InfoApiService)
 
-	LevelsApiService := potato.NewLevelsApiService()
+	LevelsApiService := potato.NewLevelsApiService(db)
 	LevelsApiController := potato.NewLevelsApiController(LevelsApiService)
 
-	ParticlesApiService := potato.NewParticlesApiService()
+	ParticlesApiService := potato.NewParticlesApiService(db)
 	ParticlesApiController := potato.NewParticlesApiController(ParticlesApiService)
 
-	SkinsApiService := potato.NewSkinsApiService()
+	SkinsApiService := potato.NewSkinsApiService(db)
 	SkinsApiController := potato.NewSkinsApiController(SkinsApiService)
 
-	TestsApiService := potato.NewTestsApiService()
+	TestsApiService := potato.NewTestsApiService(db)
 	TestsApiController := potato.NewTestsApiController(TestsApiService)
 
-	UsersApiService := potato.NewUsersApiService()
+	UsersApiService := potato.NewUsersApiService(db)
 	UsersApiController := potato.NewUsersApiController(UsersApiService)
 
 	router := potato.NewRouter(BackgroundsApiController, EffectsApiController, EnginesApiController, InfoApiController, LevelsApiController, ParticlesApiController, SkinsApiController, TestsApiController, UsersApiController)

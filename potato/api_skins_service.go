@@ -13,17 +13,20 @@ import (
 	"context"
 	"errors"
 	"net/http"
+
+	"firebase.google.com/go/db"
 )
 
 // SkinsApiService is a service that implents the logic for the SkinsApiServicer
 // This service should implement the business logic for every endpoint for the SkinsApi API.
 // Include any external packages or services that will be required by this service.
 type SkinsApiService struct {
+	db *db.Client
 }
 
 // NewSkinsApiService creates a default api service
-func NewSkinsApiService() SkinsApiServicer {
-	return &SkinsApiService{}
+func NewSkinsApiService(db *db.Client) SkinsApiServicer {
+	return &SkinsApiService{db: db}
 }
 
 // AddSkin - Add skin

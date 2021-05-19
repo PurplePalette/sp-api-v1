@@ -13,17 +13,20 @@ import (
 	"context"
 	"errors"
 	"net/http"
+
+	"firebase.google.com/go/db"
 )
 
 // InfoApiService is a service that implents the logic for the InfoApiServicer
 // This service should implement the business logic for every endpoint for the InfoApi API.
 // Include any external packages or services that will be required by this service.
 type InfoApiService struct {
+	db *db.Client
 }
 
 // NewInfoApiService creates a default api service
-func NewInfoApiService() InfoApiServicer {
-	return &InfoApiService{}
+func NewInfoApiService(db *db.Client) InfoApiServicer {
+	return &InfoApiService{db: db}
 }
 
 // EditInfo - Edit server info

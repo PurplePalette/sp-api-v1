@@ -43,16 +43,16 @@ func (c *BackgroundsApiController) Routes() Routes {
 			c.EditBackground,
 		},
 		{
-			"GetBackground",
-			strings.ToUpper("Get"),
-			"/backgrounds/{backgroundName}",
-			c.GetBackground,
-		},
-		{
 			"GetBackgroundList",
 			strings.ToUpper("Get"),
 			"/backgrounds/list",
 			c.GetBackgroundList,
+		},
+		{
+			"GetBackground",
+			strings.ToUpper("Get"),
+			"/backgrounds/{backgroundName}",
+			c.GetBackground,
 		},
 	}
 }

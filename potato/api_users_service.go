@@ -13,17 +13,20 @@ import (
 	"context"
 	"errors"
 	"net/http"
+
+	"firebase.google.com/go/db"
 )
 
 // UsersApiService is a service that implents the logic for the UsersApiServicer
 // This service should implement the business logic for every endpoint for the UsersApi API.
 // Include any external packages or services that will be required by this service.
 type UsersApiService struct {
+	db *db.Client
 }
 
 // NewUsersApiService creates a default api service
-func NewUsersApiService() UsersApiServicer {
-	return &UsersApiService{}
+func NewUsersApiService(db *db.Client) UsersApiServicer {
+	return &UsersApiService{db: db}
 }
 
 // EditUser - Edit user

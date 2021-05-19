@@ -13,17 +13,20 @@ import (
 	"context"
 	"errors"
 	"net/http"
+
+	"firebase.google.com/go/db"
 )
 
 // EnginesApiService is a service that implents the logic for the EnginesApiServicer
 // This service should implement the business logic for every endpoint for the EnginesApi API.
 // Include any external packages or services that will be required by this service.
 type EnginesApiService struct {
+	db *db.Client
 }
 
 // NewEnginesApiService creates a default api service
-func NewEnginesApiService() EnginesApiServicer {
-	return &EnginesApiService{}
+func NewEnginesApiService(db *db.Client) EnginesApiServicer {
+	return &EnginesApiService{db: db}
 }
 
 // AddEngine - Add engine

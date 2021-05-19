@@ -12,18 +12,28 @@ package potato
 import (
 	"context"
 	"errors"
+	"log"
 	"net/http"
+
+	"firebase.google.com/go/db"
 )
+
+type FireUser struct {
+	DateOfBirth string `json:"date_of_birth,omitempty"`
+	FullName    string `json:"full_name,omitempty"`
+	Nickname    string `json:"nickname,omitempty"`
+}
 
 // BackgroundsApiService is a service that implents the logic for the BackgroundsApiServicer
 // This service should implement the business logic for every endpoint for the BackgroundsApi API.
 // Include any external packages or services that will be required by this service.
 type BackgroundsApiService struct {
+	db *db.Client
 }
 
 // NewBackgroundsApiService creates a default api service
-func NewBackgroundsApiService() BackgroundsApiServicer {
-	return &BackgroundsApiService{}
+func NewBackgroundsApiService(db *db.Client) BackgroundsApiServicer {
+	return &BackgroundsApiService{db: db}
 }
 
 // AddBackground - Add background
@@ -90,6 +100,24 @@ func (s *BackgroundsApiService) GetBackgroundList(ctx context.Context, localizat
 
 	//TODO: Uncomment the next line to return response Response(200, GetBackgroundListResponse{}) or use other options such as http.Ok ...
 	//return Response(200, GetBackgroundListResponse{}), nil
+
+	// Get a database reference to our blog.
+	ref := s.db.NewRef("server/saving-data/fireblog")
+
+	usersRef := ref.Child("users")
+	err := usersRef.Set(ctx, map[string]*FireUser{
+		"alanisawesome": {
+			DateOfBirth: "June 23, 1912",
+			FullName:    "Alan Turing",
+		},
+		"gracehop": {
+			DateOfBirth: "December 9, 1906",
+			FullName:    "Grace Hopper",
+		},
+	})
+	if err != nil {
+		log.Fatalln("Error setting value:", err)
+	}
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetBackgroundList method not implemented")
 }
