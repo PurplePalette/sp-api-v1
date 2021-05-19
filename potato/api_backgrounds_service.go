@@ -16,6 +16,7 @@ import (
 	"net/http"
 
 	"firebase.google.com/go/db"
+	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
 type FireUser struct {
@@ -38,6 +39,10 @@ func NewBackgroundsApiService(db *db.Client) BackgroundsApiServicer {
 
 // AddBackground - Add background
 func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
+
 	// TODO - update AddBackground with the required logic for this service method.
 	// Add api_backgrounds_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
 
@@ -47,9 +52,6 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
 	//return Response(400, nil),nil
 
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
 	//TODO: Uncomment the next line to return response Response(409, {}) or use other options such as http.Ok ...
 	//return Response(409, nil),nil
 
@@ -58,17 +60,15 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 
 // EditBackground - Edit background
 func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
-	// TODO - update EditBackground with the required logic for this service method.
-	// Add api_backgrounds_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
 
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil
 
 	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
 	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
 
 	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
 	//return Response(403, nil),nil

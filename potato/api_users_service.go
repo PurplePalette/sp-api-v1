@@ -15,6 +15,7 @@ import (
 	"net/http"
 
 	"firebase.google.com/go/db"
+	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
 // UsersApiService is a service that implents the logic for the UsersApiServicer
@@ -31,8 +32,9 @@ func NewUsersApiService(db *db.Client) UsersApiServicer {
 
 // EditUser - Edit user
 func (s *UsersApiService) EditUser(ctx context.Context, userId string, user User) (ImplResponse, error) {
-	// TODO - update EditUser with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
 
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil

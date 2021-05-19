@@ -15,6 +15,7 @@ import (
 	"net/http"
 
 	"firebase.google.com/go/db"
+	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
 // LevelsApiService is a service that implents the logic for the LevelsApiServicer
@@ -31,8 +32,9 @@ func NewLevelsApiService(db *db.Client) LevelsApiServicer {
 
 // AddLevel - Add level
 func (s *LevelsApiService) AddLevel(ctx context.Context, levelName string, level Level) (ImplResponse, error) {
-	// TODO - update AddLevel with the required logic for this service method.
-	// Add api_levels_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
 
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil
@@ -51,8 +53,9 @@ func (s *LevelsApiService) AddLevel(ctx context.Context, levelName string, level
 
 // EditLevel - Edit level
 func (s *LevelsApiService) EditLevel(ctx context.Context, levelName string, level Level) (ImplResponse, error) {
-	// TODO - update EditLevel with the required logic for this service method.
-	// Add api_levels_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
 
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil

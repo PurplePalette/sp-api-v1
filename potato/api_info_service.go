@@ -15,6 +15,7 @@ import (
 	"net/http"
 
 	"firebase.google.com/go/db"
+	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
 // InfoApiService is a service that implents the logic for the InfoApiServicer
@@ -31,8 +32,9 @@ func NewInfoApiService(db *db.Client) InfoApiServicer {
 
 // EditInfo - Edit server info
 func (s *InfoApiService) EditInfo(ctx context.Context, serverInfo ServerInfo) (ImplResponse, error) {
-	// TODO - update EditInfo with the required logic for this service method.
-	// Add api_info_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
 
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil

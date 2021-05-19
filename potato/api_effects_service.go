@@ -15,6 +15,7 @@ import (
 	"net/http"
 
 	"firebase.google.com/go/db"
+	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
 // EffectsApiService is a service that implents the logic for the EffectsApiServicer
@@ -31,8 +32,9 @@ func NewEffectsApiService(db *db.Client) EffectsApiServicer {
 
 // AddEffect - Add effect
 func (s *EffectsApiService) AddEffect(ctx context.Context, effectName string, effect Effect) (ImplResponse, error) {
-	// TODO - update AddEffect with the required logic for this service method.
-	// Add api_effects_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
 
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil
@@ -51,8 +53,9 @@ func (s *EffectsApiService) AddEffect(ctx context.Context, effectName string, ef
 
 // EditEffect - Edit effect
 func (s *EffectsApiService) EditEffect(ctx context.Context, effectName string, effect Effect) (ImplResponse, error) {
-	// TODO - update EditEffect with the required logic for this service method.
-	// Add api_effects_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
 
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil

@@ -9,6 +9,7 @@ import (
 	"golang.org/x/net/context"
 
 	firebase "firebase.google.com/go"
+	"firebase.google.com/go/auth"
 	"firebase.google.com/go/db"
 
 	"github.com/joho/godotenv"
@@ -43,4 +44,14 @@ func NewFirebaseDatabaseClient(app *firebase.App) *db.Client {
 		log.Fatal("error initializing database client:", err)
 	}
 	return db
+}
+
+// NewFirebaseAuthorizationClient creates a new Firebase authorization client
+func NewFirebaseAuthorizationClient(app *firebase.App) *auth.Client {
+	ctx := context.Background()
+	auth, err := app.Auth(ctx)
+	if err != nil {
+		log.Fatal("error initializing auth client:", err)
+	}
+	return auth
 }

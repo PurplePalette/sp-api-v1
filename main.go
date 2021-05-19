@@ -20,7 +20,7 @@ import (
 func main() {
 	firebase := server.NewFirebaseClient()
 	db := server.NewFirebaseDatabaseClient(firebase)
-	log.Printf("Server started")
+	auth := server.NewFirebaseAuthorizationClient(firebase)
 
 	BackgroundsApiService := potato.NewBackgroundsApiService(db)
 	BackgroundsApiController := potato.NewBackgroundsApiController(BackgroundsApiService)
@@ -49,7 +49,18 @@ func main() {
 	UsersApiService := potato.NewUsersApiService(db)
 	UsersApiController := potato.NewUsersApiController(UsersApiService)
 
-	router := potato.NewRouter(BackgroundsApiController, EffectsApiController, EnginesApiController, InfoApiController, LevelsApiController, ParticlesApiController, SkinsApiController, TestsApiController, UsersApiController)
-
+	router := server.NewRouterWithInject(
+		db, auth,
+		BackgroundsApiController,
+		EffectsApiController,
+		EnginesApiController,
+		InfoApiController,
+		LevelsApiController,
+		ParticlesApiController,
+		SkinsApiController,
+		TestsApiController,
+		UsersApiController,
+	)
+	log.Printf("Server started")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
