@@ -37,6 +37,12 @@ func (c *ParticlesApiController) Routes() Routes {
 			c.AddParticle,
 		},
 		{
+			"EditParticle",
+			strings.ToUpper("Patch"),
+			"/particles/{particleName}",
+			c.EditParticle,
+		},
+		{
 			"GetParticle",
 			strings.ToUpper("Get"),
 			"/particles/{particleName}",
@@ -47,12 +53,6 @@ func (c *ParticlesApiController) Routes() Routes {
 			strings.ToUpper("Get"),
 			"/particles/list",
 			c.GetParticleList,
-		},
-		{
-			"PatchParticlesParticleName",
-			strings.ToUpper("Patch"),
-			"/particles/{particleName}",
-			c.PatchParticlesParticleName,
 		},
 	}
 }
@@ -68,6 +68,27 @@ func (c *ParticlesApiController) AddParticle(w http.ResponseWriter, r *http.Requ
 		return
 	}
 	result, err := c.service.AddParticle(r.Context(), particleName, *particle)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// EditParticle - Edit particle
+func (c *ParticlesApiController) EditParticle(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	particleName := params["particleName"]
+
+	particle := &Particle{}
+	if err := json.NewDecoder(r.Body).Decode(&particle); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	result, err := c.service.EditParticle(r.Context(), particleName, *particle)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -105,27 +126,6 @@ func (c *ParticlesApiController) GetParticleList(w http.ResponseWriter, r *http.
 	}
 	keywords := query.Get("keywords")
 	result, err := c.service.GetParticleList(r.Context(), localization, page, keywords)
-	// If an error occurred, encode the error with the status code
-	if err != nil {
-		EncodeJSONResponse(err.Error(), &result.Code, w)
-		return
-	}
-	// If no error, encode the body and the result code
-	EncodeJSONResponse(result.Body, &result.Code, w)
-
-}
-
-// PatchParticlesParticleName - Edit particle
-func (c *ParticlesApiController) PatchParticlesParticleName(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
-	particleName := params["particleName"]
-
-	particle := &Particle{}
-	if err := json.NewDecoder(r.Body).Decode(&particle); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	result, err := c.service.PatchParticlesParticleName(r.Context(), particleName, *particle)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)

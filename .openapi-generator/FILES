@@ -49,4 +49,3 @@ go/model_skin.go
 go/model_sonolus_resource_locator.go
 go/model_user.go
 go/routers.go
-main.go

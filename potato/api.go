@@ -170,9 +170,9 @@ type LevelsApiServicer interface {
 // and updated with the logic required for the API.
 type ParticlesApiServicer interface {
 	AddParticle(context.Context, string, Particle) (ImplResponse, error)
+	EditParticle(context.Context, string, Particle) (ImplResponse, error)
 	GetParticle(context.Context, string) (ImplResponse, error)
 	GetParticleList(context.Context, string, int32, string) (ImplResponse, error)
-	PatchParticlesParticleName(context.Context, string, Particle) (ImplResponse, error)
 }
 
 // SkinsApiServicer defines the api actions for the SkinsApi service

@@ -46,6 +46,15 @@ type Level struct {
 
 	Data SonolusResourceLocator `json:"data"`
 
-	// 独自要素、ジャンル
+	// 独自要素: 楽曲のジャンル
 	Genre string `json:"genre,omitempty"`
+
+	// 独自要素: 楽曲が全体公開かどうか
+	Public bool `json:"public,omitempty"`
+
+	// 独自要素: 譜面作成者のユーザーID
+	UserId string `json:"userId,omitempty"`
+
+	// 独自要素: 譜面内のノーツ数
+	Notes int32 `json:"notes,omitempty"`
 }

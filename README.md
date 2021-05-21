@@ -38,4 +38,7 @@ Once image is built use
 docker run --rm -it gen 
 ```
 
+## References
+### Command
+```openapi-generator-cli generate -i potato.yaml -g go-server --additional-properties=packageName=potato```
 

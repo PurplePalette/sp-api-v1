@@ -51,6 +51,33 @@ func (s *ParticlesApiService) AddParticle(ctx context.Context, particleName stri
 	return Response(http.StatusNotImplemented, nil), errors.New("AddParticle method not implemented")
 }
 
+// EditParticle - Edit particle
+func (s *ParticlesApiService) EditParticle(ctx context.Context, particleName string, particle Particle) (ImplResponse, error) {
+	if !request.IsLoggedIn(ctx) {
+		return Response(http.StatusUnauthorized, nil), nil
+	}
+
+	// TODO - update EditParticle with the required logic for this service method.
+	// Add api_particles_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+
+	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
+	//return Response(200, nil),nil
+
+	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
+	//return Response(400, nil),nil
+
+	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
+	//return Response(401, nil),nil
+
+	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
+	//return Response(403, nil),nil
+
+	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
+	//return Response(404, nil),nil
+
+	return Response(http.StatusNotImplemented, nil), errors.New("EditParticle method not implemented")
+}
+
 // GetParticle - Get particle
 func (s *ParticlesApiService) GetParticle(ctx context.Context, particleName string) (ImplResponse, error) {
 	// TODO - update GetParticle with the required logic for this service method.
@@ -74,28 +101,4 @@ func (s *ParticlesApiService) GetParticleList(ctx context.Context, localization 
 	//return Response(200, GetParticleListResponse{}), nil
 
 	return Response(http.StatusNotImplemented, nil), errors.New("GetParticleList method not implemented")
-}
-
-// PatchParticlesParticleName - Edit particle
-func (s *ParticlesApiService) PatchParticlesParticleName(ctx context.Context, particleName string, particle Particle) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
-	//return Response(403, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("PatchParticlesParticleName method not implemented")
 }

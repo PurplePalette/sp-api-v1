@@ -645,7 +645,7 @@ paths:
       - particles
     patch:
       description: 指定したparticleを編集します
-      operationId: patch-particles-particleName
+      operationId: editParticle
       parameters:
       - explode: false
         in: path
@@ -1703,6 +1703,7 @@ components:
         A level provides a list of entities and powered by scripted behavior in engine, with skin, effect, background and particle, to create gameplay experience for players / It defines level for actual user play. It includes all data to play one level.
         https://github.com/NonSpicyBurrito/sonolus-wiki/wiki/Level
       example:
+        notes: 6027456
         data:
           type: LevelData
           hash: hash
@@ -1755,10 +1756,12 @@ components:
           url: url
         title: title
         version: 1
+        userId: userId
         cover:
           type: LevelData
           hash: hash
           url: url
+        public: false
         engine:
           thumbnail:
             type: LevelData
@@ -1935,7 +1938,7 @@ components:
           $ref: '#/components/schemas/SonolusResourceLocator'
         genre:
           default: general
-          description: 独自要素、ジャンル
+          description: '独自要素: 楽曲のジャンル'
           enum:
           - general
           - jpop
@@ -1945,6 +1948,20 @@ components:
           maxLength: 20
           minLength: 1
           type: string
+        public:
+          default: false
+          description: '独自要素: 楽曲が全体公開かどうか'
+          type: boolean
+        userId:
+          description: '独自要素: 譜面作成者のユーザーID'
+          maxLength: 100
+          minLength: 1
+          type: string
+        notes:
+          description: '独自要素: 譜面内のノーツ数'
+          maximum: 10000000
+          minimum: 1
+          type: integer
       required:
       - artists
       - author
@@ -1952,7 +1969,6 @@ components:
       - cover
       - data
       - engine
-      - genr
       - name
       - rating
       - title
@@ -2733,7 +2749,8 @@ components:
       example:
         pageCount: 1
         items:
-        - data:
+        - notes: 6027456
+          data:
             type: LevelData
             hash: hash
             url: url
@@ -2785,10 +2802,12 @@ components:
             url: url
           title: title
           version: 1
+          userId: userId
           cover:
             type: LevelData
             hash: hash
             url: url
+          public: false
           engine:
             thumbnail:
               type: LevelData
@@ -2914,7 +2933,8 @@ components:
             useDefault: true
           name: name
           genre: general
-        - data:
+        - notes: 6027456
+          data:
             type: LevelData
             hash: hash
             url: url
@@ -2966,10 +2986,12 @@ components:
             url: url
           title: title
           version: 1
+          userId: userId
           cover:
             type: LevelData
             hash: hash
             url: url
+          public: false
           engine:
             thumbnail:
               type: LevelData
@@ -3228,6 +3250,7 @@ components:
       description: Response struct of getLevel
       example:
         item:
+          notes: 6027456
           data:
             type: LevelData
             hash: hash
@@ -3280,10 +3303,12 @@ components:
             url: url
           title: title
           version: 1
+          userId: userId
           cover:
             type: LevelData
             hash: hash
             url: url
+          public: false
           engine:
             thumbnail:
               type: LevelData
@@ -3411,7 +3436,8 @@ components:
           genre: general
         description: description
         recommended:
-        - data:
+        - notes: 6027456
+          data:
             type: LevelData
             hash: hash
             url: url
@@ -3463,10 +3489,12 @@ components:
             url: url
           title: title
           version: 1
+          userId: userId
           cover:
             type: LevelData
             hash: hash
             url: url
+          public: false
           engine:
             thumbnail:
               type: LevelData
@@ -3592,7 +3620,8 @@ components:
             useDefault: true
           name: name
           genre: general
-        - data:
+        - notes: 6027456
+          data:
             type: LevelData
             hash: hash
             url: url
@@ -3644,10 +3673,12 @@ components:
             url: url
           title: title
           version: 1
+          userId: userId
           cover:
             type: LevelData
             hash: hash
             url: url
+          public: false
           engine:
             thumbnail:
               type: LevelData
@@ -4659,7 +4690,8 @@ components:
           title: title
           version: 1
         levels:
-        - data:
+        - notes: 6027456
+          data:
             type: LevelData
             hash: hash
             url: url
@@ -4711,10 +4743,12 @@ components:
             url: url
           title: title
           version: 1
+          userId: userId
           cover:
             type: LevelData
             hash: hash
             url: url
+          public: false
           engine:
             thumbnail:
               type: LevelData
@@ -4840,7 +4874,8 @@ components:
             useDefault: true
           name: name
           genre: general
-        - data:
+        - notes: 6027456
+          data:
             type: LevelData
             hash: hash
             url: url
@@ -4892,10 +4927,12 @@ components:
             url: url
           title: title
           version: 1
+          userId: userId
           cover:
             type: LevelData
             hash: hash
             url: url
+          public: false
           engine:
             thumbnail:
               type: LevelData
