@@ -57,4 +57,10 @@ type Level struct {
 
 	// 独自要素: 譜面内のノーツ数
 	Notes int32 `json:"notes,omitempty"`
+
+	// 独自要素: データを作成したエポックミリ秒(ソート用)
+	CreatedTime int32 `json:"createdTime,omitempty"`
+
+	// 独自要素: データを更新したエポックミリ秒(ソート用)
+	UpdatedTime int32 `json:"updatedTime,omitempty"`
 }

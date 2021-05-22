@@ -9,10 +9,6 @@
 
 package potato
 
-import (
-	"time"
-)
-
 // User - ユーザー情報型
 type User struct {
 
@@ -22,9 +18,6 @@ type User struct {
 	// テスト用サーバーのエンドポイント
 	TestId string `json:"testId,omitempty"`
 
-	// 登録した日付と時刻
-	RegisteredAt time.Time `json:"registeredAt,omitempty"`
-
 	// 管理者か否か
 	IsAdmin bool `json:"isAdmin,omitempty"`
 
@@ -33,4 +26,10 @@ type User struct {
 
 	// トータル譜面数
 	TotalFumen int32 `json:"totalFumen,omitempty"`
+
+	// 独自要素: データを作成したエポックミリ秒(ソート用)
+	CreatedTime int32 `json:"createdTime,omitempty"`
+
+	// 独自要素: データを更新したエポックミリ秒(ソート用)
+	UpdatedTime int32 `json:"updatedTime,omitempty"`
 }
