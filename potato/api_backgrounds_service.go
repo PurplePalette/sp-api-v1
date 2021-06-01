@@ -101,23 +101,6 @@ func (s *BackgroundsApiService) GetBackgroundList(ctx context.Context, localizat
 	//TODO: Uncomment the next line to return response Response(200, GetBackgroundListResponse{}) or use other options such as http.Ok ...
 	//return Response(200, GetBackgroundListResponse{}), nil
 
-	// Get a database reference to our blog.
-	ref := s.db.NewRef("server/saving-data/fireblog")
-
-	usersRef := ref.Child("users")
-	err := usersRef.Set(ctx, map[string]*FireUser{
-		"alanisawesome": {
-			DateOfBirth: "June 23, 1912",
-			FullName:    "Alan Turing",
-		},
-		"gracehop": {
-			DateOfBirth: "December 9, 1906",
-			FullName:    "Grace Hopper",
-		},
-	})
-	if err != nil {
-		log.Fatalln("Error setting value:", err)
-	}
-
+	_ = request.ParseSearchQuery(keywords)
 	return Response(http.StatusNotImplemented, nil), errors.New("GetBackgroundList method not implemented")
 }
