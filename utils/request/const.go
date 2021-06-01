@@ -3,14 +3,14 @@ package request
 const SPLIT_QUERY = ":"
 const SPLIT_DIFFICULTY = "-"
 
-type SearchSortType int
+type SearchSortType string
 
 const (
-	SORT_UPDATED_DATE SearchSortType = 0
-	SORT_CREATED_DATE SearchSortType = 1
-	SORT_NAME         SearchSortType = 2
-	SORT_DIFFICULTY   SearchSortType = 3
-	SORT_NOTES        SearchSortType = 4
+	SORT_UPDATED_DATE SearchSortType = "updatedDate"
+	SORT_CREATED_DATE SearchSortType = "createdDate"
+	SORT_NAME         SearchSortType = "name"
+	SORT_DIFFICULTY   SearchSortType = "rating"
+	SORT_NOTES        SearchSortType = "notes"
 )
 
 var supportedSorts map[string]SearchSortType = map[string]SearchSortType{
@@ -26,6 +26,8 @@ var supportedSorts map[string]SearchSortType = map[string]SearchSortType{
 	"difficulty":   SORT_DIFFICULTY,
 	"l":            SORT_DIFFICULTY,
 	"level":        SORT_DIFFICULTY,
+	"r":            SORT_DIFFICULTY,
+	"rating":       SORT_DIFFICULTY,
 	"n":            SORT_NOTES,
 	"notes":        SORT_NOTES,
 }
@@ -44,14 +46,14 @@ var supportedOrders map[string]SearchSortOrder = map[string]SearchSortOrder{
 	"a":    ORDER_ASC,
 }
 
-type SearchFilterGenre int
+type SearchFilterGenre string
 
 const (
-	GENRE_ALL      SearchFilterGenre = 0
-	GENRE_GENERAL  SearchFilterGenre = 1
-	GENRE_JPOP     SearchFilterGenre = 2
-	GENRE_ANIME    SearchFilterGenre = 3
-	GENRE_VOCALOID SearchFilterGenre = 4
+	GENRE_ALL      SearchFilterGenre = ""
+	GENRE_GENERAL  SearchFilterGenre = "general"
+	GENRE_JPOP     SearchFilterGenre = "jpop"
+	GENRE_ANIME    SearchFilterGenre = "anime"
+	GENRE_VOCALOID SearchFilterGenre = "vocaloid"
 )
 
 var supportedGenres map[string]SearchFilterGenre = map[string]SearchFilterGenre{
