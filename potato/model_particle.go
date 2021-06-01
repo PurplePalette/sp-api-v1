@@ -32,4 +32,7 @@ type Particle struct {
 	Data SonolusResourceLocator `json:"data"`
 
 	Texture SonolusResourceLocator `json:"texture"`
+
+	// 独自要素: 譜面作成者のユーザーID
+	UserId string `json:"userId,omitempty"`
 }

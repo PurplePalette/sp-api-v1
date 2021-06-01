@@ -38,4 +38,7 @@ type Skin struct {
 
 	// 独自要素: データを更新したエポックミリ秒(ソート用)
 	UpdatedTime int32 `json:"updatedTime,omitempty"`
+
+	// 独自要素: 譜面作成者のユーザーID
+	UserId string `json:"userId,omitempty"`
 }

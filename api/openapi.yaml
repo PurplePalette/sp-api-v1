@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   contact:
-    name: 紫式部
+    name: 紫式部/お窓
     url: https://discord.gg/KEfVkfC6Q9
   description: |-
     Sonolusの基本APIを拡張する感じ。
@@ -1730,6 +1730,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           useDefault: true
         author: author
         rating: 81
@@ -1754,6 +1755,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           useDefault: true
         bgm:
           type: LevelData
@@ -1802,8 +1804,10 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           title: title
           version: 1
+          userId: userId
           background:
             image:
               type: LevelData
@@ -1824,6 +1828,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           subtitle: subtitle
           effect:
             updatedTime: 0
@@ -1841,6 +1846,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           name: name
           createdTime: 0
           particle:
@@ -1861,6 +1867,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
         artists: artists
         useEffect:
           item:
@@ -1879,6 +1886,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           useDefault: true
         useParticle:
           item:
@@ -1899,6 +1907,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
           useDefault: true
         name: name
         genre: general
@@ -2029,6 +2038,7 @@ components:
         createdTime: 0
         title: title
         version: 1
+        userId: userId
       properties:
         name:
           description: english and number only name for searching
@@ -2071,6 +2081,11 @@ components:
           description: '独自要素: データを更新したエポックミリ秒(ソート用)'
           minimum: 0
           type: integer
+        userId:
+          description: '独自要素: 譜面作成者のユーザーID'
+          maxLength: 100
+          minLength: 1
+          type: string
       required:
       - author
       - data
@@ -2107,6 +2122,7 @@ components:
         createdTime: 0
         title: title
         version: 1
+        userId: userId
       properties:
         name:
           description: english and number only name for searching
@@ -2149,6 +2165,11 @@ components:
           description: '独自要素: データを更新したエポックミリ秒(ソート用)'
           minimum: 0
           type: integer
+        userId:
+          description: '独自要素: 譜面作成者のユーザーID'
+          maxLength: 100
+          minLength: 1
+          type: string
       required:
       - author
       - data
@@ -2181,6 +2202,7 @@ components:
         createdTime: 0
         title: title
         version: 1
+        userId: userId
       properties:
         name:
           description: english and number only name for searching
@@ -2220,6 +2242,11 @@ components:
           description: '独自要素: データを更新したエポックミリ秒(ソート用)'
           minimum: 0
           type: integer
+        userId:
+          description: '独自要素: 譜面作成者のユーザーID'
+          maxLength: 100
+          minLength: 1
+          type: string
       required:
       - author
       - data
@@ -2253,6 +2280,7 @@ components:
         name: name
         title: title
         version: 1
+        userId: userId
       properties:
         name:
           description: english and number only name for searching
@@ -2287,6 +2315,11 @@ components:
           $ref: '#/components/schemas/SonolusResourceLocator'
         texture:
           $ref: '#/components/schemas/SonolusResourceLocator'
+        userId:
+          description: '独自要素: 譜面作成者のユーザーID'
+          maxLength: 100
+          minLength: 1
+          type: string
       required:
       - author
       - data
@@ -2338,8 +2371,10 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         title: title
         version: 1
+        userId: userId
         background:
           image:
             type: LevelData
@@ -2360,6 +2395,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         subtitle: subtitle
         effect:
           updatedTime: 0
@@ -2377,6 +2413,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         name: name
         createdTime: 0
         particle:
@@ -2397,6 +2434,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
       properties:
         name:
           description: english and number only name for searching
@@ -2447,6 +2485,11 @@ components:
           description: '独自要素: データを更新したエポックミリ秒(ソート用)'
           minimum: 0
           type: integer
+        userId:
+          description: '独自要素: 譜面作成者のユーザーID'
+          maxLength: 100
+          minLength: 1
+          type: string
       required:
       - author
       - background
@@ -2542,6 +2585,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - image:
             type: LevelData
             hash: hash
@@ -2561,6 +2605,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
       properties:
         pageCount:
           default: 1
@@ -2598,6 +2643,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -2613,6 +2659,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
       properties:
         pageCount:
           default: 1
@@ -2669,8 +2716,10 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           title: title
           version: 1
+          userId: userId
           background:
             image:
               type: LevelData
@@ -2691,6 +2740,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           subtitle: subtitle
           effect:
             updatedTime: 0
@@ -2708,6 +2758,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           name: name
           createdTime: 0
           particle:
@@ -2728,6 +2779,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -2762,8 +2814,10 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           title: title
           version: 1
+          userId: userId
           background:
             image:
               type: LevelData
@@ -2784,6 +2838,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           subtitle: subtitle
           effect:
             updatedTime: 0
@@ -2801,6 +2856,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           name: name
           createdTime: 0
           particle:
@@ -2821,6 +2877,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
       properties:
         pageCount:
           default: 1
@@ -2870,6 +2927,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           author: author
           rating: 81
@@ -2894,6 +2952,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           bgm:
             type: LevelData
@@ -2942,8 +3001,10 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             title: title
             version: 1
+            userId: userId
             background:
               image:
                 type: LevelData
@@ -2964,6 +3025,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             subtitle: subtitle
             effect:
               updatedTime: 0
@@ -2981,6 +3043,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             name: name
             createdTime: 0
             particle:
@@ -3001,6 +3064,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
           artists: artists
           useEffect:
             item:
@@ -3019,6 +3083,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           useParticle:
             item:
@@ -3039,6 +3104,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
             useDefault: true
           name: name
           genre: general
@@ -3070,6 +3136,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           author: author
           rating: 81
@@ -3094,6 +3161,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           bgm:
             type: LevelData
@@ -3142,8 +3210,10 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             title: title
             version: 1
+            userId: userId
             background:
               image:
                 type: LevelData
@@ -3164,6 +3234,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             subtitle: subtitle
             effect:
               updatedTime: 0
@@ -3181,6 +3252,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             name: name
             createdTime: 0
             particle:
@@ -3201,6 +3273,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
           artists: artists
           useEffect:
             item:
@@ -3219,6 +3292,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           useParticle:
             item:
@@ -3239,6 +3313,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
             useDefault: true
           name: name
           genre: general
@@ -3282,6 +3357,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
         - thumbnail:
             type: LevelData
             hash: hash
@@ -3299,6 +3375,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
       properties:
         pageCount:
           default: 1
@@ -3340,6 +3417,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -3359,6 +3437,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
       properties:
         pageCount:
           default: 1
@@ -3407,6 +3486,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           author: author
           rating: 81
@@ -3431,6 +3511,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           bgm:
             type: LevelData
@@ -3479,8 +3560,10 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             title: title
             version: 1
+            userId: userId
             background:
               image:
                 type: LevelData
@@ -3501,6 +3584,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             subtitle: subtitle
             effect:
               updatedTime: 0
@@ -3518,6 +3602,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             name: name
             createdTime: 0
             particle:
@@ -3538,6 +3623,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
           artists: artists
           useEffect:
             item:
@@ -3556,6 +3642,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           useParticle:
             item:
@@ -3576,6 +3663,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
             useDefault: true
           name: name
           genre: general
@@ -3609,6 +3697,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           author: author
           rating: 81
@@ -3633,6 +3722,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           bgm:
             type: LevelData
@@ -3681,8 +3771,10 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             title: title
             version: 1
+            userId: userId
             background:
               image:
                 type: LevelData
@@ -3703,6 +3795,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             subtitle: subtitle
             effect:
               updatedTime: 0
@@ -3720,6 +3813,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             name: name
             createdTime: 0
             particle:
@@ -3740,6 +3834,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
           artists: artists
           useEffect:
             item:
@@ -3758,6 +3853,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           useParticle:
             item:
@@ -3778,6 +3874,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
             useDefault: true
           name: name
           genre: general
@@ -3809,6 +3906,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           author: author
           rating: 81
@@ -3833,6 +3931,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           bgm:
             type: LevelData
@@ -3881,8 +3980,10 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             title: title
             version: 1
+            userId: userId
             background:
               image:
                 type: LevelData
@@ -3903,6 +4004,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             subtitle: subtitle
             effect:
               updatedTime: 0
@@ -3920,6 +4022,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             name: name
             createdTime: 0
             particle:
@@ -3940,6 +4043,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
           artists: artists
           useEffect:
             item:
@@ -3958,6 +4062,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           useParticle:
             item:
@@ -3978,6 +4083,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
             useDefault: true
           name: name
           genre: general
@@ -4022,6 +4128,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         description: description
         recommended:
         - image:
@@ -4043,6 +4150,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - image:
             type: LevelData
             hash: hash
@@ -4062,6 +4170,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
       properties:
         item:
           $ref: '#/components/schemas/Background'
@@ -4098,6 +4207,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         description: description
         recommended:
         - updatedTime: 0
@@ -4115,6 +4225,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -4130,6 +4241,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
       properties:
         item:
           $ref: '#/components/schemas/Effect'
@@ -4185,8 +4297,10 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           title: title
           version: 1
+          userId: userId
           background:
             image:
               type: LevelData
@@ -4207,6 +4321,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           subtitle: subtitle
           effect:
             updatedTime: 0
@@ -4224,6 +4339,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           name: name
           createdTime: 0
           particle:
@@ -4244,6 +4360,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
         description: description
         recommended:
         - updatedTime: 0
@@ -4280,8 +4397,10 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           title: title
           version: 1
+          userId: userId
           background:
             image:
               type: LevelData
@@ -4302,6 +4421,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           subtitle: subtitle
           effect:
             updatedTime: 0
@@ -4319,6 +4439,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           name: name
           createdTime: 0
           particle:
@@ -4339,6 +4460,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -4373,8 +4495,10 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           title: title
           version: 1
+          userId: userId
           background:
             image:
               type: LevelData
@@ -4395,6 +4519,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           subtitle: subtitle
           effect:
             updatedTime: 0
@@ -4412,6 +4537,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           name: name
           createdTime: 0
           particle:
@@ -4432,6 +4558,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
       properties:
         item:
           $ref: '#/components/schemas/Engine'
@@ -4470,6 +4597,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
         description: description
         recommended:
         - thumbnail:
@@ -4489,6 +4617,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
         - thumbnail:
             type: LevelData
             hash: hash
@@ -4506,6 +4635,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
       properties:
         item:
           $ref: '#/components/schemas/Particle'
@@ -4546,6 +4676,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         description: description
         recommended:
         - updatedTime: 0
@@ -4567,6 +4698,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -4586,6 +4718,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
       properties:
         item:
           $ref: '#/components/schemas/Skin'
@@ -4626,6 +4759,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -4645,6 +4779,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         effects:
         - updatedTime: 0
           thumbnail:
@@ -4661,6 +4796,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -4676,6 +4812,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         engines:
         - updatedTime: 0
           thumbnail:
@@ -4711,8 +4848,10 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           title: title
           version: 1
+          userId: userId
           background:
             image:
               type: LevelData
@@ -4733,6 +4872,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           subtitle: subtitle
           effect:
             updatedTime: 0
@@ -4750,6 +4890,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           name: name
           createdTime: 0
           particle:
@@ -4770,6 +4911,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
         - updatedTime: 0
           thumbnail:
             type: LevelData
@@ -4804,8 +4946,10 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           title: title
           version: 1
+          userId: userId
           background:
             image:
               type: LevelData
@@ -4826,6 +4970,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           subtitle: subtitle
           effect:
             updatedTime: 0
@@ -4843,6 +4988,7 @@ components:
             createdTime: 0
             title: title
             version: 1
+            userId: userId
           name: name
           createdTime: 0
           particle:
@@ -4863,6 +5009,7 @@ components:
             name: name
             title: title
             version: 1
+            userId: userId
         backgrounds:
         - image:
             type: LevelData
@@ -4883,6 +5030,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         - image:
             type: LevelData
             hash: hash
@@ -4902,6 +5050,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         particles:
         - thumbnail:
             type: LevelData
@@ -4920,6 +5069,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
         - thumbnail:
             type: LevelData
             hash: hash
@@ -4937,6 +5087,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
         levels:
         - updatedTime: 0
           notes: 6027456
@@ -4965,6 +5116,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           author: author
           rating: 81
@@ -4989,6 +5141,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           bgm:
             type: LevelData
@@ -5037,8 +5190,10 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             title: title
             version: 1
+            userId: userId
             background:
               image:
                 type: LevelData
@@ -5059,6 +5214,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             subtitle: subtitle
             effect:
               updatedTime: 0
@@ -5076,6 +5232,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             name: name
             createdTime: 0
             particle:
@@ -5096,6 +5253,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
           artists: artists
           useEffect:
             item:
@@ -5114,6 +5272,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           useParticle:
             item:
@@ -5134,6 +5293,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
             useDefault: true
           name: name
           genre: general
@@ -5165,6 +5325,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           author: author
           rating: 81
@@ -5189,6 +5350,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           bgm:
             type: LevelData
@@ -5237,8 +5399,10 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             title: title
             version: 1
+            userId: userId
             background:
               image:
                 type: LevelData
@@ -5259,6 +5423,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             subtitle: subtitle
             effect:
               updatedTime: 0
@@ -5276,6 +5441,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             name: name
             createdTime: 0
             particle:
@@ -5296,6 +5462,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
           artists: artists
           useEffect:
             item:
@@ -5314,6 +5481,7 @@ components:
               createdTime: 0
               title: title
               version: 1
+              userId: userId
             useDefault: true
           useParticle:
             item:
@@ -5334,6 +5502,7 @@ components:
               name: name
               title: title
               version: 1
+              userId: userId
             useDefault: true
           name: name
           genre: general
@@ -5488,6 +5657,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         useDefault: true
       properties:
         useDefault:
@@ -5521,6 +5691,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         useDefault: true
       properties:
         useDefault:
@@ -5550,6 +5721,7 @@ components:
           createdTime: 0
           title: title
           version: 1
+          userId: userId
         useDefault: true
       properties:
         useDefault:
@@ -5581,6 +5753,7 @@ components:
           name: name
           title: title
           version: 1
+          userId: userId
         useDefault: true
       properties:
         useDefault:
