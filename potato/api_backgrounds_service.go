@@ -39,23 +39,35 @@ func NewBackgroundsApiService(db *db.Client) BackgroundsApiServicer {
 
 // AddBackground - Add background
 func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
+	// This endpoint is not working without authorization
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	// TODO - update AddBackground with the required logic for this service method.
-	// Add api_backgrounds_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(409, {}) or use other options such as http.Ok ...
-	//return Response(409, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("AddBackground method not implemented")
+	// Check the background name is not already used
+	var isExist Background
+	existRef := s.db.NewRef("/backgrounds/" + backgroundName)
+	if err := existRef.Get(ctx, &isExist); err != nil {
+		log.Fatalln("Error getting background exist:", err)
+		return Response(500, nil), nil
+	}
+	if isExist.Name != "" {
+		return Response(http.StatusConflict, nil), nil
+	}
+	// Inject userId to background
+	userId, err := request.GetUserId(ctx)
+	if err != nil {
+		log.Fatalln("Error getting userId:", err)
+		return Response(500, nil), nil
+	}
+	background.UserId = userId
+	// Add background to firebase
+	ref := s.db.NewRef("backgrounds")
+	err = ref.Set(ctx, map[string]Background{backgroundName: background})
+	if err != nil {
+		log.Fatalln("Error posting background:", err)
+		return Response(500, nil), nil
+	}
+	return Response(200, nil), nil
 }
 
 // EditBackground - Edit background
