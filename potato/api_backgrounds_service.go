@@ -40,7 +40,7 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 	if !request.IsValidName(backgroundName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
-	if s.cache.IsBackgroundExist(backgroundName) {
+	if s.cache.backgrounds.IsExist(backgroundName) {
 		return Response(http.StatusConflict, nil), nil
 	}
 	// Force set parameter to valid
@@ -54,7 +54,7 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 		return Response(500, nil), nil
 	}
 	// Add background to cache
-	s.cache.backgroundList.Add(backgroundName, background)
+	s.cache.backgrounds.Add(backgroundName, background)
 	return Response(200, nil), nil
 }
 
@@ -67,7 +67,7 @@ func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundNa
 		return Response(http.StatusBadRequest, nil), nil
 	}
 	userId, _ := request.GetUserId(ctx)
-	match, err := s.cache.backgroundList.IsOwnerMatch(backgroundName, userId)
+	match, err := s.cache.backgrounds.IsOwnerMatch(backgroundName, userId)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -81,13 +81,13 @@ func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundNa
 		return Response(500, nil), nil
 	}
 	// Update background data in cache
-	s.cache.backgroundList.Set(backgroundName, background)
+	s.cache.backgrounds.Set(backgroundName, background)
 	return Response(200, nil), nil
 }
 
 // GetBackground - Get background
 func (s *BackgroundsApiService) GetBackground(ctx context.Context, backgroundName string) (ImplResponse, error) {
-	bg, err := s.cache.backgroundList.Get(backgroundName)
+	bg, err := s.cache.backgrounds.Get(backgroundName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -102,8 +102,8 @@ func (s *BackgroundsApiService) GetBackground(ctx context.Context, backgroundNam
 // GetBackgroundList - Get background list
 func (s *BackgroundsApiService) GetBackgroundList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
-	pages := s.cache.backgroundList.Pages()
-	items, err := s.cache.backgroundList.GetPage(page, query)
+	pages := s.cache.backgrounds.Pages()
+	items, err := s.cache.backgrounds.GetPage(page, query)
 	if err != nil {
 		log.Fatal(err)
 		return Response(500, nil), nil
