@@ -43,16 +43,16 @@ func (c *EffectsApiController) Routes() Routes {
 			c.EditEffect,
 		},
 		{
-			"GetEffect",
-			strings.ToUpper("Get"),
-			"/effects/{effectName}",
-			c.GetEffect,
-		},
-		{
 			"GetEffectList",
 			strings.ToUpper("Get"),
 			"/effects/list",
 			c.GetEffectList,
+		},
+		{
+			"GetEffect",
+			strings.ToUpper("Get"),
+			"/effects/{effectName}",
+			c.GetEffect,
 		},
 	}
 }

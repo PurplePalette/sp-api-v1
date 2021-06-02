@@ -11,7 +11,8 @@ package potato
 
 import (
 	"context"
-	"errors"
+	"encoding/json"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
@@ -36,20 +37,25 @@ func (s *EffectsApiService) AddEffect(ctx context.Context, effectName string, ef
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(409, {}) or use other options such as http.Ok ...
-	//return Response(409, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("AddEffect method not implemented")
+	if !request.IsValidName(effectName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if s.cache.effects.IsExist(effectName) {
+		return Response(http.StatusConflict, nil), nil
+	}
+	// Force set parameter to valid
+	userId, _ := request.GetUserId(ctx)
+	effect.UserId = userId
+	effect.Name = effectName
+	col := s.firestore.Collection("effects")
+	// Add effect to firestore
+	if _, err := col.Doc(effectName).Set(ctx, effect); err != nil {
+		log.Fatalln("Error posting effect:", err)
+		return Response(500, nil), nil
+	}
+	// Add effect to cache
+	s.cache.effects.Add(effectName, effect)
+	return Response(200, nil), nil
 }
 
 // EditEffect - Edit effect
@@ -57,46 +63,59 @@ func (s *EffectsApiService) EditEffect(ctx context.Context, effectName string, e
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
-	//return Response(403, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("EditEffect method not implemented")
+	if !request.IsValidName(effectName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	userId, _ := request.GetUserId(ctx)
+	match, err := s.cache.effects.IsOwnerMatch(effectName, userId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	if !match {
+		return Response(http.StatusForbidden, nil), nil
+	}
+	// Update effect data in firestore
+	col := s.firestore.Collection("effects")
+	if _, err := col.Doc(effectName).Set(ctx, effect); err != nil {
+		log.Fatalln("Error posting effect:", err)
+		return Response(500, nil), nil
+	}
+	// Update effect data in cache
+	s.cache.effects.Set(effectName, effect)
+	return Response(200, nil), nil
 }
 
 // GetEffect - Get effect
 func (s *EffectsApiService) GetEffect(ctx context.Context, effectName string) (ImplResponse, error) {
-	// TODO - update GetEffect with the required logic for this service method.
-	// Add api_effects_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetEffectResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetEffectResponse{}), nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetEffect method not implemented")
+	ef, err := s.cache.effects.Get(effectName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	resp := GetEffectResponse{
+		Item:        ef.(Effect),
+		Description: "",
+		Recommended: []Effect{},
+	}
+	return Response(200, resp), nil
 }
 
 // GetEffectList - Get effect list
 func (s *EffectsApiService) GetEffectList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetEffectList with the required logic for this service method.
-	// Add api_effects_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetEffectListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetEffectListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetEffectList method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	pages := s.cache.effects.Pages()
+	items, err := s.cache.effects.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var effects []Effect
+	err = json.Unmarshal(items, &effects)
+	if err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetEffectListResponse{
+		PageCount: pages,
+		Items:     effects,
+	}
+	return Response(200, resp), nil
 }
