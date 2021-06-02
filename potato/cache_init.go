@@ -16,43 +16,58 @@ func NewCacheInitService(firestore *firestore.Client) *CacheInitService {
 }
 
 // LoadDatabaseFromFirebase gets the entire database from Firebase
-func (s *CacheInitService) LoadDatabaseFromFirebase(colName string, response *map[string]interface{}) error {
-	// TODO: 他の取得処理をここにまとめる
-	return nil
-}
-
-// LoadUserList gets the list of users from firebase for caching user status
-func (s *CacheInitService) LoadUserList() (map[string]interface{}, error) {
-	userList := make(map[string]interface{})
-	col := s.firestore.Collection("users")
+func (s *CacheInitService) LoadDatabaseFromFirebase(colName string) (map[string]interface{}, error) {
+	data := make(map[string]interface{})
+	col := s.firestore.Collection(colName)
 	docs, err := col.Documents(context.Background()).GetAll()
 	if err != nil {
 		return nil, errors.New("could not get user collection from firestore")
 	}
 	for _, doc := range docs {
-		var user User
-		if err := doc.DataTo(&user); err != nil {
-			return nil, errors.New("could not parse doc to user struct")
+		switch colName {
+		case "backgrounds":
+			var bg Background
+			if err := doc.DataTo(&bg); err != nil {
+				return nil, errors.New("could not parse doc to background struct")
+			}
+			data[bg.Name] = bg
+		case "effects":
+			var ef Effect
+			if err := doc.DataTo(&ef); err != nil {
+				return nil, errors.New("could not parse doc to effect struct")
+			}
+			data[ef.Name] = ef
+		case "engines":
+			var eg Engine
+			if err := doc.DataTo(&eg); err != nil {
+				return nil, errors.New("could not parse doc to engine struct")
+			}
+			data[eg.Name] = eg
+		case "levels":
+			var lv Level
+			if err := doc.DataTo(&lv); err != nil {
+				return nil, errors.New("could not parse doc to level struct")
+			}
+			data[lv.Name] = lv
+		case "particles":
+			var pt Particle
+			if err := doc.DataTo(&pt); err != nil {
+				return nil, errors.New("could not parse doc to particle struct")
+			}
+			data[pt.Name] = pt
+		case "skins":
+			var sk Skin
+			if err := doc.DataTo(&sk); err != nil {
+				return nil, errors.New("could not parse doc to skin struct")
+			}
+			data[sk.Name] = sk
+		case "users":
+			var ur User
+			if err := doc.DataTo(&ur); err != nil {
+				return nil, errors.New("could not parse doc to user struct")
+			}
+			data[ur.UserId] = ur
 		}
-		userList[user.UserId] = user
 	}
-	return userList, nil
-}
-
-// LoadBackgroundList gets the list of backgrounds from firebase for caching status
-func (s *CacheInitService) LoadBackgroundList() (map[string]interface{}, error) {
-	bgList := make(map[string]interface{})
-	col := s.firestore.Collection("backgrounds")
-	docs, err := col.Documents(context.Background()).GetAll()
-	if err != nil {
-		return nil, errors.New("could not get background collection from firestore")
-	}
-	for _, doc := range docs {
-		var bg Background
-		if err := doc.DataTo(&bg); err != nil {
-			return nil, errors.New("could not parse doc to background struct")
-		}
-		bgList[bg.Name] = bg
-	}
-	return bgList, nil
+	return data, nil
 }
