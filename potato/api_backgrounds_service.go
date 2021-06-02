@@ -87,16 +87,15 @@ func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundNa
 
 // GetBackground - Get background
 func (s *BackgroundsApiService) GetBackground(ctx context.Context, backgroundName string) (ImplResponse, error) {
-	// TODO - update GetBackground with the required logic for this service method.
-	// Add api_backgrounds_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetBackgroundResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetBackgroundResponse{}), nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetBackground method not implemented")
+	if !s.cache.IsBackgroundExist(backgroundName) {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	resp := GetBackgroundResponse{
+		Item:        s.cache.backgroundList[backgroundName],
+		Description: "",
+		Recommended: []Background{},
+	}
+	return Response(200, resp), nil
 }
 
 // GetBackgroundList - Get background list

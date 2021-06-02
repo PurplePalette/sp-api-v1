@@ -102,3 +102,13 @@ func TestEditBackground(t *testing.T) {
 	t.Log(rec.Body)
 	assert.Equal(t, http.StatusOK, rec.Code)
 }
+
+func TestGetBackground(t *testing.T) {
+	s := CreateBackgroundsServer()
+	defer s.Close()
+	req := httptest.NewRequest(http.MethodGet, "/backgrounds/myBackground", nil)
+	rec := httptest.NewRecorder()
+	s.Config.Handler.ServeHTTP(rec, req)
+	t.Log(rec.Body)
+	assert.Equal(t, http.StatusOK, rec.Code)
+}
