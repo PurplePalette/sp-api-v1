@@ -13,13 +13,13 @@ package potato
 type Level struct {
 
 	// english and number only name for searching
-	Name string `json:"name"`
+	Name string `json:"name" validate:"alphanum,min=1,max=50"`
 
 	// Reserved for future update. current default is 1.
-	Version int32 `json:"version"`
+	Version int32 `json:"version" validate:"gte=1,lte=1"`
 
 	// Difficulty of the level
-	Rating int32 `json:"rating"`
+	Rating int32 `json:"rating" validate:"gte=1,lte=1000"`
 
 	Engine Engine `json:"engine"`
 
@@ -32,13 +32,13 @@ type Level struct {
 	UseParticle LevelUseParticle `json:"useParticle"`
 
 	// base title of this content
-	Title string `json:"title"`
+	Title string `json:"title" validate:"alphanumunicode,min=1,max=100"`
 
 	// artist names of original music
-	Artists string `json:"artists"`
+	Artists string `json:"artists" validate:"alphanumunicode,min=1,max=100"`
 
 	// author of this content
-	Author string `json:"author"`
+	Author string `json:"author" validate:"alphanumunicode,min=1,max=50"`
 
 	Cover SonolusResourceLocator `json:"cover"`
 
@@ -53,14 +53,14 @@ type Level struct {
 	Public bool `json:"public,omitempty"`
 
 	// 独自要素: 譜面作成者のユーザーID
-	UserId string `json:"userId,omitempty"`
+	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// 独自要素: 譜面内のノーツ数
-	Notes int32 `json:"notes,omitempty"`
+	Notes int32 `json:"notes,omitempty" validate:"gte=1,lte=10000000"`
 
 	// 独自要素: データを作成したエポックミリ秒(ソート用)
-	CreatedTime int32 `json:"createdTime,omitempty"`
+	CreatedTime int32 `json:"createdTime,omitempty" validate:"gte=1"`
 
 	// 独自要素: データを更新したエポックミリ秒(ソート用)
-	UpdatedTime int32 `json:"updatedTime,omitempty"`
+	UpdatedTime int32 `json:"updatedTime,omitempty" validate:"gte=1"`
 }

@@ -13,19 +13,19 @@ package potato
 type Particle struct {
 
 	// english and number only name for searching
-	Name string `json:"name"`
+	Name string `json:"name" validate:"alphanum,min=1,max=50"`
 
 	// Reserved for future update. current default is 1.
-	Version int32 `json:"version"`
+	Version int32 `json:"version" validate:"gte=1,lte=1"`
 
 	// base title of this content
-	Title string `json:"title"`
+	Title string `json:"title" validate:"alphanumunicode,min=1,max=100"`
 
 	// something footer(ex. featuring xyz) for this content
-	Subtitle string `json:"subtitle"`
+	Subtitle string `json:"subtitle" validate:"alphanumunicode,min=1,max=100"`
 
 	// author of this content
-	Author string `json:"author"`
+	Author string `json:"author" validate:"alphanumunicode,min=1,max=50"`
 
 	Thumbnail SonolusResourceLocator `json:"thumbnail"`
 
@@ -34,11 +34,11 @@ type Particle struct {
 	Texture SonolusResourceLocator `json:"texture"`
 
 	// 独自要素: データを作成したエポックミリ秒(ソート用)
-	CreatedTime int32 `json:"createdTime,omitempty"`
+	CreatedTime int32 `json:"createdTime,omitempty" validate:"gte=1"`
 
 	// 独自要素: データを更新したエポックミリ秒(ソート用)
-	UpdatedTime int32 `json:"updatedTime,omitempty"`
+	UpdatedTime int32 `json:"updatedTime,omitempty" validate:"gte=1"`
 
 	// 独自要素: 譜面作成者のユーザーID
-	UserId string `json:"userId,omitempty"`
+	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 }

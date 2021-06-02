@@ -13,10 +13,10 @@ package potato
 type User struct {
 
 	// FirebaseDatabase上のユーザーID
-	UserId string `json:"userId,omitempty"`
+	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// テスト用サーバーのエンドポイント
-	TestId string `json:"testId,omitempty"`
+	TestId string `json:"testId,omitempty" validate:"alphanum,min=1,max=50"`
 
 	// 管理者か否か
 	IsAdmin bool `json:"isAdmin,omitempty"`
@@ -25,11 +25,11 @@ type User struct {
 	IsDeleted bool `json:"isDeleted,omitempty"`
 
 	// トータル譜面数
-	TotalFumen int32 `json:"totalFumen,omitempty"`
+	TotalFumen int32 `json:"totalFumen,omitempty" validate:"gte=0"`
 
 	// 独自要素: データを作成したエポックミリ秒(ソート用)
-	CreatedTime int32 `json:"createdTime,omitempty"`
+	CreatedTime int32 `json:"createdTime,omitempty" validate:"gte=1"`
 
 	// 独自要素: データを更新したエポックミリ秒(ソート用)
-	UpdatedTime int32 `json:"updatedTime,omitempty"`
+	UpdatedTime int32 `json:"updatedTime,omitempty" validate:"gte=1"`
 }
