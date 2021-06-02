@@ -11,11 +11,13 @@ package potato
 
 import (
 	"context"
-	"errors"
+	"encoding/json"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 // EnginesApiService is a service that implents the logic for the EnginesApiServicer
@@ -24,11 +26,12 @@ import (
 type EnginesApiService struct {
 	firestore *firestore.Client
 	cache     *CacheService
+	validate  *validator.Validate
 }
 
 // NewEnginesApiService creates a default api service
 func NewEnginesApiService(firestore *firestore.Client, cache *CacheService) EnginesApiServicer {
-	return &EnginesApiService{firestore: firestore, cache: cache}
+	return &EnginesApiService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddEngine - Add engine
@@ -36,20 +39,28 @@ func (s *EnginesApiService) AddEngine(ctx context.Context, engineName string, en
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(409, {}) or use other options such as http.Ok ...
-	//return Response(409, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("AddEngine method not implemented")
+	if !request.IsValidName(engineName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(engineName); err != nil {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if s.cache.engines.IsExist(engineName) {
+		return Response(http.StatusConflict, nil), nil
+	}
+	// Force set parameter to valid
+	userId, _ := request.GetUserId(ctx)
+	engine.UserId = userId
+	engine.Name = engineName
+	col := s.firestore.Collection("engines")
+	// Add engine to firestore
+	if _, err := col.Doc(engineName).Set(ctx, engine); err != nil {
+		log.Fatalln("Error posting engine:", err)
+		return Response(500, nil), nil
+	}
+	// Add engine to cache
+	s.cache.engines.Add(engineName, engine)
+	return Response(200, nil), nil
 }
 
 // EditEngine - Edit engine
@@ -57,46 +68,62 @@ func (s *EnginesApiService) EditEngine(ctx context.Context, engineName string, e
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
-	//return Response(403, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("EditEngine method not implemented")
+	if !request.IsValidName(engineName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(engineName); err != nil {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	userId, _ := request.GetUserId(ctx)
+	match, err := s.cache.engines.IsOwnerMatch(engineName, userId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	if !match {
+		return Response(http.StatusForbidden, nil), nil
+	}
+	// Update engine data in firestore
+	col := s.firestore.Collection("engines")
+	if _, err := col.Doc(engineName).Set(ctx, engine); err != nil {
+		log.Fatalln("Error posting engine:", err)
+		return Response(500, nil), nil
+	}
+	// Update engine data in cache
+	s.cache.engines.Set(engineName, engine)
+	return Response(200, nil), nil
 }
 
 // GetEngine - Get engine
 func (s *EnginesApiService) GetEngine(ctx context.Context, engineName string) (ImplResponse, error) {
-	// TODO - update GetEngine with the required logic for this service method.
-	// Add api_engines_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetEngineResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetEngineResponse{}), nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetEngine method not implemented")
+	eg, err := s.cache.engines.Get(engineName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	resp := GetEngineResponse{
+		Item:        eg.(Engine),
+		Description: "",
+		Recommended: []Engine{},
+	}
+	return Response(200, resp), nil
 }
 
 // GetEngineList - Get engine list
 func (s *EnginesApiService) GetEngineList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetEngineList with the required logic for this service method.
-	// Add api_engines_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetEngineListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetEngineListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetEngineList method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	pages := s.cache.engines.Pages()
+	items, err := s.cache.engines.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var engines []Engine
+	err = json.Unmarshal(items, &engines)
+	if err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetEngineListResponse{
+		PageCount: pages,
+		Items:     engines,
+	}
+	return Response(200, resp), nil
 }
