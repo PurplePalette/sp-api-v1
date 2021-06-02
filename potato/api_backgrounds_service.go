@@ -14,9 +14,11 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 // BackgroundsApiService is a service that implents the logic for the BackgroundsApiServicer
@@ -25,11 +27,12 @@ import (
 type BackgroundsApiService struct {
 	firestore *firestore.Client
 	cache     *CacheService
+	validate  *validator.Validate
 }
 
 // NewBackgroundsApiService creates a default api service
 func NewBackgroundsApiService(firestore *firestore.Client, cache *CacheService) BackgroundsApiServicer {
-	return &BackgroundsApiService{firestore: firestore, cache: cache}
+	return &BackgroundsApiService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddBackground - Add background
@@ -40,6 +43,9 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 	if !request.IsValidName(backgroundName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
+	if err := s.validate.Struct(background); err != nil {
+		return Response(http.StatusBadRequest, nil), nil
+	}
 	if s.cache.backgrounds.IsExist(backgroundName) {
 		return Response(http.StatusConflict, nil), nil
 	}
@@ -47,6 +53,9 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 	userId, _ := request.GetUserId(ctx)
 	background.UserId = userId
 	background.Name = backgroundName
+	nowTime := int32(time.Now().Unix())
+	background.CreatedTime = nowTime
+	background.UpdatedTime = nowTime
 	col := s.firestore.Collection("backgrounds")
 	// Add background to firestore
 	if _, err := col.Doc(backgroundName).Set(ctx, background); err != nil {
@@ -64,6 +73,9 @@ func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundNa
 		return Response(http.StatusUnauthorized, nil), nil
 	}
 	if !request.IsValidName(backgroundName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(background); err != nil {
 		return Response(http.StatusBadRequest, nil), nil
 	}
 	userId, _ := request.GetUserId(ctx)
