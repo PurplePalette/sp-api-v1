@@ -33,6 +33,12 @@ type Particle struct {
 
 	Texture SonolusResourceLocator `json:"texture"`
 
+	// 独自要素: データを作成したエポックミリ秒(ソート用)
+	CreatedTime int32 `json:"createdTime,omitempty"`
+
+	// 独自要素: データを更新したエポックミリ秒(ソート用)
+	UpdatedTime int32 `json:"updatedTime,omitempty"`
+
 	// 独自要素: 譜面作成者のユーザーID
 	UserId string `json:"userId,omitempty"`
 }
