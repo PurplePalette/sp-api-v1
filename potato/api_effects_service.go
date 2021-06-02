@@ -14,7 +14,7 @@ import (
 	"errors"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
@@ -22,12 +22,13 @@ import (
 // This service should implement the business logic for every endpoint for the EffectsApi API.
 // Include any external packages or services that will be required by this service.
 type EffectsApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewEffectsApiService creates a default api service
-func NewEffectsApiService(db *db.Client) EffectsApiServicer {
-	return &EffectsApiService{db: db}
+func NewEffectsApiService(firestore *firestore.Client, cache *CacheService) EffectsApiServicer {
+	return &EffectsApiService{firestore: firestore, cache: cache}
 }
 
 // AddEffect - Add effect

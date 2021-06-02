@@ -14,7 +14,7 @@ import (
 	"errors"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
@@ -22,12 +22,13 @@ import (
 // This service should implement the business logic for every endpoint for the ParticlesApi API.
 // Include any external packages or services that will be required by this service.
 type ParticlesApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewParticlesApiService creates a default api service
-func NewParticlesApiService(db *db.Client) ParticlesApiServicer {
-	return &ParticlesApiService{db: db}
+func NewParticlesApiService(firestore *firestore.Client, cache *CacheService) ParticlesApiServicer {
+	return &ParticlesApiService{firestore: firestore, cache: cache}
 }
 
 // AddParticle - Add particle

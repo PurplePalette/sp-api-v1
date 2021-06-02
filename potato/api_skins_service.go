@@ -14,7 +14,7 @@ import (
 	"errors"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
@@ -22,12 +22,13 @@ import (
 // This service should implement the business logic for every endpoint for the SkinsApi API.
 // Include any external packages or services that will be required by this service.
 type SkinsApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewSkinsApiService creates a default api service
-func NewSkinsApiService(db *db.Client) SkinsApiServicer {
-	return &SkinsApiService{db: db}
+func NewSkinsApiService(firestore *firestore.Client, cache *CacheService) SkinsApiServicer {
+	return &SkinsApiService{firestore: firestore, cache: cache}
 }
 
 // AddSkin - Add skin

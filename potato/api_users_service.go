@@ -14,7 +14,7 @@ import (
 	"errors"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
@@ -22,12 +22,13 @@ import (
 // This service should implement the business logic for every endpoint for the UsersApi API.
 // Include any external packages or services that will be required by this service.
 type UsersApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewUsersApiService creates a default api service
-func NewUsersApiService(db *db.Client) UsersApiServicer {
-	return &UsersApiService{db: db}
+func NewUsersApiService(firestore *firestore.Client, cache *CacheService) UsersApiServicer {
+	return &UsersApiService{firestore: firestore, cache: cache}
 }
 
 // EditUser - Edit user

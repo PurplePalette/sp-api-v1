@@ -15,26 +15,21 @@ import (
 	"log"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
-
-type FireUser struct {
-	DateOfBirth string `json:"date_of_birth,omitempty"`
-	FullName    string `json:"full_name,omitempty"`
-	Nickname    string `json:"nickname,omitempty"`
-}
 
 // BackgroundsApiService is a service that implents the logic for the BackgroundsApiServicer
 // This service should implement the business logic for every endpoint for the BackgroundsApi API.
 // Include any external packages or services that will be required by this service.
 type BackgroundsApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewBackgroundsApiService creates a default api service
-func NewBackgroundsApiService(db *db.Client) BackgroundsApiServicer {
-	return &BackgroundsApiService{db: db}
+func NewBackgroundsApiService(firestore *firestore.Client, cache *CacheService) BackgroundsApiServicer {
+	return &BackgroundsApiService{firestore: firestore, cache: cache}
 }
 
 // AddBackground - Add background
@@ -44,13 +39,8 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 		return Response(http.StatusUnauthorized, nil), nil
 	}
 	// Check the background name is not already used
-	var isExist Background
-	existRef := s.db.NewRef("/backgrounds/" + backgroundName)
-	if err := existRef.Get(ctx, &isExist); err != nil {
-		log.Fatalln("Error getting background exist:", err)
-		return Response(500, nil), nil
-	}
-	if isExist.Name != "" {
+	col := s.firestore.Collection("backgrounds")
+	if _, err := col.Doc(backgroundName).Get(ctx); err == nil {
 		return Response(http.StatusConflict, nil), nil
 	}
 	// Inject userId to background
@@ -61,8 +51,7 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 	}
 	background.UserId = userId
 	// Add background to firebase
-	ref := s.db.NewRef("backgrounds")
-	err = ref.Set(ctx, map[string]Background{backgroundName: background})
+	_, err = col.Doc(backgroundName).Set(ctx, background)
 	if err != nil {
 		log.Fatalln("Error posting background:", err)
 		return Response(500, nil), nil

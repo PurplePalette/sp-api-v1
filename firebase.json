@@ -3,7 +3,7 @@
     "auth": {
       "port": 9099
     },
-    "database": {
+    "firestore": {
       "port": 9000
     },
     "ui": {

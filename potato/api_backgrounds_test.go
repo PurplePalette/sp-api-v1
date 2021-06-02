@@ -17,12 +17,16 @@ import (
 // CreateBackgroundsServer creates background server for testing
 func CreateBackgroundsServer() *httptest.Server {
 	firebase := server.NewFirebaseClient()
-	db := server.NewFirebaseDatabaseClient(firebase)
+	firestore := server.NewFirebaseFirestoreClient(firebase)
 	auth := server.NewFirebaseAuthorizationClient(firebase)
+	cache := potato.NewCacheService(firestore)
+	if err := cache.InitCache(); err != nil {
+		panic(err)
+	}
 
-	BackgroundsApiService := potato.NewBackgroundsApiService(db)
+	BackgroundsApiService := potato.NewBackgroundsApiService(firestore, cache)
 	BackgroundsApiController := potato.NewBackgroundsApiController(BackgroundsApiService)
-	router := server.NewRouterWithInject(db, auth, BackgroundsApiController)
+	router := server.NewRouterWithTestInject(auth, BackgroundsApiController)
 	return httptest.NewServer(router)
 }
 

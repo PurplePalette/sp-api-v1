@@ -14,7 +14,7 @@ import (
 	"errors"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
@@ -22,12 +22,13 @@ import (
 // This service should implement the business logic for every endpoint for the EnginesApi API.
 // Include any external packages or services that will be required by this service.
 type EnginesApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewEnginesApiService creates a default api service
-func NewEnginesApiService(db *db.Client) EnginesApiServicer {
-	return &EnginesApiService{db: db}
+func NewEnginesApiService(firestore *firestore.Client, cache *CacheService) EnginesApiServicer {
+	return &EnginesApiService{firestore: firestore, cache: cache}
 }
 
 // AddEngine - Add engine

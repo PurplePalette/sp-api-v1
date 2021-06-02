@@ -14,19 +14,20 @@ import (
 	"errors"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 )
 
 // TestsApiService is a service that implents the logic for the TestsApiServicer
 // This service should implement the business logic for every endpoint for the TestsApi API.
 // Include any external packages or services that will be required by this service.
 type TestsApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewTestsApiService creates a default api service
-func NewTestsApiService(db *db.Client) TestsApiServicer {
-	return &TestsApiService{db: db}
+func NewTestsApiService(firestore *firestore.Client, cache *CacheService) TestsApiServicer {
+	return &TestsApiService{firestore: firestore, cache: cache}
 }
 
 // GetTestServerInfo - Get user server info

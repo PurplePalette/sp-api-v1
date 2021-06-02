@@ -14,7 +14,7 @@ import (
 	"errors"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
@@ -22,12 +22,13 @@ import (
 // This service should implement the business logic for every endpoint for the InfoApi API.
 // Include any external packages or services that will be required by this service.
 type InfoApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewInfoApiService creates a default api service
-func NewInfoApiService(db *db.Client) InfoApiServicer {
-	return &InfoApiService{db: db}
+func NewInfoApiService(firestore *firestore.Client, cache *CacheService) InfoApiServicer {
+	return &InfoApiService{firestore: firestore, cache: cache}
 }
 
 // EditInfo - Edit server info

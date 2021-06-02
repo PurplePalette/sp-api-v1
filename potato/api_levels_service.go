@@ -14,7 +14,7 @@ import (
 	"errors"
 	"net/http"
 
-	"firebase.google.com/go/db"
+	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
@@ -22,12 +22,13 @@ import (
 // This service should implement the business logic for every endpoint for the LevelsApi API.
 // Include any external packages or services that will be required by this service.
 type LevelsApiService struct {
-	db *db.Client
+	firestore *firestore.Client
+	cache     *CacheService
 }
 
 // NewLevelsApiService creates a default api service
-func NewLevelsApiService(db *db.Client) LevelsApiServicer {
-	return &LevelsApiService{db: db}
+func NewLevelsApiService(firestore *firestore.Client, cache *CacheService) LevelsApiServicer {
+	return &LevelsApiService{firestore: firestore, cache: cache}
 }
 
 // AddLevel - Add level

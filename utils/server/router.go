@@ -1,19 +1,21 @@
 package server
 
 import (
+	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"firebase.google.com/go/auth"
-	"firebase.google.com/go/db"
 	"github.com/PurplePalette/sonolus-uploader-core/potato"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"golang.org/x/net/context"
 )
 
 // injectUserToContext injects firebase user info to context
-func injectUserToContext(db *db.Client, auth *auth.Client, next http.HandlerFunc) http.HandlerFunc {
+func injectUserToContext(auth *auth.Client, next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := r.Header.Get("Authorization")
 		if token != "" {
@@ -28,13 +30,50 @@ func injectUserToContext(db *db.Client, auth *auth.Client, next http.HandlerFunc
 	}
 }
 
+// injectTestUserToContext injects firebase user id to context (for test purpose)
+func injectTestUserToContext(uid string, next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := r.Header.Get("Authorization")
+		if token != "" {
+			ctx := context.WithValue(r.Context(), request.CtxUserId, uid)
+			r = r.WithContext(ctx)
+		}
+		next.ServeHTTP(w, r)
+	}
+}
+
 // NewRouterWithInject creates a new router with inject user middleware
-func NewRouterWithInject(db *db.Client, auth *auth.Client, routers ...potato.Router) *mux.Router {
+func NewRouterWithInject(auth *auth.Client, routers ...potato.Router) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, api := range routers {
 		for _, route := range api.Routes() {
 			var handler http.Handler
-			handler = injectUserToContext(db, auth, route.HandlerFunc)
+			handler = injectUserToContext(auth, route.HandlerFunc)
+			handler = potato.Logger(handler, route.Name)
+
+			router.
+				Methods(route.Method).
+				Path(route.Pattern).
+				Name(route.Name).
+				Handler(handler)
+		}
+	}
+
+	return router
+}
+
+// NewRouterWithTestInject creates a new router with inject testUser middleware
+func NewRouterWithTestInject(auth *auth.Client, routers ...potato.Router) *mux.Router {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Print("Failed to load .env, using os environment")
+	}
+	uid := os.Getenv("TEST_UID")
+	router := mux.NewRouter().StrictSlash(true)
+	for _, api := range routers {
+		for _, route := range api.Routes() {
+			var handler http.Handler
+			handler = injectTestUserToContext(uid, route.HandlerFunc)
 			handler = potato.Logger(handler, route.Name)
 
 			router.
