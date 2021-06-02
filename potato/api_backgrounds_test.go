@@ -112,3 +112,39 @@ func TestGetBackground(t *testing.T) {
 	t.Log(rec.Body)
 	assert.Equal(t, http.StatusOK, rec.Code)
 }
+
+func TestGetBackgroundList(t *testing.T) {
+	s := CreateBackgroundsServer()
+	defer s.Close()
+	req := httptest.NewRequest(http.MethodGet, "/backgrounds/list", nil)
+	rec := httptest.NewRecorder()
+	s.Config.Handler.ServeHTTP(rec, req)
+	t.Log(rec.Body)
+	assert.Equal(t, http.StatusOK, rec.Code)
+}
+
+func TestGetBackgroundListWithSpecifyKeyword(t *testing.T) {
+	s := CreateBackgroundsServer()
+	defer s.Close()
+	req := httptest.NewRequest(http.MethodGet, "/backgrounds/list", nil)
+	params := req.URL.Query()
+	params.Add("keywords", "スキン2")
+	req.URL.RawQuery = params.Encode()
+	rec := httptest.NewRecorder()
+	s.Config.Handler.ServeHTTP(rec, req)
+	t.Log(rec.Body)
+	assert.Equal(t, http.StatusOK, rec.Code)
+}
+
+func TestGetBackgroundListWithSort(t *testing.T) {
+	s := CreateBackgroundsServer()
+	defer s.Close()
+	req := httptest.NewRequest(http.MethodGet, "/backgrounds/list", nil)
+	params := req.URL.Query()
+	params.Add("keywords", "sort:d order:d")
+	req.URL.RawQuery = params.Encode()
+	rec := httptest.NewRecorder()
+	s.Config.Handler.ServeHTTP(rec, req)
+	t.Log(rec.Body)
+	assert.Equal(t, http.StatusOK, rec.Code)
+}

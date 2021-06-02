@@ -101,12 +101,21 @@ func (s *BackgroundsApiService) GetBackground(ctx context.Context, backgroundNam
 
 // GetBackgroundList - Get background list
 func (s *BackgroundsApiService) GetBackgroundList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetBackgroundList with the required logic for this service method.
-	// Add api_backgrounds_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetBackgroundListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetBackgroundListResponse{}), nil
-
-	_ = request.ParseSearchQuery(keywords)
-	return Response(http.StatusNotImplemented, nil), errors.New("GetBackgroundList method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	pages := s.cache.backgroundList.Pages()
+	items, err := s.cache.backgroundList.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var backgrounds []Background
+	err = json.Unmarshal(items, &backgrounds)
+	if err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetBackgroundListResponse{
+		PageCount: pages,
+		Items:     backgrounds,
+	}
+	return Response(200, resp), nil
 }
