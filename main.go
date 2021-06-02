@@ -19,38 +19,42 @@ import (
 
 func main() {
 	firebase := server.NewFirebaseClient()
-	db := server.NewFirebaseDatabaseClient(firebase)
+	firestore := server.NewFirebaseFirestoreClient(firebase)
 	auth := server.NewFirebaseAuthorizationClient(firebase)
+	cache := potato.NewCacheService(firestore)
+	if err := cache.InitCache(); err != nil {
+		panic(err)
+	}
 
-	BackgroundsApiService := potato.NewBackgroundsApiService(db)
+	BackgroundsApiService := potato.NewBackgroundsApiService(firestore, cache)
 	BackgroundsApiController := potato.NewBackgroundsApiController(BackgroundsApiService)
 
-	EffectsApiService := potato.NewEffectsApiService(db)
+	EffectsApiService := potato.NewEffectsApiService(firestore, cache)
 	EffectsApiController := potato.NewEffectsApiController(EffectsApiService)
 
-	EnginesApiService := potato.NewEnginesApiService(db)
+	EnginesApiService := potato.NewEnginesApiService(firestore, cache)
 	EnginesApiController := potato.NewEnginesApiController(EnginesApiService)
 
-	InfoApiService := potato.NewInfoApiService(db)
+	InfoApiService := potato.NewInfoApiService(firestore, cache)
 	InfoApiController := potato.NewInfoApiController(InfoApiService)
 
-	LevelsApiService := potato.NewLevelsApiService(db)
+	LevelsApiService := potato.NewLevelsApiService(firestore, cache)
 	LevelsApiController := potato.NewLevelsApiController(LevelsApiService)
 
-	ParticlesApiService := potato.NewParticlesApiService(db)
+	ParticlesApiService := potato.NewParticlesApiService(firestore, cache)
 	ParticlesApiController := potato.NewParticlesApiController(ParticlesApiService)
 
-	SkinsApiService := potato.NewSkinsApiService(db)
+	SkinsApiService := potato.NewSkinsApiService(firestore, cache)
 	SkinsApiController := potato.NewSkinsApiController(SkinsApiService)
 
-	TestsApiService := potato.NewTestsApiService(db)
+	TestsApiService := potato.NewTestsApiService(firestore, cache)
 	TestsApiController := potato.NewTestsApiController(TestsApiService)
 
-	UsersApiService := potato.NewUsersApiService(db)
+	UsersApiService := potato.NewUsersApiService(firestore, cache)
 	UsersApiController := potato.NewUsersApiController(UsersApiService)
 
 	router := server.NewRouterWithInject(
-		db, auth,
+		auth,
 		BackgroundsApiController,
 		EffectsApiController,
 		EnginesApiController,
