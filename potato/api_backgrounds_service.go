@@ -11,7 +11,7 @@ package potato
 
 import (
 	"context"
-	"errors"
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -54,7 +54,7 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 		return Response(500, nil), nil
 	}
 	// Add background to cache
-	s.cache.backgroundList[background.Name] = background
+	s.cache.backgroundList.Add(backgroundName, background)
 	return Response(200, nil), nil
 }
 
@@ -66,14 +66,14 @@ func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundNa
 	if !request.IsValidName(backgroundName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
-	if !s.cache.IsBackgroundExist(backgroundName) {
+	userId, _ := request.GetUserId(ctx)
+	match, err := s.cache.backgroundList.IsOwnerMatch(backgroundName, userId)
+	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
-	userId, _ := request.GetUserId(ctx)
-	if s.cache.backgroundList[backgroundName].UserId != userId {
+	if !match {
 		return Response(http.StatusForbidden, nil), nil
 	}
-	s.cache.backgroundList[backgroundName] = background
 	// Update background data in firestore
 	col := s.firestore.Collection("backgrounds")
 	if _, err := col.Doc(backgroundName).Set(ctx, background); err != nil {
@@ -81,17 +81,18 @@ func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundNa
 		return Response(500, nil), nil
 	}
 	// Update background data in cache
-	s.cache.backgroundList[background.Name] = background
+	s.cache.backgroundList.Set(backgroundName, background)
 	return Response(200, nil), nil
 }
 
 // GetBackground - Get background
 func (s *BackgroundsApiService) GetBackground(ctx context.Context, backgroundName string) (ImplResponse, error) {
-	if !s.cache.IsBackgroundExist(backgroundName) {
+	bg, err := s.cache.backgroundList.Get(backgroundName)
+	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	resp := GetBackgroundResponse{
-		Item:        s.cache.backgroundList[backgroundName],
+		Item:        bg.(Background),
 		Description: "",
 		Recommended: []Background{},
 	}
