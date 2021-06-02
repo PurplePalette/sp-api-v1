@@ -74,11 +74,11 @@ type SearchFilter struct {
 	Difficulty SearchFilterDifficulty
 	Genre      SearchFilterGenre
 	UserId     string
+	Keyword    string
 }
 
 type SearchQuery struct {
-	Keyword string
-	Sort    SearchSortType
-	Order   SearchSortOrder
-	Filter  SearchFilter
+	Sort   SearchSortType
+	Order  SearchSortOrder
+	Filter SearchFilter
 }

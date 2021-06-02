@@ -14,13 +14,21 @@ func TestParseEmptyText(t *testing.T) {
 }
 
 func TestParseKeywordOne(t *testing.T) {
-	want := request.SearchQuery{Keyword: "NoPoi!"}
+	want := request.SearchQuery{
+		Filter: request.SearchFilter{
+			Keyword: "NoPoi!",
+		},
+	}
 	actual := request.ParseSearchQuery("NoPoi!")
 	assert.Equal(t, want, actual)
 }
 
 func TestParseKeywordTwo(t *testing.T) {
-	want := request.SearchQuery{Keyword: "Daydream cafe"}
+	want := request.SearchQuery{
+		Filter: request.SearchFilter{
+			Keyword: "Daydream cafe",
+		},
+	}
 	actual := request.ParseSearchQuery("Daydream cafe")
 	assert.Equal(t, want, actual)
 }
@@ -71,8 +79,10 @@ func TestParseFilterGenreShortHand(t *testing.T) {
 
 func TestParseKeywordOneAndSortName(t *testing.T) {
 	want := request.SearchQuery{
-		Keyword: "NoPoi!",
-		Sort:    request.SORT_NAME,
+		Filter: request.SearchFilter{
+			Keyword: "NoPoi!",
+		},
+		Sort: request.SORT_NAME,
 	}
 	actual := request.ParseSearchQuery("NoPoi! sort:name")
 	assert.Equal(t, want, actual)
@@ -80,8 +90,10 @@ func TestParseKeywordOneAndSortName(t *testing.T) {
 
 func TestParseKeywordTwoAndSortName(t *testing.T) {
 	want := request.SearchQuery{
-		Keyword: "Daydream cafe",
-		Sort:    request.SORT_NAME,
+		Filter: request.SearchFilter{
+			Keyword: "Daydream cafe",
+		},
+		Sort: request.SORT_NAME,
 	}
 	actual := request.ParseSearchQuery("Daydream cafe sort:name")
 	assert.Equal(t, want, actual)
@@ -149,9 +161,9 @@ func TestParseDifficultyTwoValueFlipped(t *testing.T) {
 
 func TestParseMixed(t *testing.T) {
 	want := request.SearchQuery{
-		Keyword: "Daydream cafe ～チノver.～",
-		Sort:    request.SORT_NOTES,
+		Sort: request.SORT_NOTES,
 		Filter: request.SearchFilter{
+			Keyword:    "Daydream cafe ～チノver.～",
 			Difficulty: [2]int{10, 30},
 			Genre:      request.GENRE_ANIME,
 			UserId:     "domao",
@@ -163,9 +175,9 @@ func TestParseMixed(t *testing.T) {
 
 func TestParseMixedShortHand(t *testing.T) {
 	want := request.SearchQuery{
-		Keyword: "Daydream cafe ～チノver.～",
-		Sort:    request.SORT_NOTES,
+		Sort: request.SORT_NOTES,
 		Filter: request.SearchFilter{
+			Keyword:    "Daydream cafe ～チノver.～",
 			Difficulty: [2]int{10, 30},
 			Genre:      request.GENRE_ANIME,
 			UserId:     "domao",

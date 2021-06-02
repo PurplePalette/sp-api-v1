@@ -68,6 +68,6 @@ func ParseSearchQuery(keywords string) SearchQuery {
 			resp.Filter.UserId = queryValue
 		}
 	}
-	resp.Keyword = strings.Join(originalKeywords, " ")
+	resp.Filter.Keyword = strings.Join(originalKeywords, " ")
 	return resp
 }
