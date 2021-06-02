@@ -23,7 +23,6 @@ func CreateBackgroundsServer() *httptest.Server {
 	if err := cache.InitCache(); err != nil {
 		panic(err)
 	}
-
 	BackgroundsApiService := potato.NewBackgroundsApiService(firestore, cache)
 	BackgroundsApiController := potato.NewBackgroundsApiController(BackgroundsApiService)
 	router := server.NewRouterWithTestInject(auth, BackgroundsApiController)
@@ -44,7 +43,7 @@ func TestAddBackground(t *testing.T) {
 			Url:  "",
 		},
 		Data: potato.SonolusResourceLocator{
-			Type: "BackgroundDat",
+			Type: "BackgroundData",
 			Url:  "",
 		},
 		Image: potato.SonolusResourceLocator{

@@ -43,7 +43,7 @@ func (s *CacheService) IsUserExist(userId string) bool {
 }
 
 // IsBackgroundExist checks the user is exist and not removed
-func (s *CacheService) IsBackgroundExist(bgId string) bool {
-	_, ok := s.backgroundList[bgId]
+func (s *CacheService) IsBackgroundExist(bgName string) bool {
+	_, ok := s.backgroundList[bgName]
 	return ok
 }

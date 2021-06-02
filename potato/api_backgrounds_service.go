@@ -34,28 +34,27 @@ func NewBackgroundsApiService(firestore *firestore.Client, cache *CacheService) 
 
 // AddBackground - Add background
 func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
-	// This endpoint is not working without authorization
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-	// Check the background name is not already used
-	col := s.firestore.Collection("backgrounds")
-	if _, err := col.Doc(backgroundName).Get(ctx); err == nil {
+	if !request.IsValidName(backgroundName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if s.cache.IsBackgroundExist(backgroundName) {
 		return Response(http.StatusConflict, nil), nil
 	}
-	// Inject userId to background
-	userId, err := request.GetUserId(ctx)
-	if err != nil {
-		log.Fatalln("Error getting userId:", err)
-		return Response(500, nil), nil
-	}
+	// Force set parameter to valid
+	userId, _ := request.GetUserId(ctx)
 	background.UserId = userId
-	// Add background to firebase
-	_, err = col.Doc(backgroundName).Set(ctx, background)
-	if err != nil {
+	background.Name = backgroundName
+	col := s.firestore.Collection("backgrounds")
+	// Add background to firestore
+	if _, err := col.Doc(backgroundName).Set(ctx, background); err != nil {
 		log.Fatalln("Error posting background:", err)
 		return Response(500, nil), nil
 	}
+	// Add background to cache
+	s.cache.backgroundList[background.Name] = background
 	return Response(200, nil), nil
 }
 
