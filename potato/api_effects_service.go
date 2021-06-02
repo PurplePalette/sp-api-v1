@@ -17,6 +17,7 @@ import (
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 // EffectsApiService is a service that implents the logic for the EffectsApiServicer
@@ -25,11 +26,12 @@ import (
 type EffectsApiService struct {
 	firestore *firestore.Client
 	cache     *CacheService
+	validate  *validator.Validate
 }
 
 // NewEffectsApiService creates a default api service
 func NewEffectsApiService(firestore *firestore.Client, cache *CacheService) EffectsApiServicer {
-	return &EffectsApiService{firestore: firestore, cache: cache}
+	return &EffectsApiService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddEffect - Add effect
@@ -38,6 +40,9 @@ func (s *EffectsApiService) AddEffect(ctx context.Context, effectName string, ef
 		return Response(http.StatusUnauthorized, nil), nil
 	}
 	if !request.IsValidName(effectName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(effectName); err != nil {
 		return Response(http.StatusBadRequest, nil), nil
 	}
 	if s.cache.effects.IsExist(effectName) {
@@ -64,6 +69,9 @@ func (s *EffectsApiService) EditEffect(ctx context.Context, effectName string, e
 		return Response(http.StatusUnauthorized, nil), nil
 	}
 	if !request.IsValidName(effectName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(effectName); err != nil {
 		return Response(http.StatusBadRequest, nil), nil
 	}
 	userId, _ := request.GetUserId(ctx)
