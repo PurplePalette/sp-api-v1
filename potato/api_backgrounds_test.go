@@ -65,3 +65,40 @@ func TestAddBackground(t *testing.T) {
 	t.Log(rec.Body)
 	assert.Equal(t, http.StatusOK, rec.Code)
 }
+
+func TestEditBackground(t *testing.T) {
+	s := CreateBackgroundsServer()
+	defer s.Close()
+	bg := potato.Background{
+		Name:     "project-sekai",
+		Version:  1,
+		Title:    "プロセカスキン2",
+		Subtitle: "ほげほげ",
+		Author:   "Anonymous",
+		Thumbnail: potato.SonolusResourceLocator{
+			Type: "BackgroundThumbnail",
+			Url:  "",
+		},
+		Data: potato.SonolusResourceLocator{
+			Type: "BackgroundData",
+			Url:  "",
+		},
+		Image: potato.SonolusResourceLocator{
+			Type: "BackgroundImage",
+			Url:  "",
+		},
+		CreatedTime: int32(time.Now().Unix()),
+		UpdatedTime: int32(time.Now().Unix()),
+	}
+	bgJson, _ := json.Marshal(bg)
+	req := httptest.NewRequest(
+		http.MethodPatch,
+		"/backgrounds/myBackground",
+		bytes.NewBuffer(bgJson),
+	)
+	req = tests.SetUserAuthorizationToHeader(req)
+	rec := httptest.NewRecorder()
+	s.Config.Handler.ServeHTTP(rec, req)
+	t.Log(rec.Body)
+	assert.Equal(t, http.StatusOK, rec.Code)
+}

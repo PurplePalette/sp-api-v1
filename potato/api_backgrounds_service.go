@@ -63,20 +63,26 @@ func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundNa
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
-	//return Response(403, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("EditBackground method not implemented")
+	if !request.IsValidName(backgroundName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if !s.cache.IsBackgroundExist(backgroundName) {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	userId, _ := request.GetUserId(ctx)
+	if s.cache.backgroundList[backgroundName].UserId != userId {
+		return Response(http.StatusForbidden, nil), nil
+	}
+	s.cache.backgroundList[backgroundName] = background
+	// Update background data in firestore
+	col := s.firestore.Collection("backgrounds")
+	if _, err := col.Doc(backgroundName).Set(ctx, background); err != nil {
+		log.Fatalln("Error posting background:", err)
+		return Response(500, nil), nil
+	}
+	// Update background data in cache
+	s.cache.backgroundList[background.Name] = background
+	return Response(200, nil), nil
 }
 
 // GetBackground - Get background
