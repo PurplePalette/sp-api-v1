@@ -10,9 +10,9 @@ type CacheService struct {
 	// cacheInitService
 	init *CacheInitService
 	// userIdList stores user
-	userList map[string]User
+	userList Cache
 	// backgroundList stores background
-	backgroundList map[string]Background
+	backgroundList Cache
 }
 
 func NewCacheService(firestore *firestore.Client) *CacheService {
@@ -27,23 +27,21 @@ func (s *CacheService) InitCache() error {
 	if err != nil {
 		return errors.New("could not get user list from firestore")
 	}
-	s.userList = userList
+	s.userList.Data = userList
 	backgroundList, err := s.init.LoadBackgroundList()
 	if err != nil {
 		return errors.New("could not get background list from firestore")
 	}
-	s.backgroundList = backgroundList
+	s.backgroundList.Data = backgroundList
 	return nil
 }
 
 // IsUserExist checks the user is exist and not removed
 func (s *CacheService) IsUserExist(userId string) bool {
-	_, ok := s.userList[userId]
-	return ok
+	return s.userList.IsExist(userId)
 }
 
 // IsBackgroundExist checks the user is exist and not removed
 func (s *CacheService) IsBackgroundExist(bgName string) bool {
-	_, ok := s.backgroundList[bgName]
-	return ok
+	return s.backgroundList.IsExist(bgName)
 }

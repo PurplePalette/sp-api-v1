@@ -22,8 +22,8 @@ func (s *CacheInitService) LoadDatabaseFromFirebase(colName string, response *ma
 }
 
 // LoadUserList gets the list of users from firebase for caching user status
-func (s *CacheInitService) LoadUserList() (map[string]User, error) {
-	userList := map[string]User{}
+func (s *CacheInitService) LoadUserList() (map[string]interface{}, error) {
+	userList := make(map[string]interface{})
 	col := s.firestore.Collection("users")
 	docs, err := col.Documents(context.Background()).GetAll()
 	if err != nil {
@@ -34,14 +34,14 @@ func (s *CacheInitService) LoadUserList() (map[string]User, error) {
 		if err := doc.DataTo(&user); err != nil {
 			return nil, errors.New("could not parse doc to user struct")
 		}
-		userList[doc.Ref.ID] = user
+		userList[user.UserId] = user
 	}
 	return userList, nil
 }
 
 // LoadBackgroundList gets the list of backgrounds from firebase for caching status
-func (s *CacheInitService) LoadBackgroundList() (map[string]Background, error) {
-	bgList := map[string]Background{}
+func (s *CacheInitService) LoadBackgroundList() (map[string]interface{}, error) {
+	bgList := make(map[string]interface{})
 	col := s.firestore.Collection("backgrounds")
 	docs, err := col.Documents(context.Background()).GetAll()
 	if err != nil {
@@ -52,7 +52,7 @@ func (s *CacheInitService) LoadBackgroundList() (map[string]Background, error) {
 		if err := doc.DataTo(&bg); err != nil {
 			return nil, errors.New("could not parse doc to background struct")
 		}
-		bgList[doc.Ref.ID] = bg
+		bgList[bg.Name] = bg
 	}
 	return bgList, nil
 }
