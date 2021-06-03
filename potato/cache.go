@@ -23,6 +23,8 @@ type CacheService struct {
 	skins Cache
 	// users stores user
 	users Cache
+	// tests stores testId map
+	tests map[string]string
 	// news stores fake levels
 	news Cache
 }
@@ -139,6 +141,19 @@ func (s *CacheService) InitCache() error {
 		return errors.New("could not get user list from firestore")
 	}
 	s.users.Data = users
+	s.tests = make(map[string]string)
+	for _, user := range users {
+		parsedUser := user.(User)
+		s.tests[parsedUser.TestId] = parsedUser.UserId
+	}
 	s.InitNews()
 	return nil
+}
+
+func (c *CacheService) GetUserIdFromTest(testId string) (string, error) {
+	userId, ok := c.tests[testId]
+	if !ok {
+		return "", errors.New("could not find test")
+	}
+	return userId, nil
 }

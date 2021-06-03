@@ -41,6 +41,7 @@ func ParseSearchQuery(keywords string) SearchQuery {
 	resp := SearchQuery{
 		Filter: SearchFilter{
 			Difficulty: [2]int{0, 100},
+			Public:     true,
 		},
 	}
 	var originalKeywords []string

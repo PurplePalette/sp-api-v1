@@ -11,11 +11,12 @@ package potato
 
 import (
 	"context"
-	"errors"
+	"encoding/json"
 	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
+	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
 // TestsApiService is a service that implents the logic for the TestsApiServicer
@@ -62,66 +63,156 @@ func (s *TestsApiService) GetTestServerInfo(ctx context.Context, testId string) 
 
 // GetTestsBackgrounds - Get backgrounds for test
 func (s *TestsApiService) GetTestsBackgrounds(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetTestsBackgrounds with the required logic for this service method.
-	// Add api_tests_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetBackgroundListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetBackgroundListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTestsBackgrounds method not implemented")
+	userId, err := s.cache.GetUserIdFromTest(testId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	query.Filter.Public = false
+	pages := s.cache.backgrounds.Pages()
+	items, err := s.cache.backgrounds.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var backgrounds []Background
+	if err := json.Unmarshal(items, &backgrounds); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetBackgroundListResponse{
+		PageCount: pages,
+		Items:     backgrounds,
+	}
+	return Response(200, resp), nil
 }
 
 // GetTestsEffects - Get effects for test
 func (s *TestsApiService) GetTestsEffects(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetTestsEffects with the required logic for this service method.
-	// Add api_tests_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetEffectListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetEffectListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTestsEffects method not implemented")
+	userId, err := s.cache.GetUserIdFromTest(testId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	query.Filter.Public = false
+	pages := s.cache.effects.Pages()
+	items, err := s.cache.effects.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var effects []Effect
+	if err := json.Unmarshal(items, &effects); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetEffectListResponse{
+		PageCount: pages,
+		Items:     effects,
+	}
+	return Response(200, resp), nil
 }
 
 // GetTestsEngines - Get engines for test
 func (s *TestsApiService) GetTestsEngines(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetTestsEngines with the required logic for this service method.
-	// Add api_tests_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetEngineListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetEngineListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTestsEngines method not implemented")
+	userId, err := s.cache.GetUserIdFromTest(testId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	query.Filter.Public = false
+	pages := s.cache.engines.Pages()
+	items, err := s.cache.engines.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var engines []Engine
+	if err := json.Unmarshal(items, &engines); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetEngineListResponse{
+		PageCount: pages,
+		Items:     engines,
+	}
+	return Response(200, resp), nil
 }
 
 // GetTestsLevels - Get levels for test
 func (s *TestsApiService) GetTestsLevels(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetTestsLevels with the required logic for this service method.
-	// Add api_tests_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetLevelListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetLevelListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTestsLevels method not implemented")
+	userId, err := s.cache.GetUserIdFromTest(testId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	query.Filter.Public = false
+	pages := s.cache.levels.Pages()
+	items, err := s.cache.levels.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var levels []Level
+	if err := json.Unmarshal(items, &levels); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetLevelListResponse{
+		PageCount: pages,
+		Items:     levels,
+	}
+	return Response(200, resp), nil
 }
 
 // GetTestsParticles - Get particles for test
 func (s *TestsApiService) GetTestsParticles(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetTestsParticles with the required logic for this service method.
-	// Add api_tests_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetParticleListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetParticleListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTestsParticles method not implemented")
+	userId, err := s.cache.GetUserIdFromTest(testId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	query.Filter.Public = false
+	pages := s.cache.particles.Pages()
+	items, err := s.cache.particles.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var particles []Particle
+	if err := json.Unmarshal(items, &particles); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetParticleListResponse{
+		PageCount: pages,
+		Items:     particles,
+	}
+	return Response(200, resp), nil
 }
 
 // GetTestsSkins - Get skins for test
 func (s *TestsApiService) GetTestsSkins(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetTestsSkins with the required logic for this service method.
-	// Add api_tests_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetSkinListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetSkinListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTestsSkins method not implemented")
+	userId, err := s.cache.GetUserIdFromTest(testId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	query.Filter.Public = false
+	pages := s.cache.skins.Pages()
+	items, err := s.cache.skins.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var skins []Skin
+	if err := json.Unmarshal(items, &skins); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetSkinListResponse{
+		PageCount: pages,
+		Items:     skins,
+	}
+	return Response(200, resp), nil
 }

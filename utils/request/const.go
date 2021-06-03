@@ -75,6 +75,7 @@ type SearchFilter struct {
 	Genre      SearchFilterGenre
 	UserId     string
 	Keyword    string
+	Public     bool
 }
 
 type SearchQuery struct {
