@@ -90,8 +90,14 @@ func (s *UsersApiService) GetUserServerInfo(ctx context.Context, userId string) 
 		return Response(http.StatusInternalServerError, nil), nil
 	}
 	parsedNews.Level.Artists = userId
+	welcome2, err := s.cache.news.Get("sweetPotatoUserWelcome2")
+	parsedNews2 := welcome2.(News)
+	if err != nil {
+		log.Print(err)
+		return Response(http.StatusInternalServerError, nil), nil
+	}
 	resp := ServerInfo{
-		Levels:      []Level{parsedNews.Level},
+		Levels:      []Level{parsedNews.Level, parsedNews2.Level},
 		Skins:       []Skin{},
 		Backgrounds: []Background{},
 		Effects:     []Effect{},

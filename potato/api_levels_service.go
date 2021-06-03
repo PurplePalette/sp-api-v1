@@ -96,11 +96,18 @@ func (s *LevelsApiService) EditLevel(ctx context.Context, levelName string, leve
 
 // GetLevel - Get level
 func (s *LevelsApiService) GetLevel(ctx context.Context, levelName string) (ImplResponse, error) {
-	rawLv, err := s.cache.levels.Get(levelName)
-	if err != nil {
+	rawNs, newsNotExistErr := s.cache.news.Get(levelName)
+	rawLv, levelNotExistErr := s.cache.levels.Get(levelName)
+	if newsNotExistErr != nil && levelNotExistErr != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
-	lv := rawLv.(Level)
+	var lv Level
+	if newsNotExistErr == nil {
+		ns := rawNs.(News)
+		lv = ns.Level
+	} else {
+		lv = rawLv.(Level)
+	}
 	resp := GetLevelResponse{
 		Item:        lv,
 		Description: lv.Description,

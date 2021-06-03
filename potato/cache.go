@@ -52,7 +52,7 @@ func (s *CacheService) InitNews() {
 	s.news.Add(
 		"sweetPotatoUserWelcome",
 		NewNews(
-			"SweetPotato ユーザー個別サーバー",
+			"SweetPotatoユーザー個別サーバー",
 			"Placeholder",
 			"sweetPotatoUserWelcome",
 			"PurplePalette DevTeam",
@@ -63,11 +63,37 @@ func (s *CacheService) InitNews() {
 		),
 	)
 	s.news.Add(
+		"sweetPotatoUserWelcome2",
+		NewNews(
+			"指定されたユーザーの投稿したデータのみ",
+			"を遊ぶことができるサーバーです",
+			"sweetPotatoUserWelcome2",
+			"PurplePalette DevTeam",
+			1204,
+			"Chino",
+			"https://gochiusa.com/core_sys/images/main/cont/special/37/t_icon4/chino.jpg",
+			"※この譜面は遊べません",
+		),
+	)
+	s.news.Add(
 		"sweetPotatoTestWelcome",
 		NewNews(
-			"SweetPotato テストサーバー",
+			"SweetPotatoテストサーバー",
 			"Placeholder",
 			"sweetPotatoTestWelcome",
+			"PurplePalette DevTeam",
+			214,
+			"Rize",
+			"https://gochiusa.com/core_sys/images/main/cont/special/37/t_icon4/rize.jpg",
+			"※この譜面は遊べません",
+		),
+	)
+	s.news.Add(
+		"sweetPotatoTestWelcome2",
+		NewNews(
+			"まだ公開されていない投稿データのみ",
+			"をテストプレイできるサーバーです",
+			"sweetPotatoTestWelcome2",
 			"PurplePalette DevTeam",
 			214,
 			"Rize",
