@@ -43,16 +43,16 @@ func (c *LevelsApiController) Routes() Routes {
 			c.EditLevel,
 		},
 		{
-			"GetLevel",
-			strings.ToUpper("Get"),
-			"/levels/{levelName}",
-			c.GetLevel,
-		},
-		{
 			"GetLevelList",
 			strings.ToUpper("Get"),
 			"/levels/list",
 			c.GetLevelList,
+		},
+		{
+			"GetLevel",
+			strings.ToUpper("Get"),
+			"/levels/{levelName}",
+			c.GetLevel,
 		},
 	}
 }

@@ -11,11 +11,13 @@ package potato
 
 import (
 	"context"
-	"errors"
+	"encoding/json"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 // LevelsApiService is a service that implents the logic for the LevelsApiServicer
@@ -24,11 +26,12 @@ import (
 type LevelsApiService struct {
 	firestore *firestore.Client
 	cache     *CacheService
+	validate  *validator.Validate
 }
 
 // NewLevelsApiService creates a default api service
 func NewLevelsApiService(firestore *firestore.Client, cache *CacheService) LevelsApiServicer {
-	return &LevelsApiService{firestore: firestore, cache: cache}
+	return &LevelsApiService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddLevel - Add level
@@ -36,20 +39,28 @@ func (s *LevelsApiService) AddLevel(ctx context.Context, levelName string, level
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(409, {}) or use other options such as http.Ok ...
-	//return Response(409, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("AddLevel method not implemented")
+	if !request.IsValidName(levelName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(level); err != nil {
+		return Response(http.StatusBadRequest, err.Error()), nil
+	}
+	if s.cache.levels.IsExist(levelName) {
+		return Response(http.StatusConflict, nil), nil
+	}
+	// Force set parameter to valid
+	userId, _ := request.GetUserId(ctx)
+	level.UserId = userId
+	level.Name = levelName
+	col := s.firestore.Collection("levels")
+	// Add level to firestore
+	if _, err := col.Doc(levelName).Set(ctx, level); err != nil {
+		log.Fatalln("Error posting level:", err)
+		return Response(500, nil), nil
+	}
+	// Add level to cache
+	s.cache.levels.Add(levelName, level)
+	return Response(200, nil), nil
 }
 
 // EditLevel - Edit level
@@ -57,46 +68,64 @@ func (s *LevelsApiService) EditLevel(ctx context.Context, levelName string, leve
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
-	//return Response(403, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("EditLevel method not implemented")
+	if !request.IsValidName(levelName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(level); err != nil {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	userId, _ := request.GetUserId(ctx)
+	match, err := s.cache.levels.IsOwnerMatch(levelName, userId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	if !match {
+		return Response(http.StatusForbidden, nil), nil
+	}
+	level.Name = levelName
+	// Update level data in firestore
+	col := s.firestore.Collection("levels")
+	if _, err := col.Doc(levelName).Set(ctx, level); err != nil {
+		log.Fatalln("Error posting level:", err)
+		return Response(500, nil), nil
+	}
+	// Update level data in cache
+	s.cache.levels.Set(levelName, level)
+	return Response(200, nil), nil
 }
 
 // GetLevel - Get level
 func (s *LevelsApiService) GetLevel(ctx context.Context, levelName string) (ImplResponse, error) {
-	// TODO - update GetLevel with the required logic for this service method.
-	// Add api_levels_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetLevelResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetLevelResponse{}), nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetLevel method not implemented")
+	rawLv, err := s.cache.levels.Get(levelName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	lv := rawLv.(Level)
+	resp := GetLevelResponse{
+		Item:        lv,
+		Description: lv.Description,
+		Recommended: []Level{},
+	}
+	return Response(200, resp), nil
 }
 
 // GetLevelList - Get level list
 func (s *LevelsApiService) GetLevelList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetLevelList with the required logic for this service method.
-	// Add api_levels_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetLevelListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetLevelListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetLevelList method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	pages := s.cache.levels.Pages()
+	items, err := s.cache.levels.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var levels []Level
+	err = json.Unmarshal(items, &levels)
+	if err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetLevelListResponse{
+		PageCount: pages,
+		Items:     levels,
+	}
+	return Response(200, resp), nil
 }
