@@ -54,11 +54,23 @@ func (s *InfoApiService) EditInfo(ctx context.Context, serverInfo ServerInfo) (I
 
 // GetServerInfo - Get server info
 func (s *InfoApiService) GetServerInfo(ctx context.Context) (ImplResponse, error) {
-	// TODO - update GetServerInfo with the required logic for this service method.
-	// Add api_info_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, ServerInfo{}) or use other options such as http.Ok ...
-	//return Response(200, ServerInfo{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetServerInfo method not implemented")
+	welcome := NewNews(
+		"SweetPotatoサーバーへようこそ!",
+		"もっと をタップして一覧を表示してください",
+		"sweetPotatoWelcome",
+		"PurplePalette DevTeam",
+		410,
+		"Cocoa",
+		"https://gochiusa.com/bloom/core_sys/images/others/favicon/android-chrome-192x192.png",
+		"ハローワールド!!!",
+	)
+	resp := ServerInfo{
+		Levels:      []Level{welcome.Level},
+		Skins:       []Skin{},
+		Backgrounds: []Background{},
+		Effects:     []Effect{},
+		Particles:   []Particle{},
+		Engines:     []Engine{},
+	}
+	return Response(200, resp), nil
 }
