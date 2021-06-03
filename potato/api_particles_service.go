@@ -11,11 +11,13 @@ package potato
 
 import (
 	"context"
-	"errors"
+	"encoding/json"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 // ParticlesApiService is a service that implents the logic for the ParticlesApiServicer
@@ -24,11 +26,12 @@ import (
 type ParticlesApiService struct {
 	firestore *firestore.Client
 	cache     *CacheService
+	validate  *validator.Validate
 }
 
 // NewParticlesApiService creates a default api service
 func NewParticlesApiService(firestore *firestore.Client, cache *CacheService) ParticlesApiServicer {
-	return &ParticlesApiService{firestore: firestore, cache: cache}
+	return &ParticlesApiService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddParticle - Add particle
@@ -36,20 +39,28 @@ func (s *ParticlesApiService) AddParticle(ctx context.Context, particleName stri
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(409, {}) or use other options such as http.Ok ...
-	//return Response(409, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("AddParticle method not implemented")
+	if !request.IsValidName(particleName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(particle); err != nil {
+		return Response(http.StatusBadRequest, err.Error()), nil
+	}
+	if s.cache.particles.IsExist(particleName) {
+		return Response(http.StatusConflict, nil), nil
+	}
+	// Force set parameter to valid
+	userId, _ := request.GetUserId(ctx)
+	particle.UserId = userId
+	particle.Name = particleName
+	col := s.firestore.Collection("particles")
+	// Add particle to firestore
+	if _, err := col.Doc(particleName).Set(ctx, particle); err != nil {
+		log.Fatalln("Error posting particle:", err)
+		return Response(500, nil), nil
+	}
+	// Add particle to cache
+	s.cache.particles.Add(particleName, particle)
+	return Response(200, nil), nil
 }
 
 // EditParticle - Edit particle
@@ -57,49 +68,64 @@ func (s *ParticlesApiService) EditParticle(ctx context.Context, particleName str
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	// TODO - update EditParticle with the required logic for this service method.
-	// Add api_particles_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
-	//return Response(403, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("EditParticle method not implemented")
+	if !request.IsValidName(particleName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(particle); err != nil {
+		return Response(http.StatusBadRequest, err.Error()), nil
+	}
+	userId, _ := request.GetUserId(ctx)
+	match, err := s.cache.particles.IsOwnerMatch(particleName, userId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	if !match {
+		return Response(http.StatusForbidden, nil), nil
+	}
+	particle.Name = particleName
+	// Update particle data in firestore
+	col := s.firestore.Collection("particles")
+	if _, err := col.Doc(particleName).Set(ctx, particle); err != nil {
+		log.Fatalln("Error posting particle:", err)
+		return Response(500, nil), nil
+	}
+	// Update particle data in cache
+	s.cache.particles.Set(particleName, particle)
+	return Response(200, nil), nil
 }
 
 // GetParticle - Get particle
 func (s *ParticlesApiService) GetParticle(ctx context.Context, particleName string) (ImplResponse, error) {
-	// TODO - update GetParticle with the required logic for this service method.
-	// Add api_particles_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetParticleResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetParticleResponse{}), nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetParticle method not implemented")
+	rawPt, err := s.cache.particles.Get(particleName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	pt := rawPt.(Particle)
+	resp := GetParticleResponse{
+		Item:        pt,
+		Description: pt.Description,
+		Recommended: []Particle{},
+	}
+	return Response(200, resp), nil
 }
 
 // GetParticleList - Get particle list
 func (s *ParticlesApiService) GetParticleList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetParticleList with the required logic for this service method.
-	// Add api_particles_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetParticleListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetParticleListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetParticleList method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	pages := s.cache.particles.Pages()
+	items, err := s.cache.particles.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var particles []Particle
+	err = json.Unmarshal(items, &particles)
+	if err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetParticleListResponse{
+		PageCount: pages,
+		Items:     particles,
+	}
+	return Response(200, resp), nil
 }

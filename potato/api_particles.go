@@ -43,16 +43,16 @@ func (c *ParticlesApiController) Routes() Routes {
 			c.EditParticle,
 		},
 		{
-			"GetParticle",
-			strings.ToUpper("Get"),
-			"/particles/{particleName}",
-			c.GetParticle,
-		},
-		{
 			"GetParticleList",
 			strings.ToUpper("Get"),
 			"/particles/list",
 			c.GetParticleList,
+		},
+		{
+			"GetParticle",
+			strings.ToUpper("Get"),
+			"/particles/{particleName}",
+			c.GetParticle,
 		},
 	}
 }
