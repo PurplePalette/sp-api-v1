@@ -43,16 +43,16 @@ func (c *EnginesApiController) Routes() Routes {
 			c.EditEngine,
 		},
 		{
-			"GetEngine",
-			strings.ToUpper("Get"),
-			"/engines/{engineName}",
-			c.GetEngine,
-		},
-		{
 			"GetEngineList",
 			strings.ToUpper("Get"),
 			"/engines/list",
 			c.GetEngineList,
+		},
+		{
+			"GetEngine",
+			strings.ToUpper("Get"),
+			"/engines/{engineName}",
+			c.GetEngine,
 		},
 	}
 }
