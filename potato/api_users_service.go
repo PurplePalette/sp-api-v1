@@ -11,7 +11,9 @@ package potato
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
@@ -57,16 +59,12 @@ func (s *UsersApiService) EditUser(ctx context.Context, userId string, user User
 
 // GetUser - Get user
 func (s *UsersApiService) GetUser(ctx context.Context, userId string) (ImplResponse, error) {
-	// TODO - update GetUser with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, User{}) or use other options such as http.Ok ...
-	//return Response(200, User{}), nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetUser method not implemented")
+	rawUser, err := s.cache.users.Get(userId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	user := rawUser.(User)
+	return Response(200, user), nil
 }
 
 // GetUserList - Get user list
@@ -82,77 +80,150 @@ func (s *UsersApiService) GetUserList(ctx context.Context) (ImplResponse, error)
 
 // GetUserServerInfo - Get user server info
 func (s *UsersApiService) GetUserServerInfo(ctx context.Context, userId string) (ImplResponse, error) {
-	// TODO - update GetUserServerInfo with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	if !s.cache.users.IsExist(userId) {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	welcome, err := s.cache.news.Get("sweetPotatoUserWelcome")
+	parsedNews := welcome.(News)
+	if err != nil {
+		log.Print(err)
+		return Response(http.StatusInternalServerError, nil), nil
+	}
+	parsedNews.Level.Artists = userId
+	resp := ServerInfo{
+		Levels:      []Level{parsedNews.Level},
+		Skins:       []Skin{},
+		Backgrounds: []Background{},
+		Effects:     []Effect{},
+		Particles:   []Particle{},
+		Engines:     []Engine{},
+	}
 
-	//TODO: Uncomment the next line to return response Response(200, ServerInfo{}) or use other options such as http.Ok ...
-	//return Response(200, ServerInfo{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetUserServerInfo method not implemented")
+	return Response(200, resp), nil
 }
 
 // GetUsersBackgrounds - Get backgrounds for test
 func (s *UsersApiService) GetUsersBackgrounds(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetUsersBackgrounds with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetBackgroundListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetBackgroundListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetUsersBackgrounds method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	pages := s.cache.backgrounds.Pages()
+	items, err := s.cache.backgrounds.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var backgrounds []Background
+	if err := json.Unmarshal(items, &backgrounds); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetBackgroundListResponse{
+		PageCount: pages,
+		Items:     backgrounds,
+	}
+	return Response(200, resp), nil
 }
 
 // GetUsersEffects - Get effects for test
 func (s *UsersApiService) GetUsersEffects(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetUsersEffects with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetEffectListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetEffectListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetUsersEffects method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	pages := s.cache.effects.Pages()
+	items, err := s.cache.effects.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var effects []Effect
+	if err := json.Unmarshal(items, &effects); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetEffectListResponse{
+		PageCount: pages,
+		Items:     effects,
+	}
+	return Response(200, resp), nil
 }
 
 // GetUsersEngines - Get engines for test
 func (s *UsersApiService) GetUsersEngines(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetUsersEngines with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetEngineListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetEngineListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetUsersEngines method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	pages := s.cache.engines.Pages()
+	items, err := s.cache.engines.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var engines []Engine
+	if err := json.Unmarshal(items, &engines); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetEngineListResponse{
+		PageCount: pages,
+		Items:     engines,
+	}
+	return Response(200, resp), nil
 }
 
 // GetUsersLevels - Get levels for test
 func (s *UsersApiService) GetUsersLevels(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetUsersLevels with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetLevelListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetLevelListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetUsersLevels method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	pages := s.cache.levels.Pages()
+	items, err := s.cache.levels.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var levels []Level
+	if err := json.Unmarshal(items, &levels); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetLevelListResponse{
+		PageCount: pages,
+		Items:     levels,
+	}
+	return Response(200, resp), nil
 }
 
 // GetUsersParticles - Get particles for test
 func (s *UsersApiService) GetUsersParticles(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetUsersParticles with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetParticleListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetParticleListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetUsersParticles method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	pages := s.cache.particles.Pages()
+	items, err := s.cache.particles.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var particles []Particle
+	if err := json.Unmarshal(items, &particles); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetParticleListResponse{
+		PageCount: pages,
+		Items:     particles,
+	}
+	return Response(200, resp), nil
 }
 
 // GetUsersSkins - Get skins for test
 func (s *UsersApiService) GetUsersSkins(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetUsersSkins with the required logic for this service method.
-	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetSkinListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetSkinListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetUsersSkins method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	query.Filter.UserId = userId
+	pages := s.cache.skins.Pages()
+	items, err := s.cache.skins.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var skins []Skin
+	if err := json.Unmarshal(items, &skins); err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetSkinListResponse{
+		PageCount: pages,
+		Items:     skins,
+	}
+	return Response(200, resp), nil
 }
