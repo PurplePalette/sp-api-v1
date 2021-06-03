@@ -14,5 +14,5 @@ type LevelUseParticle struct {
 	// If true (recommended), default resource specified by the engine will be used.
 	UseDefault bool `json:"useDefault"`
 
-	Item Particle `json:"item,omitempty"`
+	Item *Particle `json:"item,omitempty" validate:"omitempty"`
 }

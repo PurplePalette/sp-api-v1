@@ -13,38 +13,38 @@ package potato
 type Level struct {
 
 	// english and number only name for searching
-	Name string `json:"name" validate:"alphanum,min=1,max=50"`
+	Name string `json:"name,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// Reserved for future update. current default is 1.
-	Version int32 `json:"version" validate:"gte=1,lte=1"`
+	Version int32 `json:"version,omitempty" validate:"omitempty,gte=1,lte=1"`
 
 	// Difficulty of the level
-	Rating int32 `json:"rating" validate:"gte=1,lte=1000"`
+	Rating int32 `json:"rating,omitempty" validate:"omitempty,gte=1,lte=1000"`
 
-	Engine Engine `json:"engine"`
+	Engine Engine `json:"engine,omitempty" validate:"omitempty"`
 
-	UseSkin LevelUseSkin `json:"useSkin"`
+	UseSkin LevelUseSkin `json:"useSkin,omitempty" validate:"omitempty"`
 
-	UseBackground LevelUseBackground `json:"useBackground"`
+	UseBackground LevelUseBackground `json:"useBackground,omitempty" validate:"omitempty"`
 
-	UseEffect LevelUseEffect `json:"useEffect"`
+	UseEffect LevelUseEffect `json:"useEffect,omitempty" validate:"omitempty"`
 
-	UseParticle LevelUseParticle `json:"useParticle"`
+	UseParticle LevelUseParticle `json:"useParticle,omitempty" validate:"omitempty"`
 
 	// base title of this content
-	Title string `json:"title" validate:"alphanumunicode,min=1,max=100"`
+	Title string `json:"title,omitempty" validate:"omitempty,alphanumunicode,min=1,max=100"`
 
 	// artist names of original music
-	Artists string `json:"artists" validate:"alphanumunicode,min=1,max=100"`
+	Artists string `json:"artists,omitempty" validate:"omitempty,alphanumunicode,min=1,max=100"`
 
 	// author of this content
-	Author string `json:"author" validate:"alphanumunicode,min=1,max=50"`
+	Author string `json:"author,omitempty" validate:"omitempty,alphanumunicode,min=1,max=50"`
 
-	Cover SonolusResourceLocator `json:"cover"`
+	Cover SonolusResourceLocator `json:"cover,omitempty" validate:"omitempty"`
 
-	Bgm SonolusResourceLocator `json:"bgm"`
+	Bgm SonolusResourceLocator `json:"bgm,omitempty" validate:"omitempty"`
 
-	Data SonolusResourceLocator `json:"data"`
+	Data SonolusResourceLocator `json:"data,omitempty" validate:"omitempty"`
 
 	// 独自要素: 楽曲のジャンル
 	Genre string `json:"genre,omitempty"`
@@ -63,4 +63,7 @@ type Level struct {
 
 	// 独自要素: データを更新したエポックミリ秒(ソート用)
 	UpdatedTime int32 `json:"updatedTime,omitempty" validate:"gte=1"`
+
+	// 独自要素: サイト内および譜面情報欄に表示される説明文
+	Description string `json:"description,omitempty" validate:"alphanumunicode,min=1,max=3000"`
 }

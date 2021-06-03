@@ -32,4 +32,7 @@ type User struct {
 
 	// 独自要素: データを更新したエポックミリ秒(ソート用)
 	UpdatedTime int32 `json:"updatedTime,omitempty" validate:"gte=1"`
+
+	// 独自要素: サイト内および譜面情報欄に表示される説明文
+	Description string `json:"description,omitempty" validate:"alphanumunicode,min=1,max=3000"`
 }

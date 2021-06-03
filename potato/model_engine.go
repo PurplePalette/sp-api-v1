@@ -13,40 +13,43 @@ package potato
 type Engine struct {
 
 	// english and number only name for searching
-	Name string `json:"name" validate:"alphanum,min=1,max=50"`
+	Name string `json:"name,omitempty" validate:"alphanum,min=1,max=50"`
 
 	// Reserved for future update. current default is 1.
-	Version int32 `json:"version" validate:"gte=1,lte=1"`
+	Version int32 `json:"version,omitempty" validate:"gte=1,lte=1"`
 
 	// base title of this content
-	Title string `json:"title" validate:"alphanumunicode,min=1,max=100"`
+	Title string `json:"title,omitempty" validate:"alphanumunicode,min=1,max=100"`
 
 	// something footer(ex. featuring xyz) for this content
-	Subtitle string `json:"subtitle" validate:"alphanumunicode,min=1,max=100"`
+	Subtitle string `json:"subtitle,omitempty" validate:"omitempty,alphanumunicode,min=1,max=100"`
 
 	// author of this content
-	Author string `json:"author" validate:"alphanumunicode,min=1,max=50"`
+	Author string `json:"author,omitempty" validate:"omitempty,alphanumunicode,min=1,max=50"`
 
-	Thumbnail SonolusResourceLocator `json:"thumbnail"`
+	Thumbnail SonolusResourceLocator `json:"thumbnail,omitempty" validate:"omitempty"`
 
-	Data SonolusResourceLocator `json:"data"`
+	Data SonolusResourceLocator `json:"data,omitempty" validate:"omitempty"`
 
-	Configuration SonolusResourceLocator `json:"configuration"`
+	Configuration SonolusResourceLocator `json:"configuration,omitempty" validate:"omitempty"`
 
-	Skin Skin `json:"skin"`
+	Skin Skin `json:"skin,omitempty" validate:"omitempty"`
 
-	Background Background `json:"background"`
+	Background Background `json:"background,omitempty" validate:"omitempty"`
 
-	Effect Effect `json:"effect"`
+	Effect Effect `json:"effect,omitempty" validate:"omitempty"`
 
-	Particle Particle `json:"particle"`
+	Particle Particle `json:"particle,omitempty" validate:"omitempty"`
 
 	// 独自要素: データを作成したエポックミリ秒(ソート用)
-	CreatedTime int32 `json:"createdTime,omitempty" validate:"gte=1"`
+	CreatedTime int32 `json:"createdTime,omitempty" validate:"omitempty,gte=1"`
 
 	// 独自要素: データを更新したエポックミリ秒(ソート用)
-	UpdatedTime int32 `json:"updatedTime,omitempty" validate:"gte=1"`
+	UpdatedTime int32 `json:"updatedTime,omitempty" validate:"omitempty,gte=1"`
 
 	// 独自要素: 譜面作成者のユーザーID
 	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
+
+	// 独自要素: サイト内および譜面情報欄に表示される説明文
+	Description string `json:"description,omitempty" validate:"omitempty,alphanumunicode,min=1,max=3000"`
 }

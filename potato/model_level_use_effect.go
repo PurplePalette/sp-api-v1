@@ -14,5 +14,5 @@ type LevelUseEffect struct {
 	// If true (recommended), default resource specified by the engine will be used.
 	UseDefault bool `json:"useDefault"`
 
-	Item Effect `json:"item,omitempty"`
+	Item *Effect `json:"item,omitempty" validate:"omitempty"`
 }

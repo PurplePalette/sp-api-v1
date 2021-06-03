@@ -14,5 +14,5 @@ type LevelUseSkin struct {
 	// If true (recommended), default resource specified by the engine will be used.
 	UseDefault bool `json:"useDefault"`
 
-	Item Skin `json:"item,omitempty"`
+	Item *Skin `json:"item,omitempty" validate:"omitempty"`
 }

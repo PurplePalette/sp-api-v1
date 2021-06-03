@@ -14,5 +14,5 @@ type LevelUseBackground struct {
 	// If true (recommended), default resource specified by the engine will be used.
 	UseDefault bool `json:"useDefault"`
 
-	Item Background `json:"item,omitempty"`
+	Item *Background `json:"item,omitempty" validate:"omitempty"`
 }
