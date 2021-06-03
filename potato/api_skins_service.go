@@ -11,11 +11,13 @@ package potato
 
 import (
 	"context"
-	"errors"
+	"encoding/json"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 // SkinsApiService is a service that implents the logic for the SkinsApiServicer
@@ -24,11 +26,12 @@ import (
 type SkinsApiService struct {
 	firestore *firestore.Client
 	cache     *CacheService
+	validate  *validator.Validate
 }
 
 // NewSkinsApiService creates a default api service
 func NewSkinsApiService(firestore *firestore.Client, cache *CacheService) SkinsApiServicer {
-	return &SkinsApiService{firestore: firestore, cache: cache}
+	return &SkinsApiService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddSkin - Add skin
@@ -36,20 +39,28 @@ func (s *SkinsApiService) AddSkin(ctx context.Context, skinName string, skin Ski
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(409, {}) or use other options such as http.Ok ...
-	//return Response(409, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("AddSkin method not implemented")
+	if !request.IsValidName(skinName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(skin); err != nil {
+		return Response(http.StatusBadRequest, err.Error()), nil
+	}
+	if s.cache.skins.IsExist(skinName) {
+		return Response(http.StatusConflict, nil), nil
+	}
+	// Force set parameter to valid
+	userId, _ := request.GetUserId(ctx)
+	skin.UserId = userId
+	skin.Name = skinName
+	col := s.firestore.Collection("skins")
+	// Add skin to firestore
+	if _, err := col.Doc(skinName).Set(ctx, skin); err != nil {
+		log.Fatalln("Error posting skin:", err)
+		return Response(500, nil), nil
+	}
+	// Add skin to cache
+	s.cache.skins.Add(skinName, skin)
+	return Response(200, nil), nil
 }
 
 // EditSkin - Edit skin
@@ -57,46 +68,64 @@ func (s *SkinsApiService) EditSkin(ctx context.Context, skinName string, skin Sk
 	if !request.IsLoggedIn(ctx) {
 		return Response(http.StatusUnauthorized, nil), nil
 	}
-
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
-	//return Response(403, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("EditSkin method not implemented")
+	if !request.IsValidName(skinName) {
+		return Response(http.StatusBadRequest, nil), nil
+	}
+	if err := s.validate.Struct(skin); err != nil {
+		return Response(http.StatusBadRequest, err.Error()), nil
+	}
+	userId, _ := request.GetUserId(ctx)
+	match, err := s.cache.skins.IsOwnerMatch(skinName, userId)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	if !match {
+		return Response(http.StatusForbidden, nil), nil
+	}
+	skin.Name = skinName
+	// Update skin data in firestore
+	col := s.firestore.Collection("skins")
+	if _, err := col.Doc(skinName).Set(ctx, skin); err != nil {
+		log.Fatalln("Error posting skin:", err)
+		return Response(500, nil), nil
+	}
+	// Update skin data in cache
+	s.cache.skins.Set(skinName, skin)
+	return Response(200, nil), nil
 }
 
 // GetSkin - Get skin
 func (s *SkinsApiService) GetSkin(ctx context.Context, skinName string) (ImplResponse, error) {
-	// TODO - update GetSkin with the required logic for this service method.
-	// Add api_skins_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetSkinResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetSkinResponse{}), nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetSkin method not implemented")
+	rawSk, err := s.cache.skins.Get(skinName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	sk := rawSk.(Skin)
+	resp := GetSkinResponse{
+		Item:        sk,
+		Description: sk.Description,
+		Recommended: []Skin{},
+	}
+	return Response(200, resp), nil
 }
 
 // GetSkinList - Get skin list
 func (s *SkinsApiService) GetSkinList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
-	// TODO - update GetSkinList with the required logic for this service method.
-	// Add api_skins_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, GetSkinListResponse{}) or use other options such as http.Ok ...
-	//return Response(200, GetSkinListResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetSkinList method not implemented")
+	query := request.ParseSearchQuery(keywords)
+	pages := s.cache.skins.Pages()
+	items, err := s.cache.skins.GetPage(page, query)
+	if err != nil {
+		log.Fatal(err)
+		return Response(500, nil), nil
+	}
+	var skins []Skin
+	err = json.Unmarshal(items, &skins)
+	if err != nil {
+		return Response(500, nil), nil
+	}
+	resp := GetSkinListResponse{
+		PageCount: pages,
+		Items:     skins,
+	}
+	return Response(200, resp), nil
 }

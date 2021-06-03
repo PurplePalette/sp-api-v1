@@ -43,16 +43,16 @@ func (c *SkinsApiController) Routes() Routes {
 			c.EditSkin,
 		},
 		{
-			"GetSkin",
-			strings.ToUpper("Get"),
-			"/skins/{skinName}",
-			c.GetSkin,
-		},
-		{
 			"GetSkinList",
 			strings.ToUpper("Get"),
 			"/skins/list",
 			c.GetSkinList,
+		},
+		{
+			"GetSkin",
+			strings.ToUpper("Get"),
+			"/skins/{skinName}",
+			c.GetSkin,
 		},
 	}
 }
