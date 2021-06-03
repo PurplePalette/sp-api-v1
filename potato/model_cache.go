@@ -169,6 +169,8 @@ func (c *Cache) GetPage(pageId int32, searchQuery request.SearchQuery) ([]byte, 
 			if userMatched && keywordMatched {
 				filteredList = append(filteredList, value)
 			}
+		case User:
+			return nil, errors.New("user data pagination is not supported yet")
 		}
 	}
 	start, end := Paginate(pageId, 20, len(filteredList))
