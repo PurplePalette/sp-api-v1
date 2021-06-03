@@ -38,7 +38,11 @@ func parseDifficulty(difficulty string) [2]int {
 
 // ParseSearchQuery parses the sonolus keywords to query
 func ParseSearchQuery(keywords string) SearchQuery {
-	resp := SearchQuery{}
+	resp := SearchQuery{
+		Filter: SearchFilter{
+			Difficulty: [2]int{0, 100},
+		},
+	}
 	var originalKeywords []string
 	queries := strings.Split(keywords, " ")
 	for _, word := range queries {
