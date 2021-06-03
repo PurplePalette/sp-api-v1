@@ -23,6 +23,8 @@ type CacheService struct {
 	skins Cache
 	// users stores user
 	users Cache
+	// news stores fake levels
+	news Cache
 }
 
 func NewCacheService(firestore *firestore.Client) *CacheService {
@@ -30,6 +32,49 @@ func NewCacheService(firestore *firestore.Client) *CacheService {
 	return &CacheService{
 		init: s,
 	}
+}
+
+func (s *CacheService) InitNews() {
+	s.news.Data = make(map[string]interface{})
+	s.news.Add(
+		"sweetPotatoWelcome",
+		NewNews(
+			"SweetPotatoサーバーへようこそ!",
+			"もっと をタップして一覧を表示してください",
+			"sweetPotatoWelcome",
+			"PurplePalette DevTeam",
+			410,
+			"Cocoa",
+			"https://gochiusa.com/core_sys/images/main/cont/special/37/t_icon4/cocoa.jpg",
+			"※この譜面は遊べません",
+		),
+	)
+	s.news.Add(
+		"sweetPotatoUserWelcome",
+		NewNews(
+			"SweetPotato ユーザー個別サーバー",
+			"Placeholder",
+			"sweetPotatoUserWelcome",
+			"PurplePalette DevTeam",
+			1204,
+			"Chino",
+			"https://gochiusa.com/core_sys/images/main/cont/special/37/t_icon4/chino.jpg",
+			"※この譜面は遊べません",
+		),
+	)
+	s.news.Add(
+		"sweetPotatoTestWelcome",
+		NewNews(
+			"SweetPotato テストサーバー",
+			"Placeholder",
+			"sweetPotatoTestWelcome",
+			"PurplePalette DevTeam",
+			214,
+			"Rize",
+			"https://gochiusa.com/core_sys/images/main/cont/special/37/t_icon4/rize.jpg",
+			"※この譜面は遊べません",
+		),
+	)
 }
 
 func (s *CacheService) InitCache() error {
@@ -68,5 +113,6 @@ func (s *CacheService) InitCache() error {
 		return errors.New("could not get user list from firestore")
 	}
 	s.users.Data = users
+	s.InitNews()
 	return nil
 }

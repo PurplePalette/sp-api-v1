@@ -12,6 +12,7 @@ package potato
 import (
 	"context"
 	"errors"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
@@ -54,18 +55,14 @@ func (s *InfoApiService) EditInfo(ctx context.Context, serverInfo ServerInfo) (I
 
 // GetServerInfo - Get server info
 func (s *InfoApiService) GetServerInfo(ctx context.Context) (ImplResponse, error) {
-	welcome := NewNews(
-		"SweetPotatoサーバーへようこそ!",
-		"もっと をタップして一覧を表示してください",
-		"sweetPotatoWelcome",
-		"PurplePalette DevTeam",
-		410,
-		"Cocoa",
-		"https://gochiusa.com/bloom/core_sys/images/others/favicon/android-chrome-192x192.png",
-		"ハローワールド!!!",
-	)
+	welcome, err := s.cache.news.Get("sweetPotatoWelcome")
+	parsedNews := welcome.(News)
+	if err != nil {
+		log.Print(err)
+		return Response(http.StatusInternalServerError, nil), nil
+	}
 	resp := ServerInfo{
-		Levels:      []Level{welcome.Level},
+		Levels:      []Level{parsedNews.Level},
 		Skins:       []Skin{},
 		Backgrounds: []Background{},
 		Effects:     []Effect{},

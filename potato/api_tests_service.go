@@ -12,6 +12,7 @@ package potato
 import (
 	"context"
 	"errors"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/firestore"
@@ -32,13 +33,25 @@ func NewTestsApiService(firestore *firestore.Client, cache *CacheService) TestsA
 
 // GetTestServerInfo - Get user server info
 func (s *TestsApiService) GetTestServerInfo(ctx context.Context, testId string) (ImplResponse, error) {
-	// TODO - update GetTestServerInfo with the required logic for this service method.
-	// Add api_tests_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	//TODO: Uncomment the next line to return response Response(200, ServerInfo{}) or use other options such as http.Ok ...
-	//return Response(200, ServerInfo{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTestServerInfo method not implemented")
+	if _, err := s.cache.GetUserIdFromTest(testId); err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	welcome, err := s.cache.news.Get("sweetPotatoTestWelcome")
+	parsedNews := welcome.(News)
+	if err != nil {
+		log.Print(err)
+		return Response(http.StatusInternalServerError, nil), nil
+	}
+	parsedNews.Level.Artists = testId
+	resp := ServerInfo{
+		Levels:      []Level{parsedNews.Level},
+		Skins:       []Skin{},
+		Backgrounds: []Background{},
+		Effects:     []Effect{},
+		Particles:   []Particle{},
+		Engines:     []Engine{},
+	}
+	return Response(200, resp), nil
 }
 
 // GetTestsBackgrounds - Get backgrounds for test
