@@ -35,10 +35,6 @@ func NewUsersApiService(firestore *firestore.Client, cache *CacheService) UsersA
 
 // EditUser - Edit user
 func (s *UsersApiService) EditUser(ctx context.Context, userId string, user User) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
-
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil
 

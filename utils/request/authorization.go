@@ -20,9 +20,3 @@ func GetUserId(ctx context.Context) (string, error) {
 	}
 	return userId, nil
 }
-
-// IsLoggedIn reads auth state from request context
-func IsLoggedIn(ctx context.Context) bool {
-	_, err := GetUserId(ctx)
-	return err == nil
-}

@@ -37,9 +37,6 @@ func NewBackgroundsApiService(firestore *firestore.Client, cache *CacheService) 
 
 // AddBackground - Add background
 func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(backgroundName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -69,9 +66,6 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 
 // EditBackground - Edit background
 func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(backgroundName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}

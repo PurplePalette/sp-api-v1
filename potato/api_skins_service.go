@@ -36,9 +36,6 @@ func NewSkinsApiService(firestore *firestore.Client, cache *CacheService) SkinsA
 
 // AddSkin - Add skin
 func (s *SkinsApiService) AddSkin(ctx context.Context, skinName string, skin Skin) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(skinName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -65,9 +62,6 @@ func (s *SkinsApiService) AddSkin(ctx context.Context, skinName string, skin Ski
 
 // EditSkin - Edit skin
 func (s *SkinsApiService) EditSkin(ctx context.Context, skinName string, skin Skin) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(skinName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}

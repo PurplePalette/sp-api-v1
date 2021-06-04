@@ -16,7 +16,6 @@ import (
 	"net/http"
 
 	"cloud.google.com/go/firestore"
-	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
 // InfoApiService is a service that implents the logic for the InfoApiServicer
@@ -34,10 +33,6 @@ func NewInfoApiService(firestore *firestore.Client, cache *CacheService) InfoApi
 
 // EditInfo - Edit server info
 func (s *InfoApiService) EditInfo(ctx context.Context, serverInfo ServerInfo) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
-
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil
 

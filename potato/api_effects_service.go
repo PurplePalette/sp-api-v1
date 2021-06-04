@@ -36,9 +36,6 @@ func NewEffectsApiService(firestore *firestore.Client, cache *CacheService) Effe
 
 // AddEffect - Add effect
 func (s *EffectsApiService) AddEffect(ctx context.Context, effectName string, effect Effect) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(effectName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -65,9 +62,6 @@ func (s *EffectsApiService) AddEffect(ctx context.Context, effectName string, ef
 
 // EditEffect - Edit effect
 func (s *EffectsApiService) EditEffect(ctx context.Context, effectName string, effect Effect) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(effectName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}

@@ -36,9 +36,6 @@ func NewParticlesApiService(firestore *firestore.Client, cache *CacheService) Pa
 
 // AddParticle - Add particle
 func (s *ParticlesApiService) AddParticle(ctx context.Context, particleName string, particle Particle) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(particleName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -65,9 +62,6 @@ func (s *ParticlesApiService) AddParticle(ctx context.Context, particleName stri
 
 // EditParticle - Edit particle
 func (s *ParticlesApiService) EditParticle(ctx context.Context, particleName string, particle Particle) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(particleName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}

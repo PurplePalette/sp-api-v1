@@ -36,9 +36,6 @@ func NewLevelsApiService(firestore *firestore.Client, cache *CacheService) Level
 
 // AddLevel - Add level
 func (s *LevelsApiService) AddLevel(ctx context.Context, levelName string, level Level) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(levelName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -65,9 +62,6 @@ func (s *LevelsApiService) AddLevel(ctx context.Context, levelName string, level
 
 // EditLevel - Edit level
 func (s *LevelsApiService) EditLevel(ctx context.Context, levelName string, level Level) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(levelName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}

@@ -15,18 +15,24 @@ import (
 )
 
 // injectUserToContext injects firebase user info to context
-func injectUserToContext(auth *auth.Client, next http.HandlerFunc) http.HandlerFunc {
+func injectUserToContext(auth *auth.Client, route potato.Route) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := r.Header.Get("Authorization")
+		authorized := false
 		if token != "" {
 			bearerToken := strings.TrimPrefix(token, "Bearer ")
 			firebaseToken, err := auth.VerifyIDTokenAndCheckRevoked(context.Background(), bearerToken)
 			if err == nil {
 				ctx := context.WithValue(r.Context(), request.CtxUserId, firebaseToken.UID)
 				r = r.WithContext(ctx)
+				authorized = true
 			}
 		}
-		next.ServeHTTP(w, r)
+		if route.Method != "GET" && !authorized {
+			w.WriteHeader(http.StatusUnauthorized)
+		} else {
+			route.HandlerFunc.ServeHTTP(w, r)
+		}
 	}
 }
 
@@ -48,7 +54,7 @@ func NewRouterWithInject(auth *auth.Client, routers ...potato.Router) *mux.Route
 	for _, api := range routers {
 		for _, route := range api.Routes() {
 			var handler http.Handler
-			handler = injectUserToContext(auth, route.HandlerFunc)
+			handler = injectUserToContext(auth, route)
 			handler = potato.Logger(handler, route.Name)
 
 			router.

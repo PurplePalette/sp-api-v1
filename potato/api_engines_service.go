@@ -36,9 +36,6 @@ func NewEnginesApiService(firestore *firestore.Client, cache *CacheService) Engi
 
 // AddEngine - Add engine
 func (s *EnginesApiService) AddEngine(ctx context.Context, engineName string, engine Engine) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(engineName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -65,9 +62,6 @@ func (s *EnginesApiService) AddEngine(ctx context.Context, engineName string, en
 
 // EditEngine - Edit engine
 func (s *EnginesApiService) EditEngine(ctx context.Context, engineName string, engine Engine) (ImplResponse, error) {
-	if !request.IsLoggedIn(ctx) {
-		return Response(http.StatusUnauthorized, nil), nil
-	}
 	if !request.IsValidName(engineName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
