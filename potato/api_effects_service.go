@@ -99,9 +99,10 @@ func (s *EffectsApiService) GetEffect(ctx context.Context, effectName string) (I
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
+	parsedEf := ef.(Effect)
 	resp := GetEffectResponse{
-		Item:        ef.(Effect),
-		Description: "",
+		Item:        parsedEf,
+		Description: parsedEf.Description,
 		Recommended: []Effect{},
 	}
 	return Response(200, resp), nil

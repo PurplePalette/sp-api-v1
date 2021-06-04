@@ -103,9 +103,10 @@ func (s *BackgroundsApiService) GetBackground(ctx context.Context, backgroundNam
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
+	parsedBg := bg.(Background)
 	resp := GetBackgroundResponse{
-		Item:        bg.(Background),
-		Description: "",
+		Item:        parsedBg,
+		Description: parsedBg.Description,
 		Recommended: []Background{},
 	}
 	return Response(200, resp), nil

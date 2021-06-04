@@ -99,9 +99,10 @@ func (s *EnginesApiService) GetEngine(ctx context.Context, engineName string) (I
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
+	parsedEg := eg.(Engine)
 	resp := GetEngineResponse{
-		Item:        eg.(Engine),
-		Description: "",
+		Item:        parsedEg,
+		Description: parsedEg.Description,
 		Recommended: []Engine{},
 	}
 	return Response(200, resp), nil
