@@ -10,7 +10,6 @@ import (
 
 	"github.com/PurplePalette/sonolus-uploader-core/potato"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/server"
-	"github.com/PurplePalette/sonolus-uploader-core/utils/tests"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -58,7 +57,7 @@ func TestAddEffect(t *testing.T) {
 		"/effects/myEffect",
 		bytes.NewBuffer(efJson),
 	)
-	req = tests.SetUserAuthorizationToHeader(req)
+	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
@@ -94,7 +93,7 @@ func TestEditEffect(t *testing.T) {
 		"/effects/myEffect",
 		bytes.NewBuffer(efJson),
 	)
-	req = tests.SetUserAuthorizationToHeader(req)
+	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)

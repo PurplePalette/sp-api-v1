@@ -10,7 +10,6 @@ import (
 
 	"github.com/PurplePalette/sonolus-uploader-core/potato"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/server"
-	"github.com/PurplePalette/sonolus-uploader-core/utils/tests"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -52,7 +51,7 @@ func TestAddParticle(t *testing.T) {
 		"/particles/myParticle",
 		bytes.NewBuffer(ptJson),
 	)
-	req = tests.SetUserAuthorizationToHeader(req)
+	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
@@ -82,7 +81,7 @@ func TestEditParticle(t *testing.T) {
 		"/particles/myParticle",
 		bytes.NewBuffer(ptJson),
 	)
-	req = tests.SetUserAuthorizationToHeader(req)
+	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
