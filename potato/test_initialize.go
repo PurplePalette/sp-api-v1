@@ -2,12 +2,17 @@ package potato
 
 import (
 	"context"
+	"encoding/json"
+	"errors"
+	"io/ioutil"
 
 	"cloud.google.com/go/firestore"
 	"google.golang.org/api/iterator"
 )
 
-func deleteCollection(ctx context.Context, client *firestore.Client,
+const TEST_UID = "YnaKWRpbanfyn1ge6FKQChqocyyn"
+
+func DeleteCollection(ctx context.Context, client *firestore.Client,
 	ref *firestore.CollectionRef, batchSize int) error {
 
 	for {
@@ -45,37 +50,101 @@ func deleteCollection(ctx context.Context, client *firestore.Client,
 	}
 }
 
+func InsertCollection(ctx context.Context, firestore *firestore.Client, collectionName string) error {
+	col := firestore.Collection(collectionName)
+	bytes, err := ioutil.ReadFile("./migration/" + collectionName + ".json")
+	if err != nil {
+		panic(err)
+	}
+	switch collectionName {
+	case "backgrounds":
+		var bgs []Background
+		if err = json.Unmarshal(bytes, &bgs); err != nil {
+			panic(err)
+		}
+		for _, bg := range bgs {
+			if _, err := col.Doc(bg.Name).Set(ctx, bg); err != nil {
+				return err
+			}
+		}
+	case "effects":
+		var efs []Effect
+		if err = json.Unmarshal(bytes, &efs); err != nil {
+			panic(err)
+		}
+		for _, ef := range efs {
+			if _, err := col.Doc(ef.Name).Set(ctx, ef); err != nil {
+				return err
+			}
+		}
+	case "engines":
+		var efs []Engine
+		if err = json.Unmarshal(bytes, &efs); err != nil {
+			panic(err)
+		}
+		for _, ef := range efs {
+			if _, err := col.Doc(ef.Name).Set(ctx, ef); err != nil {
+				return err
+			}
+		}
+	case "levels":
+		var lvs []Level
+		if err = json.Unmarshal(bytes, &lvs); err != nil {
+			panic(err)
+		}
+		for _, lv := range lvs {
+			if _, err := col.Doc(lv.Name).Set(ctx, lv); err != nil {
+				return err
+			}
+		}
+	case "particles":
+		var pts []Particle
+		if err = json.Unmarshal(bytes, &pts); err != nil {
+			panic(err)
+		}
+		for _, pt := range pts {
+			if _, err := col.Doc(pt.Name).Set(ctx, pt); err != nil {
+				return err
+			}
+		}
+	case "skins":
+		var sks []Skin
+		if err = json.Unmarshal(bytes, &sks); err != nil {
+			panic(err)
+		}
+		for _, sk := range sks {
+			if _, err := col.Doc(sk.Name).Set(ctx, sk); err != nil {
+				return err
+			}
+		}
+	case "users":
+		var uss []User
+		if err = json.Unmarshal(bytes, &uss); err != nil {
+			panic(err)
+		}
+		for _, us := range uss {
+			if _, err := col.Doc(us.UserId).Set(ctx, us); err != nil {
+				return err
+			}
+		}
+	default:
+		return errors.New("unsupported collection type")
+	}
+	return nil
+}
+
 func ReGenerateDatabase(firestore *firestore.Client) error {
-	// Drop database
-	drops := []string{"backgrounds", "effects", "engines", "levels", "particles", "skins", "users"}
-	for _, d := range drops {
-		ref := firestore.Collection(d)
+	// Drop and insert database
+	cols := []string{"backgrounds", "effects", "engines", "levels", "particles", "skins", "users"}
+	for _, col := range cols {
+		ref := firestore.Collection(col)
 		ctx := context.Background()
-		err := deleteCollection(ctx, firestore, ref, 100)
-		if err != nil {
+		if err := DeleteCollection(ctx, firestore, ref, 100); err != nil {
 			return err
 		}
-	}
-	if err := initBackgroundsDatabase(firestore); err != nil {
-		return err
-	}
-	if err := initEffectsDatabase(firestore); err != nil {
-		return err
-	}
-	if err := initEnginesDatabase(firestore); err != nil {
-		return err
-	}
-	if err := initLevelsDatabase(firestore); err != nil {
-		return err
-	}
-	if err := initParticlesDatabase(firestore); err != nil {
-		return err
-	}
-	if err := initSkinsDatabase(firestore); err != nil {
-		return err
-	}
-	if err := initUsersDatabase(firestore); err != nil {
-		return err
+		if err := InsertCollection(ctx, firestore, col); err != nil {
+			return err
+		}
 	}
 	return nil
 }

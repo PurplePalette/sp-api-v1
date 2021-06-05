@@ -1,0 +1,80 @@
+[
+   {
+      "name":"bread1",
+      "version":1,
+      "title":"Bread1",
+      "subtitle":"Performance Test",
+      "author":"Sonolus",
+      "thumbnail":{
+         "type":"SkinThumbnail",
+         "hash":"d6bcbd57f1a6523369be068eee3913bb459dec69",
+         "url":"https://sonolus.com/performance-test/repository/SkinThumbnail/d6bcbd57f1a6523369be068eee3913bb459dec69"
+      },
+      "data":{
+         "type":"SkinData",
+         "hash":"9587c863c1262ff3c6545d096ae4733f3aab22a4",
+         "url":"https://sonolus.com/performance-test/repository/SkinData/9587c863c1262ff3c6545d096ae4733f3aab22a4"
+      },
+      "texture":{
+         "type":"SkinTexture",
+         "hash":"d6bcbd57f1a6523369be068eee3913bb459dec69",
+         "url":"https://sonolus.com/performance-test/repository/SkinTexture/d6bcbd57f1a6523369be068eee3913bb459dec69"
+      },
+      "createdTime":1622902476,
+      "updatedTime":1622902476,
+      "userId":"YnaKWRpbanfyn1ge6FKQChqocyyn",
+      "description":"This is test data 1"
+   },
+   {
+      "name":"bread2",
+      "version":1,
+      "title":"Bread2",
+      "subtitle":"Performance Test",
+      "author":"Sonolus",
+      "thumbnail":{
+         "type":"SkinThumbnail",
+         "hash":"d6bcbd57f1a6523369be068eee3913bb459dec69",
+         "url":"https://sonolus.com/performance-test/repository/SkinThumbnail/d6bcbd57f1a6523369be068eee3913bb459dec69"
+      },
+      "data":{
+         "type":"SkinData",
+         "hash":"9587c863c1262ff3c6545d096ae4733f3aab22a4",
+         "url":"https://sonolus.com/performance-test/repository/SkinData/9587c863c1262ff3c6545d096ae4733f3aab22a4"
+      },
+      "texture":{
+         "type":"SkinTexture",
+         "hash":"d6bcbd57f1a6523369be068eee3913bb459dec69",
+         "url":"https://sonolus.com/performance-test/repository/SkinTexture/d6bcbd57f1a6523369be068eee3913bb459dec69"
+      },
+      "createdTime":1622905000,
+      "updatedTime":1622905000,
+      "userId":"YnaKWRpbanfyn1ge6FKQChqocyyn",
+      "description":"This is test data 2"
+   },
+   {
+      "name":"bread3",
+      "version":1,
+      "title":"Bread3",
+      "subtitle":"Performance Test",
+      "author":"Sonolus",
+      "thumbnail":{
+         "type":"SkinThumbnail",
+         "hash":"d6bcbd57f1a6523369be068eee3913bb459dec69",
+         "url":"https://sonolus.com/performance-test/repository/SkinThumbnail/d6bcbd57f1a6523369be068eee3913bb459dec69"
+      },
+      "data":{
+         "type":"SkinData",
+         "hash":"9587c863c1262ff3c6545d096ae4733f3aab22a4",
+         "url":"https://sonolus.com/performance-test/repository/SkinData/9587c863c1262ff3c6545d096ae4733f3aab22a4"
+      },
+      "texture":{
+         "type":"SkinTexture",
+         "hash":"d6bcbd57f1a6523369be068eee3913bb459dec69",
+         "url":"https://sonolus.com/performance-test/repository/SkinTexture/d6bcbd57f1a6523369be068eee3913bb459dec69"
+      },
+      "createdTime":1622903000,
+      "updatedTime":1622903000,
+      "userId":"YnaKWRpbanfyn1ge6FKQChqocyyn",
+      "description":"This is test data 3"
+   }
+]
