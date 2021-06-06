@@ -90,6 +90,42 @@ func (c *UsersApiController) Routes() Routes {
 			"/users/{userId}/skins/list",
 			c.GetUsersSkins,
 		},
+		{
+			"GetUsersBackground",
+			strings.ToUpper("Get"),
+			"/users/{userId}/backgrounds/{backgroundName}",
+			c.GetUsersBackground,
+		},
+		{
+			"GetUsersEffect",
+			strings.ToUpper("Get"),
+			"/users/{userId}/effects/{effectName}",
+			c.GetUsersEffect,
+		},
+		{
+			"GetUsersEngine",
+			strings.ToUpper("Get"),
+			"/users/{userId}/engines/{engineName}",
+			c.GetUsersEngine,
+		},
+		{
+			"GetUsersLevel",
+			strings.ToUpper("Get"),
+			"/users/{userId}/levels/{levelName}",
+			c.GetUsersLevel,
+		},
+		{
+			"GetUsersParticle",
+			strings.ToUpper("Get"),
+			"/users/{userId}/particles/{particleName}",
+			c.GetUsersParticle,
+		},
+		{
+			"GetUsersSkin",
+			strings.ToUpper("Get"),
+			"/users/{userId}/skins/{skinName}",
+			c.GetUsersSkin,
+		},
 	}
 }
 
@@ -293,6 +329,114 @@ func (c *UsersApiController) GetUsersSkins(w http.ResponseWriter, r *http.Reques
 	}
 	keywords := query.Get("keywords")
 	result, err := c.service.GetUsersSkins(r.Context(), userId, localization, page, keywords)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetUsersBackground - Get users background
+func (c *UsersApiController) GetUsersBackground(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userId := params["userId"]
+
+	backgroundName := params["backgroundName"]
+
+	result, err := c.service.GetUsersBackground(r.Context(), userId, backgroundName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetUsersEffect - Get users effect
+func (c *UsersApiController) GetUsersEffect(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userId := params["userId"]
+
+	effectName := params["effectName"]
+
+	result, err := c.service.GetUsersEffect(r.Context(), userId, effectName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetUsersEngine - Get users engine
+func (c *UsersApiController) GetUsersEngine(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userId := params["userId"]
+
+	engineName := params["engineName"]
+
+	result, err := c.service.GetUsersEngine(r.Context(), userId, engineName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetUsersLevel - Get users level
+func (c *UsersApiController) GetUsersLevel(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userId := params["userId"]
+
+	levelName := params["levelName"]
+
+	result, err := c.service.GetUsersLevel(r.Context(), userId, levelName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetUsersParticle - Get users particle
+func (c *UsersApiController) GetUsersParticle(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userId := params["userId"]
+
+	particleName := params["particleName"]
+
+	result, err := c.service.GetUsersParticle(r.Context(), userId, particleName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetUsersSkin - Get users skin
+func (c *UsersApiController) GetUsersSkin(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userId := params["userId"]
+
+	skinName := params["skinName"]
+
+	result, err := c.service.GetUsersSkin(r.Context(), userId, skinName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)

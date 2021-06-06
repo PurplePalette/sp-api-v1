@@ -71,6 +71,42 @@ func (c *TestsApiController) Routes() Routes {
 			"/tests/{testId}/skins/list",
 			c.GetTestsSkins,
 		},
+		{
+			"GetBackgroundTest",
+			strings.ToUpper("Get"),
+			"/tests/{testId}/backgrounds/{backgroundName}",
+			c.GetBackgroundTest,
+		},
+		{
+			"GetEffectTest",
+			strings.ToUpper("Get"),
+			"/tests/{testId}/effects/{effectName}",
+			c.GetEffectTest,
+		},
+		{
+			"GetEngineTest",
+			strings.ToUpper("Get"),
+			"/tests/{testId}/engines/{engineName}",
+			c.GetEngineTest,
+		},
+		{
+			"GetLevelTest",
+			strings.ToUpper("Get"),
+			"/tests/{testId}/levels/{levelName}",
+			c.GetLevelTest,
+		},
+		{
+			"GetParticleTest",
+			strings.ToUpper("Get"),
+			"/tests/{testId}/particles/{particleName}",
+			c.GetParticleTest,
+		},
+		{
+			"GetSkinTest",
+			strings.ToUpper("Get"),
+			"/tests/{testId}/skins/{skinName}",
+			c.GetSkinTest,
+		},
 	}
 }
 
@@ -224,6 +260,114 @@ func (c *TestsApiController) GetTestsSkins(w http.ResponseWriter, r *http.Reques
 	}
 	keywords := query.Get("keywords")
 	result, err := c.service.GetTestsSkins(r.Context(), testId, localization, page, keywords)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetBackgroundTest - Get testing background
+func (c *TestsApiController) GetBackgroundTest(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	testId := params["testId"]
+
+	backgroundName := params["backgroundName"]
+
+	result, err := c.service.GetBackgroundTest(r.Context(), testId, backgroundName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetEffectTest - Get testing effect
+func (c *TestsApiController) GetEffectTest(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	testId := params["testId"]
+
+	effectName := params["effectName"]
+
+	result, err := c.service.GetEffectTest(r.Context(), testId, effectName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetEngineTest - Get testing engine
+func (c *TestsApiController) GetEngineTest(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	testId := params["testId"]
+
+	engineName := params["engineName"]
+
+	result, err := c.service.GetEngineTest(r.Context(), testId, engineName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetLevelTest - Get testing level
+func (c *TestsApiController) GetLevelTest(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	testId := params["testId"]
+
+	levelName := params["levelName"]
+
+	result, err := c.service.GetLevelTest(r.Context(), testId, levelName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetParticleTest - Get testing particle
+func (c *TestsApiController) GetParticleTest(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	testId := params["testId"]
+
+	particleName := params["particleName"]
+
+	result, err := c.service.GetParticleTest(r.Context(), testId, particleName)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		EncodeJSONResponse(err.Error(), &result.Code, w)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, w)
+
+}
+
+// GetSkinTest - Get testing skin
+func (c *TestsApiController) GetSkinTest(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	testId := params["testId"]
+
+	skinName := params["skinName"]
+
+	result, err := c.service.GetSkinTest(r.Context(), testId, skinName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)

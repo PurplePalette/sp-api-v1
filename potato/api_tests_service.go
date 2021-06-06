@@ -216,3 +216,100 @@ func (s *TestsApiService) GetTestsSkins(ctx context.Context, testId string, loca
 	}
 	return Response(200, resp), nil
 }
+
+// GetBackgroundTest - Get testing background
+func (s *TestsApiService) GetBackgroundTest(ctx context.Context, testId string, backgroundName string) (ImplResponse, error) {
+	bg, err := s.cache.backgrounds.Get(backgroundName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	parsedBg := bg.(Background)
+	resp := GetBackgroundResponse{
+		Item:        parsedBg,
+		Description: parsedBg.Description,
+		Recommended: []Background{},
+	}
+	return Response(200, resp), nil
+}
+
+// GetEffectTest - Get testing effect
+func (s *TestsApiService) GetEffectTest(ctx context.Context, testId string, effectName string) (ImplResponse, error) {
+	ef, err := s.cache.effects.Get(effectName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	parsedEf := ef.(Effect)
+	resp := GetEffectResponse{
+		Item:        parsedEf,
+		Description: parsedEf.Description,
+		Recommended: []Effect{},
+	}
+	return Response(200, resp), nil
+}
+
+// GetEngineTest - Get testing engine
+func (s *TestsApiService) GetEngineTest(ctx context.Context, testId string, engineName string) (ImplResponse, error) {
+	eg, err := s.cache.engines.Get(engineName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	parsedEg := eg.(Engine)
+	resp := GetEngineResponse{
+		Item:        parsedEg,
+		Description: parsedEg.Description,
+		Recommended: []Engine{},
+	}
+	return Response(200, resp), nil
+}
+
+// GetLevelTest - Get testing level
+func (s *TestsApiService) GetLevelTest(ctx context.Context, testId string, levelName string) (ImplResponse, error) {
+	rawNs, newsNotExistErr := s.cache.news.Get(levelName)
+	rawLv, levelNotExistErr := s.cache.levels.Get(levelName)
+	if newsNotExistErr != nil && levelNotExistErr != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	var lv Level
+	if newsNotExistErr == nil {
+		ns := rawNs.(News)
+		lv = ns.Level
+	} else {
+		lv = rawLv.(Level)
+	}
+	resp := GetLevelResponse{
+		Item:        lv,
+		Description: lv.Description,
+		Recommended: []Level{},
+	}
+	return Response(200, resp), nil
+}
+
+// GetParticleTest - Get testing particle
+func (s *TestsApiService) GetParticleTest(ctx context.Context, testId string, particleName string) (ImplResponse, error) {
+	rawPt, err := s.cache.particles.Get(particleName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	pt := rawPt.(Particle)
+	resp := GetParticleResponse{
+		Item:        pt,
+		Description: pt.Description,
+		Recommended: []Particle{},
+	}
+	return Response(200, resp), nil
+}
+
+// GetSkinTest - Get testing skin
+func (s *TestsApiService) GetSkinTest(ctx context.Context, testId string, skinName string) (ImplResponse, error) {
+	rawSk, err := s.cache.skins.Get(skinName)
+	if err != nil {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	sk := rawSk.(Skin)
+	resp := GetSkinResponse{
+		Item:        sk,
+		Description: sk.Description,
+		Recommended: []Skin{},
+	}
+	return Response(200, resp), nil
+}

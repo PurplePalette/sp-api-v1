@@ -1020,6 +1020,39 @@ paths:
       summary: Get backgrounds for test
       tags:
       - tests
+  /tests/{testId}/backgrounds/{backgroundName}:
+    get:
+      description: |-
+        It returns specified background info
+        It will raise 404 if the background is not registered in this server
+      operationId: getBackgroundTest
+      parameters:
+      - explode: false
+        in: path
+        name: testId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: backgroundName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBackgroundResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get testing background
+      tags:
+      - tests
   /tests/{testId}/effects/list:
     get:
       description: 譜面テスト用エンドポイント/ エフェクト一覧を返す(一般のエフェクトリストと同じのが返される)
@@ -1074,6 +1107,39 @@ paths:
                 $ref: '#/components/schemas/GetEffectListResponse'
           description: OK
       summary: Get effects for test
+      tags:
+      - tests
+  /tests/{testId}/effects/{effectName}:
+    get:
+      description: |-
+        It returns specified effect info
+        It will raise 404 if the effect is not registered in this server
+      operationId: getEffectTest
+      parameters:
+      - explode: false
+        in: path
+        name: testId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: effectName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEffectResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get testing effect
       tags:
       - tests
   /tests/{testId}/engines/list:
@@ -1132,6 +1198,39 @@ paths:
       summary: Get engines for test
       tags:
       - tests
+  /tests/{testId}/engines/{engineName}:
+    get:
+      description: |-
+        It returns specified engine info
+        It will raise 404 if the engine is not registered in this server
+      operationId: getEngineTest
+      parameters:
+      - explode: false
+        in: path
+        name: testId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: engineName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEngineResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get testing engine
+      tags:
+      - tests
   /tests/{testId}/levels/list:
     get:
       description: 譜面テスト用エンドポイント/ 背景一覧を返す
@@ -1186,6 +1285,39 @@ paths:
                 $ref: '#/components/schemas/GetLevelListResponse'
           description: OK
       summary: Get levels for test
+      tags:
+      - tests
+  /tests/{testId}/levels/{levelName}:
+    get:
+      description: |-
+        It returns specified level info
+        It will raise 404 if the level is not registered in this server
+      operationId: getLevelTest
+      parameters:
+      - explode: false
+        in: path
+        name: testId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: levelName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLevelResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get testing level
       tags:
       - tests
   /tests/{testId}/particles/list:
@@ -1244,6 +1376,39 @@ paths:
       summary: Get particles for test
       tags:
       - tests
+  /tests/{testId}/particles/{particleName}:
+    get:
+      description: |-
+        It returns specified particle info
+        It will raise 404 if the particle is not registered in this server
+      operationId: getParticleTest
+      parameters:
+      - explode: false
+        in: path
+        name: testId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: particleName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetParticleResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get testing particle
+      tags:
+      - tests
   /tests/{testId}/skins/list:
     get:
       description: 譜面テスト用エンドポイント/ スキン一覧を返す(一般のスキンリストと同じのが返される)
@@ -1298,6 +1463,39 @@ paths:
                 $ref: '#/components/schemas/GetSkinListResponse'
           description: OK
       summary: Get skins for test
+      tags:
+      - tests
+  /tests/{testId}/skins/{skinName}:
+    get:
+      description: |-
+        It returns specified skin info
+        It will raise 404 if the skin is not registered in this server
+      operationId: getSkinTest
+      parameters:
+      - explode: false
+        in: path
+        name: testId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: skinName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSkinResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get testing skin
       tags:
       - tests
   /users/{userId}/info:
@@ -1378,6 +1576,39 @@ paths:
       summary: Get backgrounds for test
       tags:
       - users
+  /users/{userId}/backgrounds/{backgroundName}:
+    get:
+      description: |-
+        It returns specified background info
+        It will raise 404 if the background is not registered in this server
+      operationId: getUsersBackground
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: backgroundName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBackgroundResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get users background
+      tags:
+      - users
   /users/{userId}/effects/list:
     get:
       description: ユーザー個別用エンドポイント/ エフェクト一覧を返す
@@ -1432,6 +1663,39 @@ paths:
                 $ref: '#/components/schemas/GetEffectListResponse'
           description: OK
       summary: Get effects for test
+      tags:
+      - users
+  /users/{userId}/effects/{effectName}:
+    get:
+      description: |-
+        It returns specified effect info
+        It will raise 404 if the effect is not registered in this server
+      operationId: getUsersEffect
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: effectName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEffectResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get users effect
       tags:
       - users
   /users/{userId}/engines/list:
@@ -1490,6 +1754,39 @@ paths:
       summary: Get engines for test
       tags:
       - users
+  /users/{userId}/engines/{engineName}:
+    get:
+      description: |-
+        It returns specified engine info
+        It will raise 404 if the engine is not registered in this server
+      operationId: getUsersEngine
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: engineName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEngineResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get users engine
+      tags:
+      - users
   /users/{userId}/levels/list:
     get:
       description: ユーザー個別用エンドポイント/ 背景一覧を返す
@@ -1544,6 +1841,39 @@ paths:
                 $ref: '#/components/schemas/GetLevelListResponse'
           description: OK
       summary: Get levels for test
+      tags:
+      - users
+  /users/{userId}/levels/{levelName}:
+    get:
+      description: |-
+        It returns specified level info
+        It will raise 404 if the level is not registered in this server
+      operationId: getUsersLevel
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: levelName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLevelResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get users level
       tags:
       - users
   /users/{userId}/particles/list:
@@ -1602,6 +1932,39 @@ paths:
       summary: Get particles for test
       tags:
       - users
+  /users/{userId}/particles/{particleName}:
+    get:
+      description: |-
+        It returns specified particle info
+        It will raise 404 if the particle is not registered in this server
+      operationId: getUsersParticle
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: particleName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetParticleResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get users particle
+      tags:
+      - users
   /users/{userId}/skins/list:
     get:
       description: ユーザー個別用エンドポイント/ スキン一覧を返す
@@ -1656,6 +2019,39 @@ paths:
                 $ref: '#/components/schemas/GetSkinListResponse'
           description: OK
       summary: Get skins for test
+      tags:
+      - users
+  /users/{userId}/skins/{skinName}:
+    get:
+      description: |-
+        It returns specified skin info
+        It will raise 404 if the skin is not registered in this server
+      operationId: getUsersSkin
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: skinName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSkinResponse'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get users skin
       tags:
       - users
 components:

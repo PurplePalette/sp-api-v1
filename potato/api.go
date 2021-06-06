@@ -93,6 +93,12 @@ type TestsApiRouter interface {
 	GetTestsLevels(http.ResponseWriter, *http.Request)
 	GetTestsParticles(http.ResponseWriter, *http.Request)
 	GetTestsSkins(http.ResponseWriter, *http.Request)
+	GetBackgroundTest(http.ResponseWriter, *http.Request)
+	GetEffectTest(http.ResponseWriter, *http.Request)
+	GetEngineTest(http.ResponseWriter, *http.Request)
+	GetLevelTest(http.ResponseWriter, *http.Request)
+	GetParticleTest(http.ResponseWriter, *http.Request)
+	GetSkinTest(http.ResponseWriter, *http.Request)
 }
 
 // UsersApiRouter defines the required methods for binding the api requests to a responses for the UsersApi
@@ -109,6 +115,12 @@ type UsersApiRouter interface {
 	GetUsersLevels(http.ResponseWriter, *http.Request)
 	GetUsersParticles(http.ResponseWriter, *http.Request)
 	GetUsersSkins(http.ResponseWriter, *http.Request)
+	GetUsersBackground(http.ResponseWriter, *http.Request)
+	GetUsersEffect(http.ResponseWriter, *http.Request)
+	GetUsersEngine(http.ResponseWriter, *http.Request)
+	GetUsersLevel(http.ResponseWriter, *http.Request)
+	GetUsersParticle(http.ResponseWriter, *http.Request)
+	GetUsersSkin(http.ResponseWriter, *http.Request)
 }
 
 // BackgroundsApiServicer defines the api actions for the BackgroundsApi service
@@ -198,6 +210,12 @@ type TestsApiServicer interface {
 	GetTestsLevels(context.Context, string, string, int32, string) (ImplResponse, error)
 	GetTestsParticles(context.Context, string, string, int32, string) (ImplResponse, error)
 	GetTestsSkins(context.Context, string, string, int32, string) (ImplResponse, error)
+	GetBackgroundTest(context.Context, string, string) (ImplResponse, error)
+	GetEffectTest(context.Context, string, string) (ImplResponse, error)
+	GetEngineTest(context.Context, string, string) (ImplResponse, error)
+	GetLevelTest(context.Context, string, string) (ImplResponse, error)
+	GetParticleTest(context.Context, string, string) (ImplResponse, error)
+	GetSkinTest(context.Context, string, string) (ImplResponse, error)
 }
 
 // UsersApiServicer defines the api actions for the UsersApi service
@@ -215,4 +233,10 @@ type UsersApiServicer interface {
 	GetUsersLevels(context.Context, string, string, int32, string) (ImplResponse, error)
 	GetUsersParticles(context.Context, string, string, int32, string) (ImplResponse, error)
 	GetUsersSkins(context.Context, string, string, int32, string) (ImplResponse, error)
+	GetUsersBackground(context.Context, string, string) (ImplResponse, error)
+	GetUsersEffect(context.Context, string, string) (ImplResponse, error)
+	GetUsersEngine(context.Context, string, string) (ImplResponse, error)
+	GetUsersLevel(context.Context, string, string) (ImplResponse, error)
+	GetUsersParticle(context.Context, string, string) (ImplResponse, error)
+	GetUsersSkin(context.Context, string, string) (ImplResponse, error)
 }
