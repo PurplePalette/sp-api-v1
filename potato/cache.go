@@ -157,3 +157,51 @@ func (c *CacheService) GetUserIdFromTest(testId string) (string, error) {
 	}
 	return userId, nil
 }
+
+func (c *CacheService) Add(name string, data interface{}) error {
+	switch v := data.(type) {
+	case Background:
+		if err := c.backgrounds.Add(name, v); err != nil {
+			return err
+		}
+	case Effect:
+		if err := c.effects.Add(name, v); err != nil {
+			return err
+		}
+	case Engine:
+		if err := c.engines.Add(name, v); err != nil {
+			return err
+		}
+	case Level:
+		if err := c.levels.Add(name, v); err != nil {
+			return err
+		}
+	case Particle:
+		if err := c.particles.Add(name, v); err != nil {
+			return err
+		}
+	case Skin:
+		if err := c.skins.Add(name, v); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (c *CacheService) Set(name string, data interface{}) error {
+	switch v := data.(type) {
+	case Background:
+		c.backgrounds.Set(name, v)
+	case Effect:
+		c.effects.Set(name, v)
+	case Engine:
+		c.engines.Set(name, v)
+	case Level:
+		c.levels.Set(name, v)
+	case Particle:
+		c.particles.Set(name, v)
+	case Skin:
+		c.skins.Set(name, v)
+	}
+	return nil
+}

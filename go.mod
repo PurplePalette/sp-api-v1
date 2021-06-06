@@ -14,5 +14,6 @@ require (
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420
 	golang.org/x/oauth2 v0.0.0-20210514164344-f6687ab2804c // indirect
 	google.golang.org/api v0.46.0
+	google.golang.org/grpc v1.37.0
 	gopkg.in/go-playground/validator.v9 v9.31.0
 )

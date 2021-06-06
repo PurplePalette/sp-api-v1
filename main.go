@@ -53,6 +53,13 @@ func main() {
 	UsersApiService := potato.NewUsersApiService(firestore, cache)
 	UsersApiController := potato.NewUsersApiController(UsersApiService)
 
+	listener := server.NewListener(firestore, cache)
+
+	cols := []string{"backgrounds", "effects", "engines", "levels", "particles", "skins", "users"}
+	for _, col := range cols {
+		go listener.ListenFirestoreUpdate(col)
+	}
+
 	router := server.NewRouterWithInject(
 		auth,
 		BackgroundsApiController,
