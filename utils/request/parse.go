@@ -39,6 +39,8 @@ func parseDifficulty(difficulty string) [2]int {
 // ParseSearchQuery parses the sonolus keywords to query
 func ParseSearchQuery(keywords string) SearchQuery {
 	resp := SearchQuery{
+		Sort:  SORT_UPDATED_DATE,
+		Order: ORDER_DESC,
 		Filter: SearchFilter{
 			Difficulty: [2]int{0, 100},
 			Public:     true,

@@ -102,25 +102,25 @@ func (c *Cache) GetPage(pageId int32, searchQuery request.SearchQuery) ([]byte, 
 	orderQuery := searchQuery.Order
 	switch searchQuery.Sort {
 	case request.SORT_CREATED_DATE:
-		if orderQuery == request.ORDER_ASC {
+		if orderQuery == request.ORDER_DESC {
 			sort.Sort(sort.Reverse(ByCreatedTime{dataList}))
 		} else {
 			sort.Sort(ByCreatedTime{dataList})
 		}
 	case request.SORT_UPDATED_DATE:
-		if orderQuery == request.ORDER_ASC {
+		if orderQuery == request.ORDER_DESC {
 			sort.Sort(sort.Reverse(ByUpdatedTime{dataList}))
 		} else {
 			sort.Sort(ByUpdatedTime{dataList})
 		}
 	case request.SORT_DIFFICULTY:
-		if orderQuery == request.ORDER_ASC {
+		if orderQuery == request.ORDER_DESC {
 			sort.Sort(sort.Reverse(ByDifficulty{dataList}))
 		} else {
 			sort.Sort(ByDifficulty{dataList})
 		}
 	case request.SORT_NOTES:
-		if orderQuery == request.ORDER_ASC {
+		if orderQuery == request.ORDER_DESC {
 			sort.Sort(sort.Reverse(ByNotes{dataList}))
 		} else {
 			sort.Sort(ByNotes{dataList})
