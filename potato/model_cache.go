@@ -136,7 +136,7 @@ func (c *Cache) GetPage(pageId int32, searchQuery request.SearchQuery) ([]byte, 
 			genreMatched := strings.Contains(v.Genre, string(searchQuery.Filter.Genre))
 			userMatched := strings.Contains(v.UserId, searchQuery.Filter.UserId)
 			keywordMatched := strings.Contains(v.Title, searchQuery.Filter.Keyword)
-			publicMatched := v.Public == searchQuery.Filter.Public
+			publicMatched := v.Public == searchQuery.Filter.Public || searchQuery.Filter.ForcePublic
 			if ratingMatched && genreMatched && userMatched && keywordMatched && publicMatched {
 				filteredList = append(filteredList, value)
 			}

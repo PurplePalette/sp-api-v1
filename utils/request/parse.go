@@ -42,8 +42,9 @@ func ParseSearchQuery(keywords string) SearchQuery {
 		Sort:  SORT_UPDATED_DATE,
 		Order: ORDER_DESC,
 		Filter: SearchFilter{
-			Difficulty: [2]int{0, 100},
-			Public:     true,
+			Difficulty:  [2]int{0, 100},
+			Public:      true,
+			ForcePublic: false,
 		},
 	}
 	var originalKeywords []string

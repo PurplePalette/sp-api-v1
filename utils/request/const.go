@@ -71,11 +71,12 @@ var supportedGenres map[string]SearchFilterGenre = map[string]SearchFilterGenre{
 type SearchFilterDifficulty [2]int
 
 type SearchFilter struct {
-	Difficulty SearchFilterDifficulty
-	Genre      SearchFilterGenre
-	UserId     string
-	Keyword    string
-	Public     bool
+	Difficulty  SearchFilterDifficulty
+	Genre       SearchFilterGenre
+	UserId      string
+	Keyword     string
+	Public      bool
+	ForcePublic bool
 }
 
 type SearchQuery struct {

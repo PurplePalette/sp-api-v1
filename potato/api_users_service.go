@@ -171,6 +171,10 @@ func (s *UsersApiService) GetUsersEngines(ctx context.Context, userId string, lo
 func (s *UsersApiService) GetUsersLevels(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	query.Filter.UserId = userId
+	if authUser, err := request.GetUserId(ctx); err == nil && authUser == userId {
+		query.Filter.ForcePublic = true
+	}
+
 	pages := s.cache.levels.Pages()
 	items, err := s.cache.levels.GetPage(page, query)
 	if err != nil {
