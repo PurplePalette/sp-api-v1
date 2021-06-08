@@ -15,6 +15,7 @@ import (
 
 	potato "github.com/PurplePalette/sonolus-uploader-core/potato"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/server"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -72,6 +73,17 @@ func main() {
 		TestsApiController,
 		UsersApiController,
 	)
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedMethods:   []string{"GET", "POST", "PATCH"},
+		AllowedHeaders:   []string{"Authorization", "Content-Type"},
+		AllowCredentials: true,
+		// Enable Debugging for testing, consider disabling in production
+		Debug: false,
+	})
+	corsSupportedHandler := c.Handler(router)
+
 	log.Printf("Server started")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":8080", corsSupportedHandler))
 }

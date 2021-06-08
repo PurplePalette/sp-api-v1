@@ -28,8 +28,6 @@ func injectUserToContext(auth *auth.Client, route potato.Route) http.HandlerFunc
 				authorized = true
 			}
 		}
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 		if route.Method != "GET" && !authorized {
 			w.WriteHeader(http.StatusUnauthorized)
 		} else {
