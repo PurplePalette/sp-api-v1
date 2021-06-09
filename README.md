@@ -11,8 +11,9 @@ First public [Sonolus](https://sonolus.com/) api to manage user generated backgr
 - Memory
   - This api caches the whole firestore data in memory.
   - I recommend bigger memory, if you try to make big community.
-- Frontend
-  - This api does not have method to
+- Frontend(probably required)
+  - This api does not have method to register account to firebase authorization
+  - If you don't use this api as only for one user, you need frontend
   - You can use [sonolus-uploader](https://github.com/PurplePalette/sonolus-uploader) or make your own frontend.
 
 ## Building requirements
