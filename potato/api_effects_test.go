@@ -57,7 +57,6 @@ func TestAddEffect(t *testing.T) {
 		"/effects/myEffect",
 		bytes.NewBuffer(efJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
@@ -93,7 +92,6 @@ func TestEditEffect(t *testing.T) {
 		"/effects/myEffect",
 		bytes.NewBuffer(efJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)

@@ -190,7 +190,6 @@ func TestAddLevel(t *testing.T) {
 		"/levels/myLevel",
 		bytes.NewBuffer(bgJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
@@ -356,7 +355,6 @@ func TestEditLevel(t *testing.T) {
 		"/levels/myLevel",
 		bytes.NewBuffer(bgJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)

@@ -51,7 +51,6 @@ func TestAddParticle(t *testing.T) {
 		"/particles/myParticle",
 		bytes.NewBuffer(ptJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
@@ -81,7 +80,6 @@ func TestEditParticle(t *testing.T) {
 		"/particles/myParticle",
 		bytes.NewBuffer(ptJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)

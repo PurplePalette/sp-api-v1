@@ -96,7 +96,6 @@ func TestEditBackground(t *testing.T) {
 		"/backgrounds/myBackground",
 		bytes.NewBuffer(bgJson),
 	)
-	req = tests.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)

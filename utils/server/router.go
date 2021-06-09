@@ -39,11 +39,8 @@ func injectUserToContext(auth *auth.Client, route potato.Route) http.HandlerFunc
 // injectTestUserToContext injects firebase user id to context (for test purpose)
 func injectTestUserToContext(uid string, next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		token := r.Header.Get("Authorization")
-		if token != "" {
-			ctx := context.WithValue(r.Context(), request.CtxUserId, uid)
-			r = r.WithContext(ctx)
-		}
+		ctx := context.WithValue(r.Context(), request.CtxUserId, uid)
+		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)
 	}
 }

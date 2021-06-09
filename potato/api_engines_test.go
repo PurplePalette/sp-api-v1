@@ -112,7 +112,6 @@ func TestAddEngine(t *testing.T) {
 		"/engines/myEngine",
 		bytes.NewBuffer(efJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
@@ -204,7 +203,6 @@ func TestEditEngine(t *testing.T) {
 		"/engines/myEngine",
 		bytes.NewBuffer(efJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)

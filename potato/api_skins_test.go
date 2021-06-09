@@ -51,7 +51,6 @@ func TestAddSkin(t *testing.T) {
 		"/skins/mySkin",
 		bytes.NewBuffer(skJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
@@ -81,7 +80,6 @@ func TestEditSkin(t *testing.T) {
 		"/skins/mySkin",
 		bytes.NewBuffer(skJson),
 	)
-	req = potato.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
