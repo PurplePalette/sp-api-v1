@@ -25,7 +25,7 @@ type Skin struct {
 	Subtitle string `json:"subtitle,omitempty" validate:"omitempty,min=1,max=100"`
 
 	// author of this content
-	Author string `json:"author,omitempty" validate:"omitempty,alphanumunicode,min=1,max=50"`
+	Author string `json:"author,omitempty" validate:"omitempty,min=1,max=50"`
 
 	Thumbnail SonolusResourceLocator `json:"thumbnail,omitempty" validate:"omitempty"`
 
@@ -43,5 +43,5 @@ type Skin struct {
 	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// 独自要素: サイト内および譜面情報欄に表示される説明文
-	Description string `json:"description,omitempty" validate:"omitempty,alphanumunicode,min=1,max=3000"`
+	Description string `json:"description,omitempty" validate:"omitempty,min=1,max=3000"`
 }

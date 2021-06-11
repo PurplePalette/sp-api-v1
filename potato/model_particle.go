@@ -43,5 +43,5 @@ type Particle struct {
 	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// 独自要素: サイト内および譜面情報欄に表示される説明文
-	Description string `json:"description,omitempty" validate:"omitempty,alphanumunicode,min=1,max=3000"`
+	Description string `json:"description,omitempty" validate:"omitempty,min=1,max=3000"`
 }
