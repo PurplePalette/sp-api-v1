@@ -5,7 +5,7 @@ on:
     tags:
     - "v*"
 
-    jobs:
+jobs:
   goreleaser:
     runs-on: ubuntu-latest
     steps:
