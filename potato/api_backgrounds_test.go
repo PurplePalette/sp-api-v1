@@ -10,7 +10,6 @@ import (
 
 	"github.com/PurplePalette/sonolus-uploader-core/potato"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/server"
-	"github.com/PurplePalette/sonolus-uploader-core/utils/tests"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,6 +17,9 @@ import (
 func CreateBackgroundsServer() *httptest.Server {
 	firebase := server.NewFirebaseClient()
 	firestore := server.NewFirebaseFirestoreClient(firebase)
+	if err := potato.ReGenerateDatabase(firestore); err != nil {
+		panic(err)
+	}
 	auth := server.NewFirebaseAuthorizationClient(firebase)
 	cache := potato.NewCacheService(firestore)
 	if err := cache.InitCache(); err != nil {
@@ -59,7 +61,6 @@ func TestAddBackground(t *testing.T) {
 		"/backgrounds/myBackground",
 		bytes.NewBuffer(bgJson),
 	)
-	req = tests.SetUserAuthorizationToHeader(req)
 	rec := httptest.NewRecorder()
 	s.Config.Handler.ServeHTTP(rec, req)
 	t.Log(rec.Body)
