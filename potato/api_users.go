@@ -31,6 +31,12 @@ func NewUsersApiController(s UsersApiServicer) Router {
 func (c *UsersApiController) Routes() Routes {
 	return Routes{
 		{
+			"GetUserList",
+			strings.ToUpper("Get"),
+			"/users/list",
+			c.GetUserList,
+		},
+		{
 			"EditUser",
 			strings.ToUpper("Patch"),
 			"/users/{userId}",
@@ -41,12 +47,6 @@ func (c *UsersApiController) Routes() Routes {
 			strings.ToUpper("Get"),
 			"/users/{userId}",
 			c.GetUser,
-		},
-		{
-			"GetUserList",
-			strings.ToUpper("Get"),
-			"/users/list",
-			c.GetUserList,
 		},
 		{
 			"GetUserServerInfo",
