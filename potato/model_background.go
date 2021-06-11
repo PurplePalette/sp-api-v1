@@ -19,10 +19,10 @@ type Background struct {
 	Version int32 `json:"version,omitempty" validate:"gte=1,lte=1"`
 
 	// base title of this content
-	Title string `json:"title,omitempty" validate:"alphanumunicode,min=1,max=100"`
+	Title string `json:"title,omitempty" validate:"min=1,max=100"`
 
 	// something footer(ex. featuring xyz) for this content
-	Subtitle string `json:"subtitle,omitempty" validate:"alphanumunicode,min=1,max=100"`
+	Subtitle string `json:"subtitle,omitempty" validate:"min=1,max=100"`
 
 	// author of this content
 	Author string `json:"author,omitempty" validate:"alphanumunicode,min=1,max=50"`

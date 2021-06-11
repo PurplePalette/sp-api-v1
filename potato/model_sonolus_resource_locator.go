@@ -13,11 +13,11 @@ package potato
 type SonolusResourceLocator struct {
 
 	// When specify type together with hash uniquely identifies a resource.
-	Type string `json:"type,omitempty" validate:"omitempty"`
+	Type string `json:"type,omitempty" validate:"omitempty,oneof=SkinData EngineThumbnail EffectData SkinTexture ParticleData EffectThumbnail LevelBgm BackgroundThumbnail EngineConfiguration LevelData ParticleTexture BackgroundData EngineData BackgroundImage LevelCover SkinThumbnail ParticleThumbnail"`
 
 	// Hash is calculated using SHA1 on the resource file
-	Hash string `json:"hash,omitempty" validate:"omitempty"`
+	Hash string `json:"hash,omitempty" validate:"omitempty,min=40,max=40"`
 
 	// If url starts with character /, it will be treated as relative path to server address.
-	Url string `json:"url,omitempty" validate:"omitempty"`
+	Url string `json:"url,omitempty" validate:"omitempty,min=1,max=300"`
 }

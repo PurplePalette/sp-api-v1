@@ -32,10 +32,10 @@ type Level struct {
 	UseParticle LevelUseParticle `json:"useParticle,omitempty" validate:"omitempty"`
 
 	// base title of this content
-	Title string `json:"title,omitempty" validate:"omitempty,alphanumunicode,min=1,max=100"`
+	Title string `json:"title,omitempty" validate:"omitempty,min=1,max=100"`
 
 	// artist names of original music
-	Artists string `json:"artists,omitempty" validate:"omitempty,alphanumunicode,min=1,max=100"`
+	Artists string `json:"artists,omitempty" validate:"omitempty,min=1,max=100"`
 
 	// author of this content
 	Author string `json:"author,omitempty" validate:"omitempty,alphanumunicode,min=1,max=50"`

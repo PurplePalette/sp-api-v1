@@ -19,10 +19,10 @@ type Particle struct {
 	Version int32 `json:"version,omitempty" validate:"omitempty,gte=1,lte=1"`
 
 	// base title of this content
-	Title string `json:"title,omitempty" validate:"omitempty,alphanumunicode,min=1,max=100"`
+	Title string `json:"title,omitempty" validate:"omitempty,min=1,max=100"`
 
 	// something footer(ex. featuring xyz) for this content
-	Subtitle string `json:"subtitle,omitempty" validate:"omitempty,alphanumunicode,min=1,max=100"`
+	Subtitle string `json:"subtitle,omitempty" validate:"omitempty,min=1,max=100"`
 
 	// author of this content
 	Author string `json:"author,omitempty" validate:"omitempty,alphanumunicode,min=1,max=50"`
