@@ -105,49 +105,63 @@ func (l *Listener) ListenFirestoreUpdate(collectionName string) {
 					if err := change.Doc.DataTo(&data); err != nil {
 						log.Fatal(err)
 					}
-					l.cache.Set(change.Doc.Ref.ID, data)
+					if err := l.cache.Set(change.Doc.Ref.ID, data); err != nil {
+						log.Fatal(err)
+					}
 					log.Print("Modified background: ", change.Doc.Ref.ID)
 				case "effects":
 					var data potato.Effect
 					if err := change.Doc.DataTo(&data); err != nil {
 						log.Fatal(err)
 					}
-					l.cache.Set(change.Doc.Ref.ID, data)
+					if err := l.cache.Set(change.Doc.Ref.ID, data); err != nil {
+						log.Fatal(err)
+					}
 					log.Print("Modified effect: ", change.Doc.Ref.ID)
 				case "engines":
 					var data potato.Engine
 					if err := change.Doc.DataTo(&data); err != nil {
 						log.Fatal(err)
 					}
-					l.cache.Set(change.Doc.Ref.ID, data)
+					if err := l.cache.Set(change.Doc.Ref.ID, data); err != nil {
+						log.Fatal(err)
+					}
 					log.Print("Modified engine: ", change.Doc.Ref.ID)
 				case "levels":
 					var data potato.Level
 					if err := change.Doc.DataTo(&data); err != nil {
 						log.Fatal(err)
 					}
-					l.cache.Set(change.Doc.Ref.ID, data)
+					if err := l.cache.Set(change.Doc.Ref.ID, data); err != nil {
+						log.Fatal(err)
+					}
 					log.Print("Modified level: ", change.Doc.Ref.ID)
 				case "particles":
 					var data potato.Particle
 					if err := change.Doc.DataTo(&data); err != nil {
 						log.Fatal(err)
 					}
-					l.cache.Set(change.Doc.Ref.ID, data)
+					if err := l.cache.Set(change.Doc.Ref.ID, data); err != nil {
+						log.Fatal(err)
+					}
 					log.Print("Modified particle: ", change.Doc.Ref.ID)
 				case "skins":
 					var data potato.Skin
 					if err := change.Doc.DataTo(&data); err != nil {
 						log.Fatal(err)
 					}
-					l.cache.Set(change.Doc.Ref.ID, data)
+					if err := l.cache.Set(change.Doc.Ref.ID, data); err != nil {
+						log.Fatal(err)
+					}
 					log.Print("Modified skin: ", change.Doc.Ref.ID)
 				case "users":
 					var data potato.User
 					if err := change.Doc.DataTo(&data); err != nil {
 						log.Fatal(err)
 					}
-					l.cache.Set(change.Doc.Ref.ID, data)
+					if err := l.cache.Set(change.Doc.Ref.ID, data); err != nil {
+						log.Fatal(err)
+					}
 					log.Print("Modified user: ", change.Doc.Ref.ID)
 				}
 			}
