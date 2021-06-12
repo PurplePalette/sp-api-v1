@@ -32,79 +32,79 @@ func (c *TestsAPIController) Routes() Routes {
 		{
 			"GetTestServerInfo",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/info",
+			"/tests/{testID}/info",
 			c.GetTestServerInfo,
 		},
 		{
 			"GetTestsBackgrounds",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/backgrounds/list",
+			"/tests/{testID}/backgrounds/list",
 			c.GetTestsBackgrounds,
 		},
 		{
 			"GetTestsEffects",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/effects/list",
+			"/tests/{testID}/effects/list",
 			c.GetTestsEffects,
 		},
 		{
 			"GetTestsEngines",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/engines/list",
+			"/tests/{testID}/engines/list",
 			c.GetTestsEngines,
 		},
 		{
 			"GetTestsLevels",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/levels/list",
+			"/tests/{testID}/levels/list",
 			c.GetTestsLevels,
 		},
 		{
 			"GetTestsParticles",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/particles/list",
+			"/tests/{testID}/particles/list",
 			c.GetTestsParticles,
 		},
 		{
 			"GetTestsSkins",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/skins/list",
+			"/tests/{testID}/skins/list",
 			c.GetTestsSkins,
 		},
 		{
 			"GetBackgroundTest",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/backgrounds/{backgroundName}",
+			"/tests/{testID}/backgrounds/{backgroundName}",
 			c.GetBackgroundTest,
 		},
 		{
 			"GetEffectTest",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/effects/{effectName}",
+			"/tests/{testID}/effects/{effectName}",
 			c.GetEffectTest,
 		},
 		{
 			"GetEngineTest",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/engines/{engineName}",
+			"/tests/{testID}/engines/{engineName}",
 			c.GetEngineTest,
 		},
 		{
 			"GetLevelTest",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/levels/{levelName}",
+			"/tests/{testID}/levels/{levelName}",
 			c.GetLevelTest,
 		},
 		{
 			"GetParticleTest",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/particles/{particleName}",
+			"/tests/{testID}/particles/{particleName}",
 			c.GetParticleTest,
 		},
 		{
 			"GetSkinTest",
 			strings.ToUpper("Get"),
-			"/tests/{testId}/skins/{skinName}",
+			"/tests/{testID}/skins/{skinName}",
 			c.GetSkinTest,
 		},
 	}
@@ -113,9 +113,9 @@ func (c *TestsAPIController) Routes() Routes {
 // GetTestServerInfo - Get user server info
 func (c *TestsAPIController) GetTestServerInfo(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	testId := params["testId"]
+	testID := params["testId"]
 
-	result, err := c.service.GetTestServerInfo(r.Context(), testId)
+	result, err := c.service.GetTestServerInfo(r.Context(), testID)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -130,7 +130,7 @@ func (c *TestsAPIController) GetTestServerInfo(w http.ResponseWriter, r *http.Re
 func (c *TestsAPIController) GetTestsBackgrounds(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	testId := params["testId"]
+	testID := params["testId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -139,7 +139,7 @@ func (c *TestsAPIController) GetTestsBackgrounds(w http.ResponseWriter, r *http.
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetTestsBackgrounds(r.Context(), testId, localization, page, keywords)
+	result, err := c.service.GetTestsBackgrounds(r.Context(), testID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -154,7 +154,7 @@ func (c *TestsAPIController) GetTestsBackgrounds(w http.ResponseWriter, r *http.
 func (c *TestsAPIController) GetTestsEffects(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	testId := params["testId"]
+	testID := params["testId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -163,7 +163,7 @@ func (c *TestsAPIController) GetTestsEffects(w http.ResponseWriter, r *http.Requ
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetTestsEffects(r.Context(), testId, localization, page, keywords)
+	result, err := c.service.GetTestsEffects(r.Context(), testID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -178,7 +178,7 @@ func (c *TestsAPIController) GetTestsEffects(w http.ResponseWriter, r *http.Requ
 func (c *TestsAPIController) GetTestsEngines(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	testId := params["testId"]
+	testID := params["testId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -187,7 +187,7 @@ func (c *TestsAPIController) GetTestsEngines(w http.ResponseWriter, r *http.Requ
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetTestsEngines(r.Context(), testId, localization, page, keywords)
+	result, err := c.service.GetTestsEngines(r.Context(), testID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -202,7 +202,7 @@ func (c *TestsAPIController) GetTestsEngines(w http.ResponseWriter, r *http.Requ
 func (c *TestsAPIController) GetTestsLevels(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	testId := params["testId"]
+	testID := params["testId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -211,7 +211,7 @@ func (c *TestsAPIController) GetTestsLevels(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetTestsLevels(r.Context(), testId, localization, page, keywords)
+	result, err := c.service.GetTestsLevels(r.Context(), testID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -226,7 +226,7 @@ func (c *TestsAPIController) GetTestsLevels(w http.ResponseWriter, r *http.Reque
 func (c *TestsAPIController) GetTestsParticles(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	testId := params["testId"]
+	testID := params["testId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -235,7 +235,7 @@ func (c *TestsAPIController) GetTestsParticles(w http.ResponseWriter, r *http.Re
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetTestsParticles(r.Context(), testId, localization, page, keywords)
+	result, err := c.service.GetTestsParticles(r.Context(), testID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -250,7 +250,7 @@ func (c *TestsAPIController) GetTestsParticles(w http.ResponseWriter, r *http.Re
 func (c *TestsAPIController) GetTestsSkins(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	testId := params["testId"]
+	testID := params["testId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -259,7 +259,7 @@ func (c *TestsAPIController) GetTestsSkins(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetTestsSkins(r.Context(), testId, localization, page, keywords)
+	result, err := c.service.GetTestsSkins(r.Context(), testID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -273,11 +273,11 @@ func (c *TestsAPIController) GetTestsSkins(w http.ResponseWriter, r *http.Reques
 // GetBackgroundTest - Get testing background
 func (c *TestsAPIController) GetBackgroundTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	testId := params["testId"]
+	testID := params["testId"]
 
 	backgroundName := params["backgroundName"]
 
-	result, err := c.service.GetBackgroundTest(r.Context(), testId, backgroundName)
+	result, err := c.service.GetBackgroundTest(r.Context(), testID, backgroundName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -291,11 +291,11 @@ func (c *TestsAPIController) GetBackgroundTest(w http.ResponseWriter, r *http.Re
 // GetEffectTest - Get testing effect
 func (c *TestsAPIController) GetEffectTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	testId := params["testId"]
+	testID := params["testId"]
 
 	effectName := params["effectName"]
 
-	result, err := c.service.GetEffectTest(r.Context(), testId, effectName)
+	result, err := c.service.GetEffectTest(r.Context(), testID, effectName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -309,11 +309,11 @@ func (c *TestsAPIController) GetEffectTest(w http.ResponseWriter, r *http.Reques
 // GetEngineTest - Get testing engine
 func (c *TestsAPIController) GetEngineTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	testId := params["testId"]
+	testID := params["testId"]
 
 	engineName := params["engineName"]
 
-	result, err := c.service.GetEngineTest(r.Context(), testId, engineName)
+	result, err := c.service.GetEngineTest(r.Context(), testID, engineName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -327,11 +327,11 @@ func (c *TestsAPIController) GetEngineTest(w http.ResponseWriter, r *http.Reques
 // GetLevelTest - Get testing level
 func (c *TestsAPIController) GetLevelTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	testId := params["testId"]
+	testID := params["testId"]
 
 	levelName := params["levelName"]
 
-	result, err := c.service.GetLevelTest(r.Context(), testId, levelName)
+	result, err := c.service.GetLevelTest(r.Context(), testID, levelName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -345,11 +345,11 @@ func (c *TestsAPIController) GetLevelTest(w http.ResponseWriter, r *http.Request
 // GetParticleTest - Get testing particle
 func (c *TestsAPIController) GetParticleTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	testId := params["testId"]
+	testID := params["testId"]
 
 	particleName := params["particleName"]
 
-	result, err := c.service.GetParticleTest(r.Context(), testId, particleName)
+	result, err := c.service.GetParticleTest(r.Context(), testID, particleName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -363,11 +363,11 @@ func (c *TestsAPIController) GetParticleTest(w http.ResponseWriter, r *http.Requ
 // GetSkinTest - Get testing skin
 func (c *TestsAPIController) GetSkinTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	testId := params["testId"]
+	testID := params["testId"]
 
 	skinName := params["skinName"]
 
-	result, err := c.service.GetSkinTest(r.Context(), testId, skinName)
+	result, err := c.service.GetSkinTest(r.Context(), testID, skinName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)

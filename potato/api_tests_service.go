@@ -33,8 +33,8 @@ func NewTestsAPIService(firestore *firestore.Client, cache *CacheService) TestsA
 }
 
 // GetTestServerInfo - Get user server info
-func (s *TestsAPIService) GetTestServerInfo(ctx context.Context, testId string) (ImplResponse, error) {
-	if _, err := s.cache.GetUserIDFromTest(testId); err != nil {
+func (s *TestsAPIService) GetTestServerInfo(ctx context.Context, testID string) (ImplResponse, error) {
+	if _, err := s.cache.GetUserIDFromTest(testID); err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	welcome, err := s.cache.news.Get("sweetPotatoTestWelcome")
@@ -43,7 +43,7 @@ func (s *TestsAPIService) GetTestServerInfo(ctx context.Context, testId string) 
 		log.Print(err)
 		return Response(http.StatusInternalServerError, nil), nil
 	}
-	parsedNews.Level.Artists = testId
+	parsedNews.Level.Artists = testID
 	welcome2, err := s.cache.news.Get("sweetPotatoTestWelcome2")
 	parsedNews2 := welcome2.(News)
 	if err != nil {
@@ -62,8 +62,8 @@ func (s *TestsAPIService) GetTestServerInfo(ctx context.Context, testId string) 
 }
 
 // GetTestsBackgrounds - Get backgrounds for test
-func (s *TestsAPIService) GetTestsBackgrounds(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userID, err := s.cache.GetUserIDFromTest(testId)
+func (s *TestsAPIService) GetTestsBackgrounds(ctx context.Context, testID string, localization string, page int32, keywords string) (ImplResponse, error) {
+	userID, err := s.cache.GetUserIDFromTest(testID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -88,8 +88,8 @@ func (s *TestsAPIService) GetTestsBackgrounds(ctx context.Context, testId string
 }
 
 // GetTestsEffects - Get effects for test
-func (s *TestsAPIService) GetTestsEffects(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userID, err := s.cache.GetUserIDFromTest(testId)
+func (s *TestsAPIService) GetTestsEffects(ctx context.Context, testID string, localization string, page int32, keywords string) (ImplResponse, error) {
+	userID, err := s.cache.GetUserIDFromTest(testID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -114,8 +114,8 @@ func (s *TestsAPIService) GetTestsEffects(ctx context.Context, testId string, lo
 }
 
 // GetTestsEngines - Get engines for test
-func (s *TestsAPIService) GetTestsEngines(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userID, err := s.cache.GetUserIDFromTest(testId)
+func (s *TestsAPIService) GetTestsEngines(ctx context.Context, testID string, localization string, page int32, keywords string) (ImplResponse, error) {
+	userID, err := s.cache.GetUserIDFromTest(testID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -140,8 +140,8 @@ func (s *TestsAPIService) GetTestsEngines(ctx context.Context, testId string, lo
 }
 
 // GetTestsLevels - Get levels for test
-func (s *TestsAPIService) GetTestsLevels(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userID, err := s.cache.GetUserIDFromTest(testId)
+func (s *TestsAPIService) GetTestsLevels(ctx context.Context, testID string, localization string, page int32, keywords string) (ImplResponse, error) {
+	userID, err := s.cache.GetUserIDFromTest(testID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -166,8 +166,8 @@ func (s *TestsAPIService) GetTestsLevels(ctx context.Context, testId string, loc
 }
 
 // GetTestsParticles - Get particles for test
-func (s *TestsAPIService) GetTestsParticles(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userID, err := s.cache.GetUserIDFromTest(testId)
+func (s *TestsAPIService) GetTestsParticles(ctx context.Context, testID string, localization string, page int32, keywords string) (ImplResponse, error) {
+	userID, err := s.cache.GetUserIDFromTest(testID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -192,8 +192,8 @@ func (s *TestsAPIService) GetTestsParticles(ctx context.Context, testId string, 
 }
 
 // GetTestsSkins - Get skins for test
-func (s *TestsAPIService) GetTestsSkins(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userID, err := s.cache.GetUserIDFromTest(testId)
+func (s *TestsAPIService) GetTestsSkins(ctx context.Context, testID string, localization string, page int32, keywords string) (ImplResponse, error) {
+	userID, err := s.cache.GetUserIDFromTest(testID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -218,7 +218,7 @@ func (s *TestsAPIService) GetTestsSkins(ctx context.Context, testId string, loca
 }
 
 // GetBackgroundTest - Get testing background
-func (s *TestsAPIService) GetBackgroundTest(ctx context.Context, testId string, backgroundName string) (ImplResponse, error) {
+func (s *TestsAPIService) GetBackgroundTest(ctx context.Context, testID string, backgroundName string) (ImplResponse, error) {
 	bg, err := s.cache.backgrounds.Get(backgroundName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -233,7 +233,7 @@ func (s *TestsAPIService) GetBackgroundTest(ctx context.Context, testId string, 
 }
 
 // GetEffectTest - Get testing effect
-func (s *TestsAPIService) GetEffectTest(ctx context.Context, testId string, effectName string) (ImplResponse, error) {
+func (s *TestsAPIService) GetEffectTest(ctx context.Context, testID string, effectName string) (ImplResponse, error) {
 	ef, err := s.cache.effects.Get(effectName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -248,7 +248,7 @@ func (s *TestsAPIService) GetEffectTest(ctx context.Context, testId string, effe
 }
 
 // GetEngineTest - Get testing engine
-func (s *TestsAPIService) GetEngineTest(ctx context.Context, testId string, engineName string) (ImplResponse, error) {
+func (s *TestsAPIService) GetEngineTest(ctx context.Context, testID string, engineName string) (ImplResponse, error) {
 	eg, err := s.cache.engines.Get(engineName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -263,7 +263,7 @@ func (s *TestsAPIService) GetEngineTest(ctx context.Context, testId string, engi
 }
 
 // GetLevelTest - Get testing level
-func (s *TestsAPIService) GetLevelTest(ctx context.Context, testId string, levelName string) (ImplResponse, error) {
+func (s *TestsAPIService) GetLevelTest(ctx context.Context, testID string, levelName string) (ImplResponse, error) {
 	rawNs, newsNotExistErr := s.cache.news.Get(levelName)
 	rawLv, levelNotExistErr := s.cache.levels.Get(levelName)
 	if newsNotExistErr != nil && levelNotExistErr != nil {
@@ -285,7 +285,7 @@ func (s *TestsAPIService) GetLevelTest(ctx context.Context, testId string, level
 }
 
 // GetParticleTest - Get testing particle
-func (s *TestsAPIService) GetParticleTest(ctx context.Context, testId string, particleName string) (ImplResponse, error) {
+func (s *TestsAPIService) GetParticleTest(ctx context.Context, testID string, particleName string) (ImplResponse, error) {
 	rawPt, err := s.cache.particles.Get(particleName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -300,7 +300,7 @@ func (s *TestsAPIService) GetParticleTest(ctx context.Context, testId string, pa
 }
 
 // GetSkinTest - Get testing skin
-func (s *TestsAPIService) GetSkinTest(ctx context.Context, testId string, skinName string) (ImplResponse, error) {
+func (s *TestsAPIService) GetSkinTest(ctx context.Context, testID string, skinName string) (ImplResponse, error) {
 	rawSk, err := s.cache.skins.Get(skinName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil

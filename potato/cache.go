@@ -23,7 +23,7 @@ type CacheService struct {
 	skins Cache
 	// users stores user
 	users Cache
-	// tests stores testId map
+	// tests stores testID map
 	tests map[string]string
 	// news stores fake levels
 	news Cache
@@ -144,14 +144,14 @@ func (s *CacheService) InitCache() error {
 	s.tests = make(map[string]string)
 	for _, user := range users {
 		parsedUser := user.(User)
-		s.tests[parsedUser.TestId] = parsedUser.UserID
+		s.tests[parsedUser.TestID] = parsedUser.UserID
 	}
 	s.InitNews()
 	return nil
 }
 
-func (c *CacheService) GetUserIDFromTest(testId string) (string, error) {
-	userID, ok := c.tests[testId]
+func (c *CacheService) GetUserIDFromTest(testID string) (string, error) {
+	userID, ok := c.tests[testID]
 	if !ok {
 		return "", errors.New("could not find test")
 	}

@@ -16,7 +16,7 @@ type User struct {
 	UserID string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// テスト用サーバーのエンドポイント
-	TestId string `json:"testId,omitempty" validate:"alphanum,min=1,max=50"`
+	TestID string `json:"testId,omitempty" validate:"alphanum,min=1,max=50"`
 
 	// 管理者か否か
 	IsAdmin bool `json:"isAdmin,omitempty"`
