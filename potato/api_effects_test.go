@@ -40,12 +40,12 @@ func TestAddEffect(t *testing.T) {
 		Thumbnail: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		Data: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),
@@ -75,12 +75,12 @@ func TestEditEffect(t *testing.T) {
 		Thumbnail: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		Data: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),

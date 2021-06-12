@@ -19,5 +19,5 @@ type SonolusResourceLocator struct {
 	Hash string `json:"hash,omitempty" validate:"omitempty,min=40,max=40"`
 
 	// If url starts with character /, it will be treated as relative path to server address.
-	Url string `json:"url,omitempty" validate:"omitempty,min=1,max=300"`
+	URL string `json:"url,omitempty" validate:"omitempty,min=1,max=300"`
 }

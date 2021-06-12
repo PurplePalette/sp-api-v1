@@ -39,17 +39,17 @@ func TestAddEngine(t *testing.T) {
 		Thumbnail: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		Data: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		Configuration: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		Skin: potato.Skin{
 			Name:        "",
@@ -130,17 +130,17 @@ func TestEditEngine(t *testing.T) {
 		Thumbnail: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		Data: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		Configuration: potato.SonolusResourceLocator{
 			Type: "",
 			Hash: "",
-			Url:  "",
+			URL:  "",
 		},
 		Skin: potato.Skin{
 			Name:        "",

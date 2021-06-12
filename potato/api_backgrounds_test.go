@@ -42,15 +42,15 @@ func TestAddBackground(t *testing.T) {
 		Author:   "Anonymous",
 		Thumbnail: potato.SonolusResourceLocator{
 			Type: "BackgroundThumbnail",
-			Url:  "",
+			URL:  "",
 		},
 		Data: potato.SonolusResourceLocator{
 			Type: "BackgroundData",
-			Url:  "",
+			URL:  "",
 		},
 		Image: potato.SonolusResourceLocator{
 			Type: "BackgroundImage",
-			Url:  "",
+			URL:  "",
 		},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),
@@ -78,15 +78,15 @@ func TestEditBackground(t *testing.T) {
 		Author:   "Anonymous",
 		Thumbnail: potato.SonolusResourceLocator{
 			Type: "BackgroundThumbnail",
-			Url:  "",
+			URL:  "",
 		},
 		Data: potato.SonolusResourceLocator{
 			Type: "BackgroundData",
-			Url:  "",
+			URL:  "",
 		},
 		Image: potato.SonolusResourceLocator{
 			Type: "BackgroundImage",
-			Url:  "",
+			URL:  "",
 		},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),

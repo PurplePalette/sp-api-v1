@@ -36,7 +36,7 @@ func NewNews(title string, subTitle string, upperLeftText string, upperRightText
 			Author:        upperRightText,
 			Cover: SonolusResourceLocator{
 				Type: "LevelCover",
-				Url:  iconURL,
+				URL:  iconURL,
 			},
 			Bgm:         SonolusResourceLocator{},
 			Data:        SonolusResourceLocator{},

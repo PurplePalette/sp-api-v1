@@ -43,15 +43,15 @@ func TestAddLevel(t *testing.T) {
 			Author:   "Dev",
 			Thumbnail: potato.SonolusResourceLocator{
 				Type: "EngineThumbnail",
-				Url:  "https://example.com",
+				URL:  "https://example.com",
 			},
 			Data: potato.SonolusResourceLocator{
 				Type: "EngineData",
-				Url:  "https://example.com",
+				URL:  "https://example.com",
 			},
 			Configuration: potato.SonolusResourceLocator{
 				Type: "EngineConfiguration",
-				Url:  "https://example.com",
+				URL:  "https://example.com",
 			},
 			Skin: potato.Skin{
 				Name:     "defaultSkin",
@@ -61,15 +61,15 @@ func TestAddLevel(t *testing.T) {
 				Author:   "Dev",
 				Thumbnail: potato.SonolusResourceLocator{
 					Type: "SkinThumbnail",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Data: potato.SonolusResourceLocator{
 					Type: "SkinData",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Texture: potato.SonolusResourceLocator{
 					Type: "SkinTexture",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				CreatedTime: int32(time.Now().Unix()),
 				UpdatedTime: int32(time.Now().Unix()),
@@ -84,15 +84,15 @@ func TestAddLevel(t *testing.T) {
 				Author:   "Dev",
 				Thumbnail: potato.SonolusResourceLocator{
 					Type: "BackgroundThumbnail",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Data: potato.SonolusResourceLocator{
 					Type: "BackgroundData",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Image: potato.SonolusResourceLocator{
 					Type: "BackgroundImage",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				CreatedTime: int32(time.Now().Unix()),
 				UpdatedTime: int32(time.Now().Unix()),
@@ -107,11 +107,11 @@ func TestAddLevel(t *testing.T) {
 				Author:   "Dev",
 				Thumbnail: potato.SonolusResourceLocator{
 					Type: "EffectThumbnail",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Data: potato.SonolusResourceLocator{
 					Type: "EffectData",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				CreatedTime: int32(time.Now().Unix()),
 				UpdatedTime: int32(time.Now().Unix()),
@@ -126,15 +126,15 @@ func TestAddLevel(t *testing.T) {
 				Author:   "Dev",
 				Thumbnail: potato.SonolusResourceLocator{
 					Type: "ParticleThumbnail",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Data: potato.SonolusResourceLocator{
 					Type: "ParticleData",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Texture: potato.SonolusResourceLocator{
 					Type: "ParticleTexture",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				CreatedTime: int32(time.Now().Unix()),
 				UpdatedTime: int32(time.Now().Unix()),
@@ -163,15 +163,15 @@ func TestAddLevel(t *testing.T) {
 		Author:  "お窓",
 		Cover: potato.SonolusResourceLocator{
 			Type: "LevelCover",
-			Url:  "https://example.com",
+			URL:  "https://example.com",
 		},
 		Bgm: potato.SonolusResourceLocator{
 			Type: "LevelBgm",
-			Url:  "https://example.com",
+			URL:  "https://example.com",
 		},
 		Data: potato.SonolusResourceLocator{
 			Type: "LevelData",
-			Url:  "https://example.com",
+			URL:  "https://example.com",
 		},
 		Genre:       "general",
 		Public:      false,
@@ -211,15 +211,15 @@ func TestEditLevel(t *testing.T) {
 			Author:   "Dev",
 			Thumbnail: potato.SonolusResourceLocator{
 				Type: "EngineThumbnail",
-				Url:  "https://example.com",
+				URL:  "https://example.com",
 			},
 			Data: potato.SonolusResourceLocator{
 				Type: "EngineData",
-				Url:  "https://example.com",
+				URL:  "https://example.com",
 			},
 			Configuration: potato.SonolusResourceLocator{
 				Type: "EngineConfiguration",
-				Url:  "https://example.com",
+				URL:  "https://example.com",
 			},
 			Skin: potato.Skin{
 				Name:     "defaultSkin",
@@ -229,15 +229,15 @@ func TestEditLevel(t *testing.T) {
 				Author:   "Dev",
 				Thumbnail: potato.SonolusResourceLocator{
 					Type: "SkinThumbnail",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Data: potato.SonolusResourceLocator{
 					Type: "SkinData",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Texture: potato.SonolusResourceLocator{
 					Type: "SkinTexture",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				CreatedTime: int32(time.Now().Unix()),
 				UpdatedTime: int32(time.Now().Unix()),
@@ -252,15 +252,15 @@ func TestEditLevel(t *testing.T) {
 				Author:   "Dev",
 				Thumbnail: potato.SonolusResourceLocator{
 					Type: "BackgroundThumbnail",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Data: potato.SonolusResourceLocator{
 					Type: "BackgroundData",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Image: potato.SonolusResourceLocator{
 					Type: "BackgroundImage",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				CreatedTime: int32(time.Now().Unix()),
 				UpdatedTime: int32(time.Now().Unix()),
@@ -275,11 +275,11 @@ func TestEditLevel(t *testing.T) {
 				Author:   "Dev",
 				Thumbnail: potato.SonolusResourceLocator{
 					Type: "EffectThumbnail",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Data: potato.SonolusResourceLocator{
 					Type: "EffectData",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				CreatedTime: int32(time.Now().Unix()),
 				UpdatedTime: int32(time.Now().Unix()),
@@ -294,15 +294,15 @@ func TestEditLevel(t *testing.T) {
 				Author:   "Dev",
 				Thumbnail: potato.SonolusResourceLocator{
 					Type: "ParticleThumbnail",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Data: potato.SonolusResourceLocator{
 					Type: "ParticleData",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				Texture: potato.SonolusResourceLocator{
 					Type: "ParticleTexture",
-					Url:  "https://example.com",
+					URL:  "https://example.com",
 				},
 				CreatedTime: int32(time.Now().Unix()),
 				UpdatedTime: int32(time.Now().Unix()),
@@ -331,15 +331,15 @@ func TestEditLevel(t *testing.T) {
 		Author:  "お窓",
 		Cover: potato.SonolusResourceLocator{
 			Type: "LevelCover",
-			Url:  "https://example.com",
+			URL:  "https://example.com",
 		},
 		Bgm: potato.SonolusResourceLocator{
 			Type: "LevelBgm",
-			Url:  "https://example.com",
+			URL:  "https://example.com",
 		},
 		Data: potato.SonolusResourceLocator{
 			Type: "LevelData",
-			Url:  "https://example.com",
+			URL:  "https://example.com",
 		},
 		Genre:       "general",
 		Public:      false,
