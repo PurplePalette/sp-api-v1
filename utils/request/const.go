@@ -73,7 +73,7 @@ type SearchFilterDifficulty [2]int
 type SearchFilter struct {
 	Difficulty  SearchFilterDifficulty
 	Genre       SearchFilterGenre
-	UserId      string
+	UserID      string
 	Keyword     string
 	Public      bool
 	ForcePublic bool

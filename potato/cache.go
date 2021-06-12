@@ -144,18 +144,18 @@ func (s *CacheService) InitCache() error {
 	s.tests = make(map[string]string)
 	for _, user := range users {
 		parsedUser := user.(User)
-		s.tests[parsedUser.TestId] = parsedUser.UserId
+		s.tests[parsedUser.TestId] = parsedUser.UserID
 	}
 	s.InitNews()
 	return nil
 }
 
-func (c *CacheService) GetUserIdFromTest(testId string) (string, error) {
-	userId, ok := c.tests[testId]
+func (c *CacheService) GetUserIDFromTest(testId string) (string, error) {
+	userID, ok := c.tests[testId]
 	if !ok {
 		return "", errors.New("could not find test")
 	}
-	return userId, nil
+	return userID, nil
 }
 
 func (c *CacheService) Add(name string, data interface{}) error {

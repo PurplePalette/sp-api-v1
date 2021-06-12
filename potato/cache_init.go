@@ -66,7 +66,7 @@ func (s *CacheInitService) LoadDatabaseFromFirebase(colName string) (map[string]
 			if err := doc.DataTo(&ur); err != nil {
 				return nil, errors.New("could not parse doc to user struct")
 			}
-			data[ur.UserId] = ur
+			data[ur.UserID] = ur
 		}
 	}
 	return data, nil

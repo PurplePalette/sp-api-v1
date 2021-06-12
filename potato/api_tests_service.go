@@ -34,7 +34,7 @@ func NewTestsAPIService(firestore *firestore.Client, cache *CacheService) TestsA
 
 // GetTestServerInfo - Get user server info
 func (s *TestsAPIService) GetTestServerInfo(ctx context.Context, testId string) (ImplResponse, error) {
-	if _, err := s.cache.GetUserIdFromTest(testId); err != nil {
+	if _, err := s.cache.GetUserIDFromTest(testId); err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	welcome, err := s.cache.news.Get("sweetPotatoTestWelcome")
@@ -63,12 +63,12 @@ func (s *TestsAPIService) GetTestServerInfo(ctx context.Context, testId string) 
 
 // GetTestsBackgrounds - Get backgrounds for test
 func (s *TestsAPIService) GetTestsBackgrounds(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userId, err := s.cache.GetUserIdFromTest(testId)
+	userID, err := s.cache.GetUserIDFromTest(testId)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	query.Filter.Public = false
 	pages := s.cache.backgrounds.Pages()
 	items, err := s.cache.backgrounds.GetPage(page, query)
@@ -89,12 +89,12 @@ func (s *TestsAPIService) GetTestsBackgrounds(ctx context.Context, testId string
 
 // GetTestsEffects - Get effects for test
 func (s *TestsAPIService) GetTestsEffects(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userId, err := s.cache.GetUserIdFromTest(testId)
+	userID, err := s.cache.GetUserIDFromTest(testId)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	query.Filter.Public = false
 	pages := s.cache.effects.Pages()
 	items, err := s.cache.effects.GetPage(page, query)
@@ -115,12 +115,12 @@ func (s *TestsAPIService) GetTestsEffects(ctx context.Context, testId string, lo
 
 // GetTestsEngines - Get engines for test
 func (s *TestsAPIService) GetTestsEngines(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userId, err := s.cache.GetUserIdFromTest(testId)
+	userID, err := s.cache.GetUserIDFromTest(testId)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	query.Filter.Public = false
 	pages := s.cache.engines.Pages()
 	items, err := s.cache.engines.GetPage(page, query)
@@ -141,12 +141,12 @@ func (s *TestsAPIService) GetTestsEngines(ctx context.Context, testId string, lo
 
 // GetTestsLevels - Get levels for test
 func (s *TestsAPIService) GetTestsLevels(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userId, err := s.cache.GetUserIdFromTest(testId)
+	userID, err := s.cache.GetUserIDFromTest(testId)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	query.Filter.Public = false
 	pages := s.cache.levels.Pages()
 	items, err := s.cache.levels.GetPage(page, query)
@@ -167,12 +167,12 @@ func (s *TestsAPIService) GetTestsLevels(ctx context.Context, testId string, loc
 
 // GetTestsParticles - Get particles for test
 func (s *TestsAPIService) GetTestsParticles(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userId, err := s.cache.GetUserIdFromTest(testId)
+	userID, err := s.cache.GetUserIDFromTest(testId)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	query.Filter.Public = false
 	pages := s.cache.particles.Pages()
 	items, err := s.cache.particles.GetPage(page, query)
@@ -193,12 +193,12 @@ func (s *TestsAPIService) GetTestsParticles(ctx context.Context, testId string, 
 
 // GetTestsSkins - Get skins for test
 func (s *TestsAPIService) GetTestsSkins(ctx context.Context, testId string, localization string, page int32, keywords string) (ImplResponse, error) {
-	userId, err := s.cache.GetUserIdFromTest(testId)
+	userID, err := s.cache.GetUserIDFromTest(testId)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	query.Filter.Public = false
 	pages := s.cache.skins.Pages()
 	items, err := s.cache.skins.GetPage(page, query)

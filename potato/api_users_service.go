@@ -34,7 +34,7 @@ func NewUsersAPIService(firestore *firestore.Client, cache *CacheService) UsersA
 }
 
 // EditUser - Edit user
-func (s *UsersAPIService) EditUser(ctx context.Context, userId string, user User) (ImplResponse, error) {
+func (s *UsersAPIService) EditUser(ctx context.Context, userID string, user User) (ImplResponse, error) {
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil
 
@@ -54,8 +54,8 @@ func (s *UsersAPIService) EditUser(ctx context.Context, userId string, user User
 }
 
 // GetUser - Get user
-func (s *UsersAPIService) GetUser(ctx context.Context, userId string) (ImplResponse, error) {
-	rawUser, err := s.cache.users.Get(userId)
+func (s *UsersAPIService) GetUser(ctx context.Context, userID string) (ImplResponse, error) {
+	rawUser, err := s.cache.users.Get(userID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -75,8 +75,8 @@ func (s *UsersAPIService) GetUserList(ctx context.Context) (ImplResponse, error)
 }
 
 // GetUserServerInfo - Get user server info
-func (s *UsersAPIService) GetUserServerInfo(ctx context.Context, userId string) (ImplResponse, error) {
-	if !s.cache.users.IsExist(userId) {
+func (s *UsersAPIService) GetUserServerInfo(ctx context.Context, userID string) (ImplResponse, error) {
+	if !s.cache.users.IsExist(userID) {
 		return Response(http.StatusNotFound, nil), nil
 	}
 	welcome, err := s.cache.news.Get("sweetPotatoUserWelcome")
@@ -85,7 +85,7 @@ func (s *UsersAPIService) GetUserServerInfo(ctx context.Context, userId string) 
 		log.Print(err)
 		return Response(http.StatusInternalServerError, nil), nil
 	}
-	parsedNews.Level.Artists = userId
+	parsedNews.Level.Artists = userID
 	welcome2, err := s.cache.news.Get("sweetPotatoUserWelcome2")
 	parsedNews2 := welcome2.(News)
 	if err != nil {
@@ -105,9 +105,9 @@ func (s *UsersAPIService) GetUserServerInfo(ctx context.Context, userId string) 
 }
 
 // GetUsersBackgrounds - Get backgrounds for test
-func (s *UsersAPIService) GetUsersBackgrounds(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersBackgrounds(ctx context.Context, userID string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	pages := s.cache.backgrounds.Pages()
 	items, err := s.cache.backgrounds.GetPage(page, query)
 	if err != nil {
@@ -126,9 +126,9 @@ func (s *UsersAPIService) GetUsersBackgrounds(ctx context.Context, userId string
 }
 
 // GetUsersEffects - Get effects for test
-func (s *UsersAPIService) GetUsersEffects(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersEffects(ctx context.Context, userID string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	pages := s.cache.effects.Pages()
 	items, err := s.cache.effects.GetPage(page, query)
 	if err != nil {
@@ -147,9 +147,9 @@ func (s *UsersAPIService) GetUsersEffects(ctx context.Context, userId string, lo
 }
 
 // GetUsersEngines - Get engines for test
-func (s *UsersAPIService) GetUsersEngines(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersEngines(ctx context.Context, userID string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	pages := s.cache.engines.Pages()
 	items, err := s.cache.engines.GetPage(page, query)
 	if err != nil {
@@ -168,10 +168,10 @@ func (s *UsersAPIService) GetUsersEngines(ctx context.Context, userId string, lo
 }
 
 // GetUsersLevels - Get levels for test
-func (s *UsersAPIService) GetUsersLevels(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersLevels(ctx context.Context, userID string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
-	if authUser, err := request.GetUserId(ctx); err == nil && authUser == userId {
+	query.Filter.UserID = userID
+	if authUser, err := request.GetUserID(ctx); err == nil && authUser == userID {
 		query.Filter.ForcePublic = true
 	}
 
@@ -193,9 +193,9 @@ func (s *UsersAPIService) GetUsersLevels(ctx context.Context, userId string, loc
 }
 
 // GetUsersParticles - Get particles for test
-func (s *UsersAPIService) GetUsersParticles(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersParticles(ctx context.Context, userID string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	pages := s.cache.particles.Pages()
 	items, err := s.cache.particles.GetPage(page, query)
 	if err != nil {
@@ -214,9 +214,9 @@ func (s *UsersAPIService) GetUsersParticles(ctx context.Context, userId string, 
 }
 
 // GetUsersSkins - Get skins for test
-func (s *UsersAPIService) GetUsersSkins(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersSkins(ctx context.Context, userID string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
-	query.Filter.UserId = userId
+	query.Filter.UserID = userID
 	pages := s.cache.skins.Pages()
 	items, err := s.cache.skins.GetPage(page, query)
 	if err != nil {
@@ -235,7 +235,7 @@ func (s *UsersAPIService) GetUsersSkins(ctx context.Context, userId string, loca
 }
 
 // GetUsersBackground - Get users background
-func (s *UsersAPIService) GetUsersBackground(ctx context.Context, userId string, backgroundName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersBackground(ctx context.Context, userID string, backgroundName string) (ImplResponse, error) {
 	bg, err := s.cache.backgrounds.Get(backgroundName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -250,7 +250,7 @@ func (s *UsersAPIService) GetUsersBackground(ctx context.Context, userId string,
 }
 
 // GetUsersEffect - Get users effect
-func (s *UsersAPIService) GetUsersEffect(ctx context.Context, userId string, effectName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersEffect(ctx context.Context, userID string, effectName string) (ImplResponse, error) {
 	ef, err := s.cache.effects.Get(effectName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -265,7 +265,7 @@ func (s *UsersAPIService) GetUsersEffect(ctx context.Context, userId string, eff
 }
 
 // GetUsersEngine - Get users engine
-func (s *UsersAPIService) GetUsersEngine(ctx context.Context, userId string, engineName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersEngine(ctx context.Context, userID string, engineName string) (ImplResponse, error) {
 	eg, err := s.cache.engines.Get(engineName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -280,7 +280,7 @@ func (s *UsersAPIService) GetUsersEngine(ctx context.Context, userId string, eng
 }
 
 // GetUsersLevel - Get users level
-func (s *UsersAPIService) GetUsersLevel(ctx context.Context, userId string, levelName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersLevel(ctx context.Context, userID string, levelName string) (ImplResponse, error) {
 	rawNs, newsNotExistErr := s.cache.news.Get(levelName)
 	rawLv, levelNotExistErr := s.cache.levels.Get(levelName)
 	if newsNotExistErr != nil && levelNotExistErr != nil {
@@ -302,7 +302,7 @@ func (s *UsersAPIService) GetUsersLevel(ctx context.Context, userId string, leve
 }
 
 // GetUsersParticle - Get users particle
-func (s *UsersAPIService) GetUsersParticle(ctx context.Context, userId string, particleName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersParticle(ctx context.Context, userID string, particleName string) (ImplResponse, error) {
 	rawPt, err := s.cache.particles.Get(particleName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -317,7 +317,7 @@ func (s *UsersAPIService) GetUsersParticle(ctx context.Context, userId string, p
 }
 
 // GetUsersSkin - Get users skin
-func (s *UsersAPIService) GetUsersSkin(ctx context.Context, userId string, skinName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersSkin(ctx context.Context, userID string, skinName string) (ImplResponse, error) {
 	rawSk, err := s.cache.skins.Get(skinName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil

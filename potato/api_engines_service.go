@@ -46,8 +46,8 @@ func (s *EnginesAPIService) AddEngine(ctx context.Context, engineName string, en
 		return Response(http.StatusConflict, nil), nil
 	}
 	// Force set parameter to valid
-	userId, _ := request.GetUserId(ctx)
-	engine.UserId = userId
+	userID, _ := request.GetUserID(ctx)
+	engine.UserID = userID
 	engine.Name = engineName
 	col := s.firestore.Collection("engines")
 	// Add engine to firestore
@@ -68,8 +68,8 @@ func (s *EnginesAPIService) EditEngine(ctx context.Context, engineName string, e
 	if err := s.validate.Struct(engineName); err != nil {
 		return Response(http.StatusBadRequest, nil), nil
 	}
-	userId, _ := request.GetUserId(ctx)
-	match, err := s.cache.engines.IsOwnerMatch(engineName, userId)
+	userID, _ := request.GetUserID(ctx)
+	match, err := s.cache.engines.IsOwnerMatch(engineName, userID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}

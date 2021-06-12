@@ -166,7 +166,7 @@ func TestParseMixed(t *testing.T) {
 			Keyword:    "Daydream cafe ～チノver.～",
 			Difficulty: [2]int{10, 30},
 			Genre:      request.GENRE_ANIME,
-			UserId:     "domao",
+			UserID:     "domao",
 		},
 	}
 	actual := request.ParseSearchQuery("Daydream cafe difficulty:10-30 genre:anime sort:notes user:domao ～チノver.～")
@@ -180,7 +180,7 @@ func TestParseMixedShortHand(t *testing.T) {
 			Keyword:    "Daydream cafe ～チノver.～",
 			Difficulty: [2]int{10, 30},
 			Genre:      request.GENRE_ANIME,
-			UserId:     "domao",
+			UserID:     "domao",
 		},
 	}
 	actual := request.ParseSearchQuery("Daydream cafe d:10-30 g:a s:n u:domao ～チノver.～")

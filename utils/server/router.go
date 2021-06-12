@@ -23,7 +23,7 @@ func injectUserToContext(auth *auth.Client, route potato.Route) http.HandlerFunc
 			bearerToken := strings.TrimPrefix(token, "Bearer ")
 			firebaseToken, err := auth.VerifyIDTokenAndCheckRevoked(context.Background(), bearerToken)
 			if err == nil {
-				ctx := context.WithValue(r.Context(), request.CtxUserId, firebaseToken.UID)
+				ctx := context.WithValue(r.Context(), request.CtxUserID, firebaseToken.UID)
 				r = r.WithContext(ctx)
 				authorized = true
 			}
@@ -39,7 +39,7 @@ func injectUserToContext(auth *auth.Client, route potato.Route) http.HandlerFunc
 // injectTestUserToContext injects firebase user id to context (for test purpose)
 func injectTestUserToContext(uid string, next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		ctx := context.WithValue(r.Context(), request.CtxUserId, uid)
+		ctx := context.WithValue(r.Context(), request.CtxUserID, uid)
 		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)
 	}

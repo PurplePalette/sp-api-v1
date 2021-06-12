@@ -53,7 +53,7 @@ type Level struct {
 	Public bool `json:"public,omitempty"`
 
 	// 独自要素: 譜面作成者のユーザーID
-	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
+	UserID string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// 独自要素: 譜面内のノーツ数
 	Notes int32 `json:"notes,omitempty" validate:"gte=1,lte=10000000"`

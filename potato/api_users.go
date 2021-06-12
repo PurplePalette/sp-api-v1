@@ -39,91 +39,91 @@ func (c *UsersAPIController) Routes() Routes {
 		{
 			"EditUser",
 			strings.ToUpper("Patch"),
-			"/users/{userId}",
+			"/users/{userID}",
 			c.EditUser,
 		},
 		{
 			"GetUser",
 			strings.ToUpper("Get"),
-			"/users/{userId}",
+			"/users/{userID}",
 			c.GetUser,
 		},
 		{
 			"GetUserServerInfo",
 			strings.ToUpper("Get"),
-			"/users/{userId}/info",
+			"/users/{userID}/info",
 			c.GetUserServerInfo,
 		},
 		{
 			"GetUsersBackgrounds",
 			strings.ToUpper("Get"),
-			"/users/{userId}/backgrounds/list",
+			"/users/{userID}/backgrounds/list",
 			c.GetUsersBackgrounds,
 		},
 		{
 			"GetUsersEffects",
 			strings.ToUpper("Get"),
-			"/users/{userId}/effects/list",
+			"/users/{userID}/effects/list",
 			c.GetUsersEffects,
 		},
 		{
 			"GetUsersEngines",
 			strings.ToUpper("Get"),
-			"/users/{userId}/engines/list",
+			"/users/{userID}/engines/list",
 			c.GetUsersEngines,
 		},
 		{
 			"GetUsersLevels",
 			strings.ToUpper("Get"),
-			"/users/{userId}/levels/list",
+			"/users/{userID}/levels/list",
 			c.GetUsersLevels,
 		},
 		{
 			"GetUsersParticles",
 			strings.ToUpper("Get"),
-			"/users/{userId}/particles/list",
+			"/users/{userID}/particles/list",
 			c.GetUsersParticles,
 		},
 		{
 			"GetUsersSkins",
 			strings.ToUpper("Get"),
-			"/users/{userId}/skins/list",
+			"/users/{userID}/skins/list",
 			c.GetUsersSkins,
 		},
 		{
 			"GetUsersBackground",
 			strings.ToUpper("Get"),
-			"/users/{userId}/backgrounds/{backgroundName}",
+			"/users/{userID}/backgrounds/{backgroundName}",
 			c.GetUsersBackground,
 		},
 		{
 			"GetUsersEffect",
 			strings.ToUpper("Get"),
-			"/users/{userId}/effects/{effectName}",
+			"/users/{userID}/effects/{effectName}",
 			c.GetUsersEffect,
 		},
 		{
 			"GetUsersEngine",
 			strings.ToUpper("Get"),
-			"/users/{userId}/engines/{engineName}",
+			"/users/{userID}/engines/{engineName}",
 			c.GetUsersEngine,
 		},
 		{
 			"GetUsersLevel",
 			strings.ToUpper("Get"),
-			"/users/{userId}/levels/{levelName}",
+			"/users/{userID}/levels/{levelName}",
 			c.GetUsersLevel,
 		},
 		{
 			"GetUsersParticle",
 			strings.ToUpper("Get"),
-			"/users/{userId}/particles/{particleName}",
+			"/users/{userID}/particles/{particleName}",
 			c.GetUsersParticle,
 		},
 		{
 			"GetUsersSkin",
 			strings.ToUpper("Get"),
-			"/users/{userId}/skins/{skinName}",
+			"/users/{userID}/skins/{skinName}",
 			c.GetUsersSkin,
 		},
 	}
@@ -132,14 +132,14 @@ func (c *UsersAPIController) Routes() Routes {
 // EditUser - Edit user
 func (c *UsersAPIController) EditUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
 	user := &User{}
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	result, err := c.service.EditUser(r.Context(), userId, *user)
+	result, err := c.service.EditUser(r.Context(), userID, *user)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -153,9 +153,9 @@ func (c *UsersAPIController) EditUser(w http.ResponseWriter, r *http.Request) {
 // GetUser - Get user
 func (c *UsersAPIController) GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
-	result, err := c.service.GetUser(r.Context(), userId)
+	result, err := c.service.GetUser(r.Context(), userID)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -182,9 +182,9 @@ func (c *UsersAPIController) GetUserList(w http.ResponseWriter, r *http.Request)
 // GetUserServerInfo - Get user server info
 func (c *UsersAPIController) GetUserServerInfo(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
-	result, err := c.service.GetUserServerInfo(r.Context(), userId)
+	result, err := c.service.GetUserServerInfo(r.Context(), userID)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -199,7 +199,7 @@ func (c *UsersAPIController) GetUserServerInfo(w http.ResponseWriter, r *http.Re
 func (c *UsersAPIController) GetUsersBackgrounds(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userId := params["userId"]
+	userID := params["userID"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -208,7 +208,7 @@ func (c *UsersAPIController) GetUsersBackgrounds(w http.ResponseWriter, r *http.
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetUsersBackgrounds(r.Context(), userId, localization, page, keywords)
+	result, err := c.service.GetUsersBackgrounds(r.Context(), userID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -223,7 +223,7 @@ func (c *UsersAPIController) GetUsersBackgrounds(w http.ResponseWriter, r *http.
 func (c *UsersAPIController) GetUsersEffects(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userId := params["userId"]
+	userID := params["userID"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -232,7 +232,7 @@ func (c *UsersAPIController) GetUsersEffects(w http.ResponseWriter, r *http.Requ
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetUsersEffects(r.Context(), userId, localization, page, keywords)
+	result, err := c.service.GetUsersEffects(r.Context(), userID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -247,7 +247,7 @@ func (c *UsersAPIController) GetUsersEffects(w http.ResponseWriter, r *http.Requ
 func (c *UsersAPIController) GetUsersEngines(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userId := params["userId"]
+	userID := params["userID"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -256,7 +256,7 @@ func (c *UsersAPIController) GetUsersEngines(w http.ResponseWriter, r *http.Requ
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetUsersEngines(r.Context(), userId, localization, page, keywords)
+	result, err := c.service.GetUsersEngines(r.Context(), userID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -271,7 +271,7 @@ func (c *UsersAPIController) GetUsersEngines(w http.ResponseWriter, r *http.Requ
 func (c *UsersAPIController) GetUsersLevels(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userId := params["userId"]
+	userID := params["userID"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -280,7 +280,7 @@ func (c *UsersAPIController) GetUsersLevels(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetUsersLevels(r.Context(), userId, localization, page, keywords)
+	result, err := c.service.GetUsersLevels(r.Context(), userID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -295,7 +295,7 @@ func (c *UsersAPIController) GetUsersLevels(w http.ResponseWriter, r *http.Reque
 func (c *UsersAPIController) GetUsersParticles(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userId := params["userId"]
+	userID := params["userID"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -304,7 +304,7 @@ func (c *UsersAPIController) GetUsersParticles(w http.ResponseWriter, r *http.Re
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetUsersParticles(r.Context(), userId, localization, page, keywords)
+	result, err := c.service.GetUsersParticles(r.Context(), userID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -319,7 +319,7 @@ func (c *UsersAPIController) GetUsersParticles(w http.ResponseWriter, r *http.Re
 func (c *UsersAPIController) GetUsersSkins(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userId := params["userId"]
+	userID := params["userID"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -328,7 +328,7 @@ func (c *UsersAPIController) GetUsersSkins(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	keywords := query.Get("keywords")
-	result, err := c.service.GetUsersSkins(r.Context(), userId, localization, page, keywords)
+	result, err := c.service.GetUsersSkins(r.Context(), userID, localization, page, keywords)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -342,11 +342,11 @@ func (c *UsersAPIController) GetUsersSkins(w http.ResponseWriter, r *http.Reques
 // GetUsersBackground - Get users background
 func (c *UsersAPIController) GetUsersBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
 	backgroundName := params["backgroundName"]
 
-	result, err := c.service.GetUsersBackground(r.Context(), userId, backgroundName)
+	result, err := c.service.GetUsersBackground(r.Context(), userID, backgroundName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -360,11 +360,11 @@ func (c *UsersAPIController) GetUsersBackground(w http.ResponseWriter, r *http.R
 // GetUsersEffect - Get users effect
 func (c *UsersAPIController) GetUsersEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
 	effectName := params["effectName"]
 
-	result, err := c.service.GetUsersEffect(r.Context(), userId, effectName)
+	result, err := c.service.GetUsersEffect(r.Context(), userID, effectName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -378,11 +378,11 @@ func (c *UsersAPIController) GetUsersEffect(w http.ResponseWriter, r *http.Reque
 // GetUsersEngine - Get users engine
 func (c *UsersAPIController) GetUsersEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
 	engineName := params["engineName"]
 
-	result, err := c.service.GetUsersEngine(r.Context(), userId, engineName)
+	result, err := c.service.GetUsersEngine(r.Context(), userID, engineName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -396,11 +396,11 @@ func (c *UsersAPIController) GetUsersEngine(w http.ResponseWriter, r *http.Reque
 // GetUsersLevel - Get users level
 func (c *UsersAPIController) GetUsersLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
 	levelName := params["levelName"]
 
-	result, err := c.service.GetUsersLevel(r.Context(), userId, levelName)
+	result, err := c.service.GetUsersLevel(r.Context(), userID, levelName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -414,11 +414,11 @@ func (c *UsersAPIController) GetUsersLevel(w http.ResponseWriter, r *http.Reques
 // GetUsersParticle - Get users particle
 func (c *UsersAPIController) GetUsersParticle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
 	particleName := params["particleName"]
 
-	result, err := c.service.GetUsersParticle(r.Context(), userId, particleName)
+	result, err := c.service.GetUsersParticle(r.Context(), userID, particleName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)
@@ -432,11 +432,11 @@ func (c *UsersAPIController) GetUsersParticle(w http.ResponseWriter, r *http.Req
 // GetUsersSkin - Get users skin
 func (c *UsersAPIController) GetUsersSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userId := params["userId"]
+	userID := params["userID"]
 
 	skinName := params["skinName"]
 
-	result, err := c.service.GetUsersSkin(r.Context(), userId, skinName)
+	result, err := c.service.GetUsersSkin(r.Context(), userID, skinName)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		EncodeJSONResponse(err.Error(), &result.Code, w)

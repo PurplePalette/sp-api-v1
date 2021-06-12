@@ -47,8 +47,8 @@ func (s *BackgroundsAPIService) AddBackground(ctx context.Context, backgroundNam
 		return Response(http.StatusConflict, nil), nil
 	}
 	// Force set parameter to valid
-	userId, _ := request.GetUserId(ctx)
-	background.UserId = userId
+	userID, _ := request.GetUserID(ctx)
+	background.UserID = userID
 	background.Name = backgroundName
 	nowTime := int32(time.Now().Unix())
 	background.CreatedTime = nowTime
@@ -72,8 +72,8 @@ func (s *BackgroundsAPIService) EditBackground(ctx context.Context, backgroundNa
 	if err := s.validate.Struct(background); err != nil {
 		return Response(http.StatusBadRequest, nil), nil
 	}
-	userId, _ := request.GetUserId(ctx)
-	match, err := s.cache.backgrounds.IsOwnerMatch(backgroundName, userId)
+	userID, _ := request.GetUserID(ctx)
+	match, err := s.cache.backgrounds.IsOwnerMatch(backgroundName, userID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}

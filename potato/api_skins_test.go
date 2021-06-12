@@ -42,7 +42,7 @@ func TestAddSkin(t *testing.T) {
 		Texture:     potato.SonolusResourceLocator{Type: "SkinTexture", Url: "https://example.com"},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),
-		UserId:      "YnaKWRpbanfyn1ge6FKQChqocyyn",
+		UserID:      "YnaKWRpbanfyn1ge6FKQChqocyyn",
 		Description: "スキンテスト",
 	}
 	skJson, _ := json.Marshal(sk)
@@ -71,7 +71,7 @@ func TestEditSkin(t *testing.T) {
 		Texture:     potato.SonolusResourceLocator{Type: "SkinTexture", Url: "https://example.com"},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),
-		UserId:      "YnaKWRpbanfyn1ge6FKQChqocyyn",
+		UserID:      "YnaKWRpbanfyn1ge6FKQChqocyyn",
 		Description: "変更済みスキンテスト",
 	}
 	skJson, _ := json.Marshal(sk)

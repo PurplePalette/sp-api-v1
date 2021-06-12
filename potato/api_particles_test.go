@@ -42,7 +42,7 @@ func TestAddParticle(t *testing.T) {
 		Texture:     potato.SonolusResourceLocator{Type: "ParticleTexture", Url: "https://example.com"},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),
-		UserId:      "YnaKWRpbanfyn1ge6FKQChqocyyn",
+		UserID:      "YnaKWRpbanfyn1ge6FKQChqocyyn",
 		Description: "パーティクルテスト",
 	}
 	ptJson, _ := json.Marshal(pt)
@@ -71,7 +71,7 @@ func TestEditParticle(t *testing.T) {
 		Texture:     potato.SonolusResourceLocator{Type: "ParticleTexture", Url: "https://example.com"},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),
-		UserId:      "YnaKWRpbanfyn1ge6FKQChqocyyn",
+		UserID:      "YnaKWRpbanfyn1ge6FKQChqocyyn",
 		Description: "変更済みパーティクル",
 	}
 	ptJson, _ := json.Marshal(pt)

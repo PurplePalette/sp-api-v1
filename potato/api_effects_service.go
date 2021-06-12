@@ -46,8 +46,8 @@ func (s *EffectsAPIService) AddEffect(ctx context.Context, effectName string, ef
 		return Response(http.StatusConflict, nil), nil
 	}
 	// Force set parameter to valid
-	userId, _ := request.GetUserId(ctx)
-	effect.UserId = userId
+	userID, _ := request.GetUserID(ctx)
+	effect.UserID = userID
 	effect.Name = effectName
 	col := s.firestore.Collection("effects")
 	// Add effect to firestore
@@ -68,8 +68,8 @@ func (s *EffectsAPIService) EditEffect(ctx context.Context, effectName string, e
 	if err := s.validate.Struct(effectName); err != nil {
 		return Response(http.StatusBadRequest, nil), nil
 	}
-	userId, _ := request.GetUserId(ctx)
-	match, err := s.cache.effects.IsOwnerMatch(effectName, userId)
+	userID, _ := request.GetUserID(ctx)
+	match, err := s.cache.effects.IsOwnerMatch(effectName, userID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}

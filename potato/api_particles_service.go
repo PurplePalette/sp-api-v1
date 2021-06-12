@@ -46,8 +46,8 @@ func (s *ParticlesAPIService) AddParticle(ctx context.Context, particleName stri
 		return Response(http.StatusConflict, nil), nil
 	}
 	// Force set parameter to valid
-	userId, _ := request.GetUserId(ctx)
-	particle.UserId = userId
+	userID, _ := request.GetUserID(ctx)
+	particle.UserID = userID
 	particle.Name = particleName
 	col := s.firestore.Collection("particles")
 	// Add particle to firestore
@@ -68,8 +68,8 @@ func (s *ParticlesAPIService) EditParticle(ctx context.Context, particleName str
 	if err := s.validate.Struct(particle); err != nil {
 		return Response(http.StatusBadRequest, err.Error()), nil
 	}
-	userId, _ := request.GetUserId(ctx)
-	match, err := s.cache.particles.IsOwnerMatch(particleName, userId)
+	userID, _ := request.GetUserID(ctx)
+	match, err := s.cache.particles.IsOwnerMatch(particleName, userID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}

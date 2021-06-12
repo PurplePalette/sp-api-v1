@@ -49,7 +49,7 @@ func TestAddEffect(t *testing.T) {
 		},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),
-		UserId:      "kfcn",
+		UserID:      "kfcn",
 	}
 	efJson, _ := json.Marshal(ef)
 	req := httptest.NewRequest(
@@ -84,7 +84,7 @@ func TestEditEffect(t *testing.T) {
 		},
 		CreatedTime: int32(time.Now().Unix()),
 		UpdatedTime: int32(time.Now().Unix()),
-		UserId:      "kfcn",
+		UserID:      "kfcn",
 	}
 	efJson, _ := json.Marshal(ef)
 	req := httptest.NewRequest(

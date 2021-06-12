@@ -123,7 +123,7 @@ func InsertCollection(ctx context.Context, firestore *firestore.Client, collecti
 			panic(err)
 		}
 		for _, us := range uss {
-			if _, err := col.Doc(us.UserId).Set(ctx, us); err != nil {
+			if _, err := col.Doc(us.UserID).Set(ctx, us); err != nil {
 				return err
 			}
 		}

@@ -73,7 +73,7 @@ func ParseSearchQuery(keywords string) SearchQuery {
 		case "d", "difficulty":
 			resp.Filter.Difficulty = parseDifficulty(queryValue)
 		case "u", "user":
-			resp.Filter.UserId = queryValue
+			resp.Filter.UserID = queryValue
 		}
 	}
 	resp.Filter.Keyword = strings.Join(originalKeywords, " ")

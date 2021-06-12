@@ -46,8 +46,8 @@ func (s *LevelsAPIService) AddLevel(ctx context.Context, levelName string, level
 		return Response(http.StatusConflict, nil), nil
 	}
 	// Force set parameter to valid
-	userId, _ := request.GetUserId(ctx)
-	level.UserId = userId
+	userID, _ := request.GetUserID(ctx)
+	level.UserID = userID
 	level.Name = levelName
 	col := s.firestore.Collection("levels")
 	// Add level to firestore
@@ -68,8 +68,8 @@ func (s *LevelsAPIService) EditLevel(ctx context.Context, levelName string, leve
 	if err := s.validate.Struct(level); err != nil {
 		return Response(http.StatusBadRequest, nil), nil
 	}
-	userId, _ := request.GetUserId(ctx)
-	match, err := s.cache.levels.IsOwnerMatch(levelName, userId)
+	userID, _ := request.GetUserID(ctx)
+	match, err := s.cache.levels.IsOwnerMatch(levelName, userID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}

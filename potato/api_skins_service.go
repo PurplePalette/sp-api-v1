@@ -46,8 +46,8 @@ func (s *SkinsAPIService) AddSkin(ctx context.Context, skinName string, skin Ski
 		return Response(http.StatusConflict, nil), nil
 	}
 	// Force set parameter to valid
-	userId, _ := request.GetUserId(ctx)
-	skin.UserId = userId
+	userID, _ := request.GetUserID(ctx)
+	skin.UserID = userID
 	skin.Name = skinName
 	col := s.firestore.Collection("skins")
 	// Add skin to firestore
@@ -68,8 +68,8 @@ func (s *SkinsAPIService) EditSkin(ctx context.Context, skinName string, skin Sk
 	if err := s.validate.Struct(skin); err != nil {
 		return Response(http.StatusBadRequest, err.Error()), nil
 	}
-	userId, _ := request.GetUserId(ctx)
-	match, err := s.cache.skins.IsOwnerMatch(skinName, userId)
+	userID, _ := request.GetUserID(ctx)
+	match, err := s.cache.skins.IsOwnerMatch(skinName, userID)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
 	}

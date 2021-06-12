@@ -49,24 +49,24 @@ func (c *Cache) Remove(key string, data interface{}) error {
 	return nil
 }
 
-func (c *Cache) IsOwnerMatch(key string, userId string) (bool, error) {
+func (c *Cache) IsOwnerMatch(key string, userID string) (bool, error) {
 	v, ok := c.Data[key]
 	if !ok {
 		return false, errors.New("specified key was not exists")
 	}
 	switch d := v.(type) {
 	case Background:
-		return d.UserId == userId, nil
+		return d.UserID == userID, nil
 	case Effect:
-		return d.UserId == userId, nil
+		return d.UserID == userID, nil
 	case Engine:
-		return d.UserId == userId, nil
+		return d.UserID == userID, nil
 	case Particle:
-		return d.UserId == userId, nil
+		return d.UserID == userID, nil
 	case Skin:
-		return d.UserId == userId, nil
+		return d.UserID == userID, nil
 	case Level:
-		return d.UserId == userId, nil
+		return d.UserID == userID, nil
 	default:
 		return false, nil
 	}
@@ -134,38 +134,38 @@ func (c *Cache) GetPage(pageId int32, searchQuery request.SearchQuery) ([]byte, 
 			maxD := int32(searchQuery.Filter.Difficulty[1])
 			ratingMatched := v.Rating >= minD && v.Rating <= maxD
 			genreMatched := strings.Contains(v.Genre, string(searchQuery.Filter.Genre))
-			userMatched := strings.Contains(v.UserId, searchQuery.Filter.UserId)
+			userMatched := strings.Contains(v.UserID, searchQuery.Filter.UserID)
 			keywordMatched := strings.Contains(v.Title, searchQuery.Filter.Keyword)
 			publicMatched := v.Public == searchQuery.Filter.Public || searchQuery.Filter.ForcePublic
 			if ratingMatched && genreMatched && userMatched && keywordMatched && publicMatched {
 				filteredList = append(filteredList, value)
 			}
 		case Background:
-			userMatched := strings.Contains(v.UserId, searchQuery.Filter.UserId)
+			userMatched := strings.Contains(v.UserID, searchQuery.Filter.UserID)
 			keywordMatched := strings.Contains(v.Title, searchQuery.Filter.Keyword)
 			if userMatched && keywordMatched {
 				filteredList = append(filteredList, value)
 			}
 		case Effect:
-			userMatched := strings.Contains(v.UserId, searchQuery.Filter.UserId)
+			userMatched := strings.Contains(v.UserID, searchQuery.Filter.UserID)
 			keywordMatched := strings.Contains(v.Title, searchQuery.Filter.Keyword)
 			if userMatched && keywordMatched {
 				filteredList = append(filteredList, value)
 			}
 		case Engine:
-			userMatched := strings.Contains(v.UserId, searchQuery.Filter.UserId)
+			userMatched := strings.Contains(v.UserID, searchQuery.Filter.UserID)
 			keywordMatched := strings.Contains(v.Title, searchQuery.Filter.Keyword)
 			if userMatched && keywordMatched {
 				filteredList = append(filteredList, value)
 			}
 		case Particle:
-			userMatched := strings.Contains(v.UserId, searchQuery.Filter.UserId)
+			userMatched := strings.Contains(v.UserID, searchQuery.Filter.UserID)
 			keywordMatched := strings.Contains(v.Title, searchQuery.Filter.Keyword)
 			if userMatched && keywordMatched {
 				filteredList = append(filteredList, value)
 			}
 		case Skin:
-			userMatched := strings.Contains(v.UserId, searchQuery.Filter.UserId)
+			userMatched := strings.Contains(v.UserID, searchQuery.Filter.UserID)
 			keywordMatched := strings.Contains(v.Title, searchQuery.Filter.Keyword)
 			if userMatched && keywordMatched {
 				filteredList = append(filteredList, value)

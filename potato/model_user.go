@@ -13,7 +13,7 @@ package potato
 type User struct {
 
 	// FirebaseDatabase上のユーザーID
-	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
+	UserID string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// テスト用サーバーのエンドポイント
 	TestId string `json:"testId,omitempty" validate:"alphanum,min=1,max=50"`

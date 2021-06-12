@@ -62,7 +62,7 @@ func TestAddEngine(t *testing.T) {
 			Texture:     potato.SonolusResourceLocator{},
 			CreatedTime: 0,
 			UpdatedTime: 0,
-			UserId:      "",
+			UserID:      "",
 		},
 		Background: potato.Background{
 			Name:        "",
@@ -75,7 +75,7 @@ func TestAddEngine(t *testing.T) {
 			Image:       potato.SonolusResourceLocator{},
 			CreatedTime: 0,
 			UpdatedTime: 0,
-			UserId:      "",
+			UserID:      "",
 		},
 		Effect: potato.Effect{
 			Name:        "",
@@ -87,7 +87,7 @@ func TestAddEngine(t *testing.T) {
 			Data:        potato.SonolusResourceLocator{},
 			CreatedTime: 0,
 			UpdatedTime: 0,
-			UserId:      "",
+			UserID:      "",
 		},
 		Particle: potato.Particle{
 			Name:        "",
@@ -100,11 +100,11 @@ func TestAddEngine(t *testing.T) {
 			Texture:     potato.SonolusResourceLocator{},
 			CreatedTime: 0,
 			UpdatedTime: 0,
-			UserId:      "",
+			UserID:      "",
 		},
 		CreatedTime: 0,
 		UpdatedTime: 0,
-		UserId:      "",
+		UserID:      "",
 	}
 	efJson, _ := json.Marshal(ef)
 	req := httptest.NewRequest(
@@ -153,7 +153,7 @@ func TestEditEngine(t *testing.T) {
 			Texture:     potato.SonolusResourceLocator{},
 			CreatedTime: 0,
 			UpdatedTime: 0,
-			UserId:      "",
+			UserID:      "",
 		},
 		Background: potato.Background{
 			Name:        "",
@@ -166,7 +166,7 @@ func TestEditEngine(t *testing.T) {
 			Image:       potato.SonolusResourceLocator{},
 			CreatedTime: 0,
 			UpdatedTime: 0,
-			UserId:      "",
+			UserID:      "",
 		},
 		Effect: potato.Effect{
 			Name:        "",
@@ -178,7 +178,7 @@ func TestEditEngine(t *testing.T) {
 			Data:        potato.SonolusResourceLocator{},
 			CreatedTime: 0,
 			UpdatedTime: 0,
-			UserId:      "",
+			UserID:      "",
 		},
 		Particle: potato.Particle{
 			Name:        "",
@@ -191,11 +191,11 @@ func TestEditEngine(t *testing.T) {
 			Texture:     potato.SonolusResourceLocator{},
 			CreatedTime: 0,
 			UpdatedTime: 0,
-			UserId:      "",
+			UserID:      "",
 		},
 		CreatedTime: 0,
 		UpdatedTime: 0,
-		UserId:      "",
+		UserID:      "",
 	}
 	efJson, _ := json.Marshal(ef)
 	req := httptest.NewRequest(

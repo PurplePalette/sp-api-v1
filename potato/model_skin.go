@@ -40,7 +40,7 @@ type Skin struct {
 	UpdatedTime int32 `json:"updatedTime,omitempty" validate:"omitempty,gte=1"`
 
 	// 独自要素: 譜面作成者のユーザーID
-	UserId string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
+	UserID string `json:"userId,omitempty" validate:"omitempty,alphanum,min=1,max=50"`
 
 	// 独自要素: サイト内および譜面情報欄に表示される説明文
 	Description string `json:"description,omitempty" validate:"omitempty,min=1,max=3000"`
