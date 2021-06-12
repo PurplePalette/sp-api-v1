@@ -10,8 +10,7 @@ import (
 	"google.golang.org/api/iterator"
 )
 
-const TEST_UID = "YnaKWRpbanfyn1ge6FKQChqocyyn"
-
+// DeleteCollection deletes entire data stored in specified ref
 func DeleteCollection(ctx context.Context, client *firestore.Client,
 	ref *firestore.CollectionRef, batchSize int) error {
 
@@ -50,6 +49,7 @@ func DeleteCollection(ctx context.Context, client *firestore.Client,
 	}
 }
 
+// InsertCollection inserts entire data of json migration file to specified ref
 func InsertCollection(ctx context.Context, firestore *firestore.Client, collectionName string) error {
 	col := firestore.Collection(collectionName)
 	bytes, err := ioutil.ReadFile("./migration/" + collectionName + ".json")
@@ -133,6 +133,7 @@ func InsertCollection(ctx context.Context, firestore *firestore.Client, collecti
 	return nil
 }
 
+// ReGenerateDatabase drop and insert data to firestore
 func ReGenerateDatabase(firestore *firestore.Client) error {
 	// Drop and insert database
 	cols := []string{"backgrounds", "effects", "engines", "levels", "particles", "skins", "users"}
