@@ -1,8 +1,10 @@
 package potato
 
+// News is fake level struct that has entire level struct
 type News struct{ Level }
 
-func NewNews(title string, subTitle string, upperLeftText string, upperRightText string, iconRating int, iconText string, iconUrl string, description string) News {
+// NewNews creates a new fake level struct using specified texts
+func NewNews(title string, subTitle string, upperLeftText string, upperRightText string, iconRating int, iconText string, iconURL string, description string) News {
 	news := News{
 		Level: Level{
 			Name:    upperLeftText,
@@ -34,7 +36,7 @@ func NewNews(title string, subTitle string, upperLeftText string, upperRightText
 			Author:        upperRightText,
 			Cover: SonolusResourceLocator{
 				Type: "LevelCover",
-				Url:  iconUrl,
+				Url:  iconURL,
 			},
 			Bgm:         SonolusResourceLocator{},
 			Data:        SonolusResourceLocator{},
