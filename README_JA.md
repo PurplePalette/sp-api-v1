@@ -1,5 +1,5 @@
 # Sonolus uploader core (Sonolus用バックエンドAPI)
-[![Go Report Card](https://goreportcard.com/badge/github.com/PurplePalette/sonolus-uploader-core)](https://goreportcard.com/report/github.com/PurplePalette/sonolus-uploader-core)
+[![Go Report Card](https://goreportcard.com/badge/github.com/PurplePalette/sonolus-uploader-core)](https://goreportcard.com/report/github.com/PurplePalette/sonolus-uploader-core) [![DeepSource](https://deepsource.io/gh/PurplePalette/sonolus-uploader-core.svg/?label=active+issues&token=BtrlmMasopdXq8pFegZxtOB1)](https://deepsource.io/gh/PurplePalette/sonolus-uploader-core/?ref=repository-badge)
 
 [Sonolus](https://sonolus.com/) という音楽ゲームで要求されるサーバーを実装する最初の公開APIです。background, effect, engine, level, particle, skin それぞれをユーザーが登録したり、Sonolusクライアントから読み出して遊ぶことができます。
 
@@ -25,7 +25,7 @@
 このAPIとフロントエンドを使えば、一覧を壊す心配もなくなり、サイトから成果を気軽に共有できます。
 
 ## ライセンス
-GPL-v3
+MIT
 
 ## Powered by OpenAPI
 [openapi-generator](https://openapi-generator.tech) を使用して生成したスタブを実装したAPIです。[OpenAPI-Spec](https://github.com/OAI/OpenAPI-Specification) を利用すれば、サーバーやクライアントを簡単に作成できます。このAPI用のクライアントを作るときは、[README](https://openapi-generator.tech)を読んで、この[ServerSpec](https://github.com/PurplePalette/sonolus-uploader-core/blob/main/api/openapi.yaml)を利用してください。

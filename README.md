@@ -1,5 +1,5 @@
 # Sonolus uploader core (backend for sonolus)
-[![Go Report Card](https://goreportcard.com/badge/github.com/PurplePalette/sonolus-uploader-core)](https://goreportcard.com/report/github.com/PurplePalette/sonolus-uploader-core)
+[![Go Report Card](https://goreportcard.com/badge/github.com/PurplePalette/sonolus-uploader-core)](https://goreportcard.com/report/github.com/PurplePalette/sonolus-uploader-core) [![DeepSource](https://deepsource.io/gh/PurplePalette/sonolus-uploader-core.svg/?label=active+issues&token=BtrlmMasopdXq8pFegZxtOB1)](https://deepsource.io/gh/PurplePalette/sonolus-uploader-core/?ref=repository-badge)
 
 First public [Sonolus](https://sonolus.com/) api to manage user generated background, effect, engine, level, particle and skin. Sure it accepts user upload and, able to deliver the contents to sonolus client.
 
