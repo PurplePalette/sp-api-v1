@@ -70,11 +70,11 @@ func (c *BackgroundsAPIController) AddBackground(w http.ResponseWriter, r *http.
 	result, err := c.service.AddBackground(r.Context(), backgroundName, *background)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
-		EncodeJSONResponse(err.Error(), &result.Code, w)
+		_ = EncodeJSONResponse(err.Error(), &result.Code, w)
 		return
 	}
 	// If no error, encode the body and the result code
-	EncodeJSONResponse(result.Body, &result.Code, w)
+	_ = EncodeJSONResponse(result.Body, &result.Code, w)
 
 }
 
@@ -91,7 +91,7 @@ func (c *BackgroundsAPIController) EditBackground(w http.ResponseWriter, r *http
 	result, err := c.service.EditBackground(r.Context(), backgroundName, *background)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
-		EncodeJSONResponse(err.Error(), &result.Code, w)
+		_ = EncodeJSONResponse(err.Error(), &result.Code, w)
 		return
 	}
 	// If no error, encode the body and the result code
