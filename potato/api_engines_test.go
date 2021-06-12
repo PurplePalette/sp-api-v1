@@ -21,9 +21,9 @@ func CreateEnginesServer() *httptest.Server {
 	if err := cache.InitCache(); err != nil {
 		panic(err)
 	}
-	enginesApiService := potato.NewEnginesApiService(firestore, cache)
-	enginesApiController := potato.NewEnginesApiController(enginesApiService)
-	router := server.NewRouterWithTestInject(auth, enginesApiController)
+	enginesAPIService := potato.NewEnginesAPIService(firestore, cache)
+	enginesAPIController := potato.NewEnginesAPIController(enginesAPIService)
+	router := server.NewRouterWithTestInject(auth, enginesAPIController)
 	return httptest.NewServer(router)
 }
 

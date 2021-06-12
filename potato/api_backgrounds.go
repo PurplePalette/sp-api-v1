@@ -17,18 +17,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// A BackgroundsApiController binds http requests to an api service and writes the service results to the http response
-type BackgroundsApiController struct {
-	service BackgroundsApiServicer
+// A BackgroundsAPIController binds http requests to an api service and writes the service results to the http response
+type BackgroundsAPIController struct {
+	service BackgroundsAPIServicer
 }
 
-// NewBackgroundsApiController creates a default api controller
-func NewBackgroundsApiController(s BackgroundsApiServicer) Router {
-	return &BackgroundsApiController{service: s}
+// NewBackgroundsAPIController creates a default api controller
+func NewBackgroundsAPIController(s BackgroundsAPIServicer) Router {
+	return &BackgroundsAPIController{service: s}
 }
 
-// Routes returns all of the api route for the BackgroundsApiController
-func (c *BackgroundsApiController) Routes() Routes {
+// Routes returns all of the api route for the BackgroundsAPIController
+func (c *BackgroundsAPIController) Routes() Routes {
 	return Routes{
 		{
 			"AddBackground",
@@ -58,7 +58,7 @@ func (c *BackgroundsApiController) Routes() Routes {
 }
 
 // AddBackground - Add background
-func (c *BackgroundsApiController) AddBackground(w http.ResponseWriter, r *http.Request) {
+func (c *BackgroundsAPIController) AddBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	backgroundName := params["backgroundName"]
 
@@ -79,7 +79,7 @@ func (c *BackgroundsApiController) AddBackground(w http.ResponseWriter, r *http.
 }
 
 // EditBackground - Edit background
-func (c *BackgroundsApiController) EditBackground(w http.ResponseWriter, r *http.Request) {
+func (c *BackgroundsAPIController) EditBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	backgroundName := params["backgroundName"]
 
@@ -100,7 +100,7 @@ func (c *BackgroundsApiController) EditBackground(w http.ResponseWriter, r *http
 }
 
 // GetBackground - Get background
-func (c *BackgroundsApiController) GetBackground(w http.ResponseWriter, r *http.Request) {
+func (c *BackgroundsAPIController) GetBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	backgroundName := params["backgroundName"]
 
@@ -116,7 +116,7 @@ func (c *BackgroundsApiController) GetBackground(w http.ResponseWriter, r *http.
 }
 
 // GetBackgroundList - Get background list
-func (c *BackgroundsApiController) GetBackgroundList(w http.ResponseWriter, r *http.Request) {
+func (c *BackgroundsAPIController) GetBackgroundList(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)

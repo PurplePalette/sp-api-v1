@@ -22,9 +22,9 @@ func CreateLevelsServer() *httptest.Server {
 	if err := cache.InitCache(); err != nil {
 		panic(err)
 	}
-	LevelsApiService := potato.NewLevelsApiService(firestore, cache)
-	LevelsApiController := potato.NewLevelsApiController(LevelsApiService)
-	router := server.NewRouterWithTestInject(auth, LevelsApiController)
+	LevelsAPIService := potato.NewLevelsAPIService(firestore, cache)
+	LevelsAPIController := potato.NewLevelsAPIController(LevelsAPIService)
+	router := server.NewRouterWithTestInject(auth, LevelsAPIController)
 	return httptest.NewServer(router)
 }
 

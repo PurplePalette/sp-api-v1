@@ -20,22 +20,22 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-// ParticlesApiService is a service that implents the logic for the ParticlesApiServicer
-// This service should implement the business logic for every endpoint for the ParticlesApi API.
+// ParticlesAPIService is a service that implents the logic for the ParticlesAPIServicer
+// This service should implement the business logic for every endpoint for the ParticlesAPI API.
 // Include any external packages or services that will be required by this service.
-type ParticlesApiService struct {
+type ParticlesAPIService struct {
 	firestore *firestore.Client
 	cache     *CacheService
 	validate  *validator.Validate
 }
 
-// NewParticlesApiService creates a default api service
-func NewParticlesApiService(firestore *firestore.Client, cache *CacheService) ParticlesApiServicer {
-	return &ParticlesApiService{firestore: firestore, cache: cache, validate: validator.New()}
+// NewParticlesAPIService creates a default api service
+func NewParticlesAPIService(firestore *firestore.Client, cache *CacheService) ParticlesAPIServicer {
+	return &ParticlesAPIService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddParticle - Add particle
-func (s *ParticlesApiService) AddParticle(ctx context.Context, particleName string, particle Particle) (ImplResponse, error) {
+func (s *ParticlesAPIService) AddParticle(ctx context.Context, particleName string, particle Particle) (ImplResponse, error) {
 	if !request.IsValidName(particleName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -61,7 +61,7 @@ func (s *ParticlesApiService) AddParticle(ctx context.Context, particleName stri
 }
 
 // EditParticle - Edit particle
-func (s *ParticlesApiService) EditParticle(ctx context.Context, particleName string, particle Particle) (ImplResponse, error) {
+func (s *ParticlesAPIService) EditParticle(ctx context.Context, particleName string, particle Particle) (ImplResponse, error) {
 	if !request.IsValidName(particleName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -89,7 +89,7 @@ func (s *ParticlesApiService) EditParticle(ctx context.Context, particleName str
 }
 
 // GetParticle - Get particle
-func (s *ParticlesApiService) GetParticle(ctx context.Context, particleName string) (ImplResponse, error) {
+func (s *ParticlesAPIService) GetParticle(ctx context.Context, particleName string) (ImplResponse, error) {
 	rawPt, err := s.cache.particles.Get(particleName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -104,7 +104,7 @@ func (s *ParticlesApiService) GetParticle(ctx context.Context, particleName stri
 }
 
 // GetParticleList - Get particle list
-func (s *ParticlesApiService) GetParticleList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *ParticlesAPIService) GetParticleList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	pages := s.cache.particles.Pages()
 	items, err := s.cache.particles.GetPage(page, query)

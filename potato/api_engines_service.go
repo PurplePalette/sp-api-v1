@@ -20,22 +20,22 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-// EnginesApiService is a service that implents the logic for the EnginesApiServicer
-// This service should implement the business logic for every endpoint for the EnginesApi API.
+// EnginesAPIService is a service that implents the logic for the EnginesAPIServicer
+// This service should implement the business logic for every endpoint for the EnginesAPI API.
 // Include any external packages or services that will be required by this service.
-type EnginesApiService struct {
+type EnginesAPIService struct {
 	firestore *firestore.Client
 	cache     *CacheService
 	validate  *validator.Validate
 }
 
-// NewEnginesApiService creates a default api service
-func NewEnginesApiService(firestore *firestore.Client, cache *CacheService) EnginesApiServicer {
-	return &EnginesApiService{firestore: firestore, cache: cache, validate: validator.New()}
+// NewEnginesAPIService creates a default api service
+func NewEnginesAPIService(firestore *firestore.Client, cache *CacheService) EnginesAPIServicer {
+	return &EnginesAPIService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddEngine - Add engine
-func (s *EnginesApiService) AddEngine(ctx context.Context, engineName string, engine Engine) (ImplResponse, error) {
+func (s *EnginesAPIService) AddEngine(ctx context.Context, engineName string, engine Engine) (ImplResponse, error) {
 	if !request.IsValidName(engineName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -61,7 +61,7 @@ func (s *EnginesApiService) AddEngine(ctx context.Context, engineName string, en
 }
 
 // EditEngine - Edit engine
-func (s *EnginesApiService) EditEngine(ctx context.Context, engineName string, engine Engine) (ImplResponse, error) {
+func (s *EnginesAPIService) EditEngine(ctx context.Context, engineName string, engine Engine) (ImplResponse, error) {
 	if !request.IsValidName(engineName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -88,7 +88,7 @@ func (s *EnginesApiService) EditEngine(ctx context.Context, engineName string, e
 }
 
 // GetEngine - Get engine
-func (s *EnginesApiService) GetEngine(ctx context.Context, engineName string) (ImplResponse, error) {
+func (s *EnginesAPIService) GetEngine(ctx context.Context, engineName string) (ImplResponse, error) {
 	eg, err := s.cache.engines.Get(engineName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -103,7 +103,7 @@ func (s *EnginesApiService) GetEngine(ctx context.Context, engineName string) (I
 }
 
 // GetEngineList - Get engine list
-func (s *EnginesApiService) GetEngineList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *EnginesAPIService) GetEngineList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	pages := s.cache.engines.Pages()
 	items, err := s.cache.engines.GetPage(page, query)

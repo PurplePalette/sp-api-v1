@@ -20,21 +20,21 @@ import (
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
 )
 
-// UsersApiService is a service that implents the logic for the UsersApiServicer
-// This service should implement the business logic for every endpoint for the UsersApi API.
+// UsersAPIService is a service that implents the logic for the UsersAPIServicer
+// This service should implement the business logic for every endpoint for the UsersAPI API.
 // Include any external packages or services that will be required by this service.
-type UsersApiService struct {
+type UsersAPIService struct {
 	firestore *firestore.Client
 	cache     *CacheService
 }
 
-// NewUsersApiService creates a default api service
-func NewUsersApiService(firestore *firestore.Client, cache *CacheService) UsersApiServicer {
-	return &UsersApiService{firestore: firestore, cache: cache}
+// NewUsersAPIService creates a default api service
+func NewUsersAPIService(firestore *firestore.Client, cache *CacheService) UsersAPIServicer {
+	return &UsersAPIService{firestore: firestore, cache: cache}
 }
 
 // EditUser - Edit user
-func (s *UsersApiService) EditUser(ctx context.Context, userId string, user User) (ImplResponse, error) {
+func (s *UsersAPIService) EditUser(ctx context.Context, userId string, user User) (ImplResponse, error) {
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil
 
@@ -54,7 +54,7 @@ func (s *UsersApiService) EditUser(ctx context.Context, userId string, user User
 }
 
 // GetUser - Get user
-func (s *UsersApiService) GetUser(ctx context.Context, userId string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUser(ctx context.Context, userId string) (ImplResponse, error) {
 	rawUser, err := s.cache.users.Get(userId)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -64,7 +64,7 @@ func (s *UsersApiService) GetUser(ctx context.Context, userId string) (ImplRespo
 }
 
 // GetUserList - Get user list
-func (s *UsersApiService) GetUserList(ctx context.Context) (ImplResponse, error) {
+func (s *UsersAPIService) GetUserList(ctx context.Context) (ImplResponse, error) {
 	// TODO - update GetUserList with the required logic for this service method.
 	// Add api_users_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
 
@@ -75,7 +75,7 @@ func (s *UsersApiService) GetUserList(ctx context.Context) (ImplResponse, error)
 }
 
 // GetUserServerInfo - Get user server info
-func (s *UsersApiService) GetUserServerInfo(ctx context.Context, userId string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUserServerInfo(ctx context.Context, userId string) (ImplResponse, error) {
 	if !s.cache.users.IsExist(userId) {
 		return Response(http.StatusNotFound, nil), nil
 	}
@@ -105,7 +105,7 @@ func (s *UsersApiService) GetUserServerInfo(ctx context.Context, userId string) 
 }
 
 // GetUsersBackgrounds - Get backgrounds for test
-func (s *UsersApiService) GetUsersBackgrounds(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersBackgrounds(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	query.Filter.UserId = userId
 	pages := s.cache.backgrounds.Pages()
@@ -126,7 +126,7 @@ func (s *UsersApiService) GetUsersBackgrounds(ctx context.Context, userId string
 }
 
 // GetUsersEffects - Get effects for test
-func (s *UsersApiService) GetUsersEffects(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersEffects(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	query.Filter.UserId = userId
 	pages := s.cache.effects.Pages()
@@ -147,7 +147,7 @@ func (s *UsersApiService) GetUsersEffects(ctx context.Context, userId string, lo
 }
 
 // GetUsersEngines - Get engines for test
-func (s *UsersApiService) GetUsersEngines(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersEngines(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	query.Filter.UserId = userId
 	pages := s.cache.engines.Pages()
@@ -168,7 +168,7 @@ func (s *UsersApiService) GetUsersEngines(ctx context.Context, userId string, lo
 }
 
 // GetUsersLevels - Get levels for test
-func (s *UsersApiService) GetUsersLevels(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersLevels(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	query.Filter.UserId = userId
 	if authUser, err := request.GetUserId(ctx); err == nil && authUser == userId {
@@ -193,7 +193,7 @@ func (s *UsersApiService) GetUsersLevels(ctx context.Context, userId string, loc
 }
 
 // GetUsersParticles - Get particles for test
-func (s *UsersApiService) GetUsersParticles(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersParticles(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	query.Filter.UserId = userId
 	pages := s.cache.particles.Pages()
@@ -214,7 +214,7 @@ func (s *UsersApiService) GetUsersParticles(ctx context.Context, userId string, 
 }
 
 // GetUsersSkins - Get skins for test
-func (s *UsersApiService) GetUsersSkins(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersSkins(ctx context.Context, userId string, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	query.Filter.UserId = userId
 	pages := s.cache.skins.Pages()
@@ -235,7 +235,7 @@ func (s *UsersApiService) GetUsersSkins(ctx context.Context, userId string, loca
 }
 
 // GetUsersBackground - Get users background
-func (s *UsersApiService) GetUsersBackground(ctx context.Context, userId string, backgroundName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersBackground(ctx context.Context, userId string, backgroundName string) (ImplResponse, error) {
 	bg, err := s.cache.backgrounds.Get(backgroundName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -250,7 +250,7 @@ func (s *UsersApiService) GetUsersBackground(ctx context.Context, userId string,
 }
 
 // GetUsersEffect - Get users effect
-func (s *UsersApiService) GetUsersEffect(ctx context.Context, userId string, effectName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersEffect(ctx context.Context, userId string, effectName string) (ImplResponse, error) {
 	ef, err := s.cache.effects.Get(effectName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -265,7 +265,7 @@ func (s *UsersApiService) GetUsersEffect(ctx context.Context, userId string, eff
 }
 
 // GetUsersEngine - Get users engine
-func (s *UsersApiService) GetUsersEngine(ctx context.Context, userId string, engineName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersEngine(ctx context.Context, userId string, engineName string) (ImplResponse, error) {
 	eg, err := s.cache.engines.Get(engineName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -280,7 +280,7 @@ func (s *UsersApiService) GetUsersEngine(ctx context.Context, userId string, eng
 }
 
 // GetUsersLevel - Get users level
-func (s *UsersApiService) GetUsersLevel(ctx context.Context, userId string, levelName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersLevel(ctx context.Context, userId string, levelName string) (ImplResponse, error) {
 	rawNs, newsNotExistErr := s.cache.news.Get(levelName)
 	rawLv, levelNotExistErr := s.cache.levels.Get(levelName)
 	if newsNotExistErr != nil && levelNotExistErr != nil {
@@ -302,7 +302,7 @@ func (s *UsersApiService) GetUsersLevel(ctx context.Context, userId string, leve
 }
 
 // GetUsersParticle - Get users particle
-func (s *UsersApiService) GetUsersParticle(ctx context.Context, userId string, particleName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersParticle(ctx context.Context, userId string, particleName string) (ImplResponse, error) {
 	rawPt, err := s.cache.particles.Get(particleName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -317,7 +317,7 @@ func (s *UsersApiService) GetUsersParticle(ctx context.Context, userId string, p
 }
 
 // GetUsersSkin - Get users skin
-func (s *UsersApiService) GetUsersSkin(ctx context.Context, userId string, skinName string) (ImplResponse, error) {
+func (s *UsersAPIService) GetUsersSkin(ctx context.Context, userId string, skinName string) (ImplResponse, error) {
 	rawSk, err := s.cache.skins.Get(skinName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil

@@ -15,18 +15,18 @@ import (
 	"strings"
 )
 
-// A InfoApiController binds http requests to an api service and writes the service results to the http response
-type InfoApiController struct {
-	service InfoApiServicer
+// A InfoAPIController binds http requests to an api service and writes the service results to the http response
+type InfoAPIController struct {
+	service InfoAPIServicer
 }
 
-// NewInfoApiController creates a default api controller
-func NewInfoApiController(s InfoApiServicer) Router {
-	return &InfoApiController{service: s}
+// NewInfoAPIController creates a default api controller
+func NewInfoAPIController(s InfoAPIServicer) Router {
+	return &InfoAPIController{service: s}
 }
 
-// Routes returns all of the api route for the InfoApiController
-func (c *InfoApiController) Routes() Routes {
+// Routes returns all of the api route for the InfoAPIController
+func (c *InfoAPIController) Routes() Routes {
 	return Routes{
 		{
 			"EditInfo",
@@ -44,7 +44,7 @@ func (c *InfoApiController) Routes() Routes {
 }
 
 // EditInfo - Edit server info
-func (c *InfoApiController) EditInfo(w http.ResponseWriter, r *http.Request) {
+func (c *InfoAPIController) EditInfo(w http.ResponseWriter, r *http.Request) {
 	serverInfo := &ServerInfo{}
 	if err := json.NewDecoder(r.Body).Decode(&serverInfo); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -62,7 +62,7 @@ func (c *InfoApiController) EditInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetServerInfo - Get server info
-func (c *InfoApiController) GetServerInfo(w http.ResponseWriter, r *http.Request) {
+func (c *InfoAPIController) GetServerInfo(w http.ResponseWriter, r *http.Request) {
 	result, err := c.service.GetServerInfo(r.Context())
 	// If an error occurred, encode the error with the status code
 	if err != nil {

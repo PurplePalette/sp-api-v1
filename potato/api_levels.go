@@ -17,18 +17,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// A LevelsApiController binds http requests to an api service and writes the service results to the http response
-type LevelsApiController struct {
-	service LevelsApiServicer
+// A LevelsAPIController binds http requests to an api service and writes the service results to the http response
+type LevelsAPIController struct {
+	service LevelsAPIServicer
 }
 
-// NewLevelsApiController creates a default api controller
-func NewLevelsApiController(s LevelsApiServicer) Router {
-	return &LevelsApiController{service: s}
+// NewLevelsAPIController creates a default api controller
+func NewLevelsAPIController(s LevelsAPIServicer) Router {
+	return &LevelsAPIController{service: s}
 }
 
-// Routes returns all of the api route for the LevelsApiController
-func (c *LevelsApiController) Routes() Routes {
+// Routes returns all of the api route for the LevelsAPIController
+func (c *LevelsAPIController) Routes() Routes {
 	return Routes{
 		{
 			"AddLevel",
@@ -58,7 +58,7 @@ func (c *LevelsApiController) Routes() Routes {
 }
 
 // AddLevel - Add level
-func (c *LevelsApiController) AddLevel(w http.ResponseWriter, r *http.Request) {
+func (c *LevelsAPIController) AddLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	levelName := params["levelName"]
 
@@ -79,7 +79,7 @@ func (c *LevelsApiController) AddLevel(w http.ResponseWriter, r *http.Request) {
 }
 
 // EditLevel - Edit level
-func (c *LevelsApiController) EditLevel(w http.ResponseWriter, r *http.Request) {
+func (c *LevelsAPIController) EditLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	levelName := params["levelName"]
 
@@ -100,7 +100,7 @@ func (c *LevelsApiController) EditLevel(w http.ResponseWriter, r *http.Request) 
 }
 
 // GetLevel - Get level
-func (c *LevelsApiController) GetLevel(w http.ResponseWriter, r *http.Request) {
+func (c *LevelsAPIController) GetLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	levelName := params["levelName"]
 
@@ -116,7 +116,7 @@ func (c *LevelsApiController) GetLevel(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetLevelList - Get level list
-func (c *LevelsApiController) GetLevelList(w http.ResponseWriter, r *http.Request) {
+func (c *LevelsAPIController) GetLevelList(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)

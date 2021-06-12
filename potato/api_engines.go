@@ -17,18 +17,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// A EnginesApiController binds http requests to an api service and writes the service results to the http response
-type EnginesApiController struct {
-	service EnginesApiServicer
+// A EnginesAPIController binds http requests to an api service and writes the service results to the http response
+type EnginesAPIController struct {
+	service EnginesAPIServicer
 }
 
-// NewEnginesApiController creates a default api controller
-func NewEnginesApiController(s EnginesApiServicer) Router {
-	return &EnginesApiController{service: s}
+// NewEnginesAPIController creates a default api controller
+func NewEnginesAPIController(s EnginesAPIServicer) Router {
+	return &EnginesAPIController{service: s}
 }
 
-// Routes returns all of the api route for the EnginesApiController
-func (c *EnginesApiController) Routes() Routes {
+// Routes returns all of the api route for the EnginesAPIController
+func (c *EnginesAPIController) Routes() Routes {
 	return Routes{
 		{
 			"AddEngine",
@@ -58,7 +58,7 @@ func (c *EnginesApiController) Routes() Routes {
 }
 
 // AddEngine - Add engine
-func (c *EnginesApiController) AddEngine(w http.ResponseWriter, r *http.Request) {
+func (c *EnginesAPIController) AddEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	engineName := params["engineName"]
 
@@ -79,7 +79,7 @@ func (c *EnginesApiController) AddEngine(w http.ResponseWriter, r *http.Request)
 }
 
 // EditEngine - Edit engine
-func (c *EnginesApiController) EditEngine(w http.ResponseWriter, r *http.Request) {
+func (c *EnginesAPIController) EditEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	engineName := params["engineName"]
 
@@ -100,7 +100,7 @@ func (c *EnginesApiController) EditEngine(w http.ResponseWriter, r *http.Request
 }
 
 // GetEngine - Get engine
-func (c *EnginesApiController) GetEngine(w http.ResponseWriter, r *http.Request) {
+func (c *EnginesAPIController) GetEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	engineName := params["engineName"]
 
@@ -116,7 +116,7 @@ func (c *EnginesApiController) GetEngine(w http.ResponseWriter, r *http.Request)
 }
 
 // GetEngineList - Get engine list
-func (c *EnginesApiController) GetEngineList(w http.ResponseWriter, r *http.Request) {
+func (c *EnginesAPIController) GetEngineList(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)

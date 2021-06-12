@@ -17,18 +17,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// A SkinsApiController binds http requests to an api service and writes the service results to the http response
-type SkinsApiController struct {
-	service SkinsApiServicer
+// A SkinsAPIController binds http requests to an api service and writes the service results to the http response
+type SkinsAPIController struct {
+	service SkinsAPIServicer
 }
 
-// NewSkinsApiController creates a default api controller
-func NewSkinsApiController(s SkinsApiServicer) Router {
-	return &SkinsApiController{service: s}
+// NewSkinsAPIController creates a default api controller
+func NewSkinsAPIController(s SkinsAPIServicer) Router {
+	return &SkinsAPIController{service: s}
 }
 
-// Routes returns all of the api route for the SkinsApiController
-func (c *SkinsApiController) Routes() Routes {
+// Routes returns all of the api route for the SkinsAPIController
+func (c *SkinsAPIController) Routes() Routes {
 	return Routes{
 		{
 			"AddSkin",
@@ -58,7 +58,7 @@ func (c *SkinsApiController) Routes() Routes {
 }
 
 // AddSkin - Add skin
-func (c *SkinsApiController) AddSkin(w http.ResponseWriter, r *http.Request) {
+func (c *SkinsAPIController) AddSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	skinName := params["skinName"]
 
@@ -79,7 +79,7 @@ func (c *SkinsApiController) AddSkin(w http.ResponseWriter, r *http.Request) {
 }
 
 // EditSkin - Edit skin
-func (c *SkinsApiController) EditSkin(w http.ResponseWriter, r *http.Request) {
+func (c *SkinsAPIController) EditSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	skinName := params["skinName"]
 
@@ -100,7 +100,7 @@ func (c *SkinsApiController) EditSkin(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetSkin - Get skin
-func (c *SkinsApiController) GetSkin(w http.ResponseWriter, r *http.Request) {
+func (c *SkinsAPIController) GetSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	skinName := params["skinName"]
 
@@ -116,7 +116,7 @@ func (c *SkinsApiController) GetSkin(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetSkinList - Get skin list
-func (c *SkinsApiController) GetSkinList(w http.ResponseWriter, r *http.Request) {
+func (c *SkinsAPIController) GetSkinList(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)

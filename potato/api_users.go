@@ -17,18 +17,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// A UsersApiController binds http requests to an api service and writes the service results to the http response
-type UsersApiController struct {
-	service UsersApiServicer
+// A UsersAPIController binds http requests to an api service and writes the service results to the http response
+type UsersAPIController struct {
+	service UsersAPIServicer
 }
 
-// NewUsersApiController creates a default api controller
-func NewUsersApiController(s UsersApiServicer) Router {
-	return &UsersApiController{service: s}
+// NewUsersAPIController creates a default api controller
+func NewUsersAPIController(s UsersAPIServicer) Router {
+	return &UsersAPIController{service: s}
 }
 
-// Routes returns all of the api route for the UsersApiController
-func (c *UsersApiController) Routes() Routes {
+// Routes returns all of the api route for the UsersAPIController
+func (c *UsersAPIController) Routes() Routes {
 	return Routes{
 		{
 			"GetUserList",
@@ -130,7 +130,7 @@ func (c *UsersApiController) Routes() Routes {
 }
 
 // EditUser - Edit user
-func (c *UsersApiController) EditUser(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) EditUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
@@ -151,7 +151,7 @@ func (c *UsersApiController) EditUser(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetUser - Get user
-func (c *UsersApiController) GetUser(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
@@ -167,7 +167,7 @@ func (c *UsersApiController) GetUser(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetUserList - Get user list
-func (c *UsersApiController) GetUserList(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUserList(w http.ResponseWriter, r *http.Request) {
 	result, err := c.service.GetUserList(r.Context())
 	// If an error occurred, encode the error with the status code
 	if err != nil {
@@ -180,7 +180,7 @@ func (c *UsersApiController) GetUserList(w http.ResponseWriter, r *http.Request)
 }
 
 // GetUserServerInfo - Get user server info
-func (c *UsersApiController) GetUserServerInfo(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUserServerInfo(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
@@ -196,7 +196,7 @@ func (c *UsersApiController) GetUserServerInfo(w http.ResponseWriter, r *http.Re
 }
 
 // GetUsersBackgrounds - Get backgrounds for test
-func (c *UsersApiController) GetUsersBackgrounds(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersBackgrounds(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
@@ -220,7 +220,7 @@ func (c *UsersApiController) GetUsersBackgrounds(w http.ResponseWriter, r *http.
 }
 
 // GetUsersEffects - Get effects for test
-func (c *UsersApiController) GetUsersEffects(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersEffects(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
@@ -244,7 +244,7 @@ func (c *UsersApiController) GetUsersEffects(w http.ResponseWriter, r *http.Requ
 }
 
 // GetUsersEngines - Get engines for test
-func (c *UsersApiController) GetUsersEngines(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersEngines(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
@@ -268,7 +268,7 @@ func (c *UsersApiController) GetUsersEngines(w http.ResponseWriter, r *http.Requ
 }
 
 // GetUsersLevels - Get levels for test
-func (c *UsersApiController) GetUsersLevels(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersLevels(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
@@ -292,7 +292,7 @@ func (c *UsersApiController) GetUsersLevels(w http.ResponseWriter, r *http.Reque
 }
 
 // GetUsersParticles - Get particles for test
-func (c *UsersApiController) GetUsersParticles(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersParticles(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
@@ -316,7 +316,7 @@ func (c *UsersApiController) GetUsersParticles(w http.ResponseWriter, r *http.Re
 }
 
 // GetUsersSkins - Get skins for test
-func (c *UsersApiController) GetUsersSkins(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersSkins(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	userId := params["userId"]
@@ -340,7 +340,7 @@ func (c *UsersApiController) GetUsersSkins(w http.ResponseWriter, r *http.Reques
 }
 
 // GetUsersBackground - Get users background
-func (c *UsersApiController) GetUsersBackground(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
@@ -358,7 +358,7 @@ func (c *UsersApiController) GetUsersBackground(w http.ResponseWriter, r *http.R
 }
 
 // GetUsersEffect - Get users effect
-func (c *UsersApiController) GetUsersEffect(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
@@ -376,7 +376,7 @@ func (c *UsersApiController) GetUsersEffect(w http.ResponseWriter, r *http.Reque
 }
 
 // GetUsersEngine - Get users engine
-func (c *UsersApiController) GetUsersEngine(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
@@ -394,7 +394,7 @@ func (c *UsersApiController) GetUsersEngine(w http.ResponseWriter, r *http.Reque
 }
 
 // GetUsersLevel - Get users level
-func (c *UsersApiController) GetUsersLevel(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
@@ -412,7 +412,7 @@ func (c *UsersApiController) GetUsersLevel(w http.ResponseWriter, r *http.Reques
 }
 
 // GetUsersParticle - Get users particle
-func (c *UsersApiController) GetUsersParticle(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersParticle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
@@ -430,7 +430,7 @@ func (c *UsersApiController) GetUsersParticle(w http.ResponseWriter, r *http.Req
 }
 
 // GetUsersSkin - Get users skin
-func (c *UsersApiController) GetUsersSkin(w http.ResponseWriter, r *http.Request) {
+func (c *UsersAPIController) GetUsersSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 

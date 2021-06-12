@@ -21,22 +21,22 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-// BackgroundsApiService is a service that implents the logic for the BackgroundsApiServicer
-// This service should implement the business logic for every endpoint for the BackgroundsApi API.
+// BackgroundsAPIService is a service that implents the logic for the BackgroundsAPIServicer
+// This service should implement the business logic for every endpoint for the BackgroundsAPI API.
 // Include any external packages or services that will be required by this service.
-type BackgroundsApiService struct {
+type BackgroundsAPIService struct {
 	firestore *firestore.Client
 	cache     *CacheService
 	validate  *validator.Validate
 }
 
-// NewBackgroundsApiService creates a default api service
-func NewBackgroundsApiService(firestore *firestore.Client, cache *CacheService) BackgroundsApiServicer {
-	return &BackgroundsApiService{firestore: firestore, cache: cache, validate: validator.New()}
+// NewBackgroundsAPIService creates a default api service
+func NewBackgroundsAPIService(firestore *firestore.Client, cache *CacheService) BackgroundsAPIServicer {
+	return &BackgroundsAPIService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddBackground - Add background
-func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
+func (s *BackgroundsAPIService) AddBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
 	if !request.IsValidName(backgroundName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -65,7 +65,7 @@ func (s *BackgroundsApiService) AddBackground(ctx context.Context, backgroundNam
 }
 
 // EditBackground - Edit background
-func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
+func (s *BackgroundsAPIService) EditBackground(ctx context.Context, backgroundName string, background Background) (ImplResponse, error) {
 	if !request.IsValidName(backgroundName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -92,7 +92,7 @@ func (s *BackgroundsApiService) EditBackground(ctx context.Context, backgroundNa
 }
 
 // GetBackground - Get background
-func (s *BackgroundsApiService) GetBackground(ctx context.Context, backgroundName string) (ImplResponse, error) {
+func (s *BackgroundsAPIService) GetBackground(ctx context.Context, backgroundName string) (ImplResponse, error) {
 	bg, err := s.cache.backgrounds.Get(backgroundName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -107,7 +107,7 @@ func (s *BackgroundsApiService) GetBackground(ctx context.Context, backgroundNam
 }
 
 // GetBackgroundList - Get background list
-func (s *BackgroundsApiService) GetBackgroundList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *BackgroundsAPIService) GetBackgroundList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	pages := s.cache.backgrounds.Pages()
 	items, err := s.cache.backgrounds.GetPage(page, query)

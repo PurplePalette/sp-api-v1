@@ -22,9 +22,9 @@ func CreateParticlesServer() *httptest.Server {
 	if err := cache.InitCache(); err != nil {
 		panic(err)
 	}
-	ParticlesApiService := potato.NewParticlesApiService(firestore, cache)
-	ParticlesApiController := potato.NewParticlesApiController(ParticlesApiService)
-	router := server.NewRouterWithTestInject(auth, ParticlesApiController)
+	ParticlesAPIService := potato.NewParticlesAPIService(firestore, cache)
+	ParticlesAPIController := potato.NewParticlesAPIController(ParticlesAPIService)
+	router := server.NewRouterWithTestInject(auth, ParticlesAPIController)
 	return httptest.NewServer(router)
 }
 

@@ -17,18 +17,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// A ParticlesApiController binds http requests to an api service and writes the service results to the http response
-type ParticlesApiController struct {
-	service ParticlesApiServicer
+// A ParticlesAPIController binds http requests to an api service and writes the service results to the http response
+type ParticlesAPIController struct {
+	service ParticlesAPIServicer
 }
 
-// NewParticlesApiController creates a default api controller
-func NewParticlesApiController(s ParticlesApiServicer) Router {
-	return &ParticlesApiController{service: s}
+// NewParticlesAPIController creates a default api controller
+func NewParticlesAPIController(s ParticlesAPIServicer) Router {
+	return &ParticlesAPIController{service: s}
 }
 
-// Routes returns all of the api route for the ParticlesApiController
-func (c *ParticlesApiController) Routes() Routes {
+// Routes returns all of the api route for the ParticlesAPIController
+func (c *ParticlesAPIController) Routes() Routes {
 	return Routes{
 		{
 			"AddParticle",
@@ -58,7 +58,7 @@ func (c *ParticlesApiController) Routes() Routes {
 }
 
 // AddParticle - Add particle
-func (c *ParticlesApiController) AddParticle(w http.ResponseWriter, r *http.Request) {
+func (c *ParticlesAPIController) AddParticle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	particleName := params["particleName"]
 
@@ -79,7 +79,7 @@ func (c *ParticlesApiController) AddParticle(w http.ResponseWriter, r *http.Requ
 }
 
 // EditParticle - Edit particle
-func (c *ParticlesApiController) EditParticle(w http.ResponseWriter, r *http.Request) {
+func (c *ParticlesAPIController) EditParticle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	particleName := params["particleName"]
 
@@ -100,7 +100,7 @@ func (c *ParticlesApiController) EditParticle(w http.ResponseWriter, r *http.Req
 }
 
 // GetParticle - Get particle
-func (c *ParticlesApiController) GetParticle(w http.ResponseWriter, r *http.Request) {
+func (c *ParticlesAPIController) GetParticle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	particleName := params["particleName"]
 
@@ -116,7 +116,7 @@ func (c *ParticlesApiController) GetParticle(w http.ResponseWriter, r *http.Requ
 }
 
 // GetParticleList - Get particle list
-func (c *ParticlesApiController) GetParticleList(w http.ResponseWriter, r *http.Request) {
+func (c *ParticlesAPIController) GetParticleList(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)

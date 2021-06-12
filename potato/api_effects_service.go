@@ -20,22 +20,22 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-// EffectsApiService is a service that implents the logic for the EffectsApiServicer
-// This service should implement the business logic for every endpoint for the EffectsApi API.
+// EffectsAPIService is a service that implents the logic for the EffectsAPIServicer
+// This service should implement the business logic for every endpoint for the EffectsAPI API.
 // Include any external packages or services that will be required by this service.
-type EffectsApiService struct {
+type EffectsAPIService struct {
 	firestore *firestore.Client
 	cache     *CacheService
 	validate  *validator.Validate
 }
 
-// NewEffectsApiService creates a default api service
-func NewEffectsApiService(firestore *firestore.Client, cache *CacheService) EffectsApiServicer {
-	return &EffectsApiService{firestore: firestore, cache: cache, validate: validator.New()}
+// NewEffectsAPIService creates a default api service
+func NewEffectsAPIService(firestore *firestore.Client, cache *CacheService) EffectsAPIServicer {
+	return &EffectsAPIService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddEffect - Add effect
-func (s *EffectsApiService) AddEffect(ctx context.Context, effectName string, effect Effect) (ImplResponse, error) {
+func (s *EffectsAPIService) AddEffect(ctx context.Context, effectName string, effect Effect) (ImplResponse, error) {
 	if !request.IsValidName(effectName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -61,7 +61,7 @@ func (s *EffectsApiService) AddEffect(ctx context.Context, effectName string, ef
 }
 
 // EditEffect - Edit effect
-func (s *EffectsApiService) EditEffect(ctx context.Context, effectName string, effect Effect) (ImplResponse, error) {
+func (s *EffectsAPIService) EditEffect(ctx context.Context, effectName string, effect Effect) (ImplResponse, error) {
 	if !request.IsValidName(effectName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -88,7 +88,7 @@ func (s *EffectsApiService) EditEffect(ctx context.Context, effectName string, e
 }
 
 // GetEffect - Get effect
-func (s *EffectsApiService) GetEffect(ctx context.Context, effectName string) (ImplResponse, error) {
+func (s *EffectsAPIService) GetEffect(ctx context.Context, effectName string) (ImplResponse, error) {
 	ef, err := s.cache.effects.Get(effectName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -103,7 +103,7 @@ func (s *EffectsApiService) GetEffect(ctx context.Context, effectName string) (I
 }
 
 // GetEffectList - Get effect list
-func (s *EffectsApiService) GetEffectList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *EffectsAPIService) GetEffectList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	pages := s.cache.effects.Pages()
 	items, err := s.cache.effects.GetPage(page, query)

@@ -20,22 +20,22 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-// LevelsApiService is a service that implents the logic for the LevelsApiServicer
-// This service should implement the business logic for every endpoint for the LevelsApi API.
+// LevelsAPIService is a service that implents the logic for the LevelsAPIServicer
+// This service should implement the business logic for every endpoint for the LevelsAPI API.
 // Include any external packages or services that will be required by this service.
-type LevelsApiService struct {
+type LevelsAPIService struct {
 	firestore *firestore.Client
 	cache     *CacheService
 	validate  *validator.Validate
 }
 
-// NewLevelsApiService creates a default api service
-func NewLevelsApiService(firestore *firestore.Client, cache *CacheService) LevelsApiServicer {
-	return &LevelsApiService{firestore: firestore, cache: cache, validate: validator.New()}
+// NewLevelsAPIService creates a default api service
+func NewLevelsAPIService(firestore *firestore.Client, cache *CacheService) LevelsAPIServicer {
+	return &LevelsAPIService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddLevel - Add level
-func (s *LevelsApiService) AddLevel(ctx context.Context, levelName string, level Level) (ImplResponse, error) {
+func (s *LevelsAPIService) AddLevel(ctx context.Context, levelName string, level Level) (ImplResponse, error) {
 	if !request.IsValidName(levelName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -61,7 +61,7 @@ func (s *LevelsApiService) AddLevel(ctx context.Context, levelName string, level
 }
 
 // EditLevel - Edit level
-func (s *LevelsApiService) EditLevel(ctx context.Context, levelName string, level Level) (ImplResponse, error) {
+func (s *LevelsAPIService) EditLevel(ctx context.Context, levelName string, level Level) (ImplResponse, error) {
 	if !request.IsValidName(levelName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -89,7 +89,7 @@ func (s *LevelsApiService) EditLevel(ctx context.Context, levelName string, leve
 }
 
 // GetLevel - Get level
-func (s *LevelsApiService) GetLevel(ctx context.Context, levelName string) (ImplResponse, error) {
+func (s *LevelsAPIService) GetLevel(ctx context.Context, levelName string) (ImplResponse, error) {
 	rawNs, newsNotExistErr := s.cache.news.Get(levelName)
 	rawLv, levelNotExistErr := s.cache.levels.Get(levelName)
 	if newsNotExistErr != nil && levelNotExistErr != nil {
@@ -111,7 +111,7 @@ func (s *LevelsApiService) GetLevel(ctx context.Context, levelName string) (Impl
 }
 
 // GetLevelList - Get level list
-func (s *LevelsApiService) GetLevelList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *LevelsAPIService) GetLevelList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	pages := s.cache.levels.Pages()
 	items, err := s.cache.levels.GetPage(page, query)

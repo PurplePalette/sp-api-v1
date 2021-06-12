@@ -22,9 +22,9 @@ func CreateSkinsServer() *httptest.Server {
 	if err := cache.InitCache(); err != nil {
 		panic(err)
 	}
-	SkinsApiService := potato.NewSkinsApiService(firestore, cache)
-	SkinsApiController := potato.NewSkinsApiController(SkinsApiService)
-	router := server.NewRouterWithTestInject(auth, SkinsApiController)
+	SkinsAPIService := potato.NewSkinsAPIService(firestore, cache)
+	SkinsAPIController := potato.NewSkinsAPIController(SkinsAPIService)
+	router := server.NewRouterWithTestInject(auth, SkinsAPIController)
 	return httptest.NewServer(router)
 }
 

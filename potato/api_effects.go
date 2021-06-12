@@ -17,18 +17,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// A EffectsApiController binds http requests to an api service and writes the service results to the http response
-type EffectsApiController struct {
-	service EffectsApiServicer
+// A EffectsAPIController binds http requests to an api service and writes the service results to the http response
+type EffectsAPIController struct {
+	service EffectsAPIServicer
 }
 
-// NewEffectsApiController creates a default api controller
-func NewEffectsApiController(s EffectsApiServicer) Router {
-	return &EffectsApiController{service: s}
+// NewEffectsAPIController creates a default api controller
+func NewEffectsAPIController(s EffectsAPIServicer) Router {
+	return &EffectsAPIController{service: s}
 }
 
-// Routes returns all of the api route for the EffectsApiController
-func (c *EffectsApiController) Routes() Routes {
+// Routes returns all of the api route for the EffectsAPIController
+func (c *EffectsAPIController) Routes() Routes {
 	return Routes{
 		{
 			"AddEffect",
@@ -58,7 +58,7 @@ func (c *EffectsApiController) Routes() Routes {
 }
 
 // AddEffect - Add effect
-func (c *EffectsApiController) AddEffect(w http.ResponseWriter, r *http.Request) {
+func (c *EffectsAPIController) AddEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	effectName := params["effectName"]
 
@@ -79,7 +79,7 @@ func (c *EffectsApiController) AddEffect(w http.ResponseWriter, r *http.Request)
 }
 
 // EditEffect - Edit effect
-func (c *EffectsApiController) EditEffect(w http.ResponseWriter, r *http.Request) {
+func (c *EffectsAPIController) EditEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	effectName := params["effectName"]
 
@@ -100,7 +100,7 @@ func (c *EffectsApiController) EditEffect(w http.ResponseWriter, r *http.Request
 }
 
 // GetEffect - Get effect
-func (c *EffectsApiController) GetEffect(w http.ResponseWriter, r *http.Request) {
+func (c *EffectsAPIController) GetEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	effectName := params["effectName"]
 
@@ -116,7 +116,7 @@ func (c *EffectsApiController) GetEffect(w http.ResponseWriter, r *http.Request)
 }
 
 // GetEffectList - Get effect list
-func (c *EffectsApiController) GetEffectList(w http.ResponseWriter, r *http.Request) {
+func (c *EffectsAPIController) GetEffectList(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)

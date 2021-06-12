@@ -25,9 +25,9 @@ func CreateBackgroundsServer() *httptest.Server {
 	if err := cache.InitCache(); err != nil {
 		panic(err)
 	}
-	BackgroundsApiService := potato.NewBackgroundsApiService(firestore, cache)
-	BackgroundsApiController := potato.NewBackgroundsApiController(BackgroundsApiService)
-	router := server.NewRouterWithTestInject(auth, BackgroundsApiController)
+	BackgroundsAPIService := potato.NewBackgroundsAPIService(firestore, cache)
+	BackgroundsAPIController := potato.NewBackgroundsAPIController(BackgroundsAPIService)
+	router := server.NewRouterWithTestInject(auth, BackgroundsAPIController)
 	return httptest.NewServer(router)
 }
 

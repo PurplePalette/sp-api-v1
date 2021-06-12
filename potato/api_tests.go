@@ -16,18 +16,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// A TestsApiController binds http requests to an api service and writes the service results to the http response
-type TestsApiController struct {
-	service TestsApiServicer
+// A TestsAPIController binds http requests to an api service and writes the service results to the http response
+type TestsAPIController struct {
+	service TestsAPIServicer
 }
 
-// NewTestsApiController creates a default api controller
-func NewTestsApiController(s TestsApiServicer) Router {
-	return &TestsApiController{service: s}
+// NewTestsAPIController creates a default api controller
+func NewTestsAPIController(s TestsAPIServicer) Router {
+	return &TestsAPIController{service: s}
 }
 
-// Routes returns all of the api route for the TestsApiController
-func (c *TestsApiController) Routes() Routes {
+// Routes returns all of the api route for the TestsAPIController
+func (c *TestsAPIController) Routes() Routes {
 	return Routes{
 		{
 			"GetTestServerInfo",
@@ -111,7 +111,7 @@ func (c *TestsApiController) Routes() Routes {
 }
 
 // GetTestServerInfo - Get user server info
-func (c *TestsApiController) GetTestServerInfo(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetTestServerInfo(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	testId := params["testId"]
 
@@ -127,7 +127,7 @@ func (c *TestsApiController) GetTestServerInfo(w http.ResponseWriter, r *http.Re
 }
 
 // GetTestsBackgrounds - Get backgrounds for test
-func (c *TestsApiController) GetTestsBackgrounds(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetTestsBackgrounds(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
@@ -151,7 +151,7 @@ func (c *TestsApiController) GetTestsBackgrounds(w http.ResponseWriter, r *http.
 }
 
 // GetTestsEffects - Get effects for test
-func (c *TestsApiController) GetTestsEffects(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetTestsEffects(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
@@ -175,7 +175,7 @@ func (c *TestsApiController) GetTestsEffects(w http.ResponseWriter, r *http.Requ
 }
 
 // GetTestsEngines - Get engines for test
-func (c *TestsApiController) GetTestsEngines(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetTestsEngines(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
@@ -199,7 +199,7 @@ func (c *TestsApiController) GetTestsEngines(w http.ResponseWriter, r *http.Requ
 }
 
 // GetTestsLevels - Get levels for test
-func (c *TestsApiController) GetTestsLevels(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetTestsLevels(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
@@ -223,7 +223,7 @@ func (c *TestsApiController) GetTestsLevels(w http.ResponseWriter, r *http.Reque
 }
 
 // GetTestsParticles - Get particles for test
-func (c *TestsApiController) GetTestsParticles(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetTestsParticles(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
@@ -247,7 +247,7 @@ func (c *TestsApiController) GetTestsParticles(w http.ResponseWriter, r *http.Re
 }
 
 // GetTestsSkins - Get skins for test
-func (c *TestsApiController) GetTestsSkins(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetTestsSkins(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
 	testId := params["testId"]
@@ -271,7 +271,7 @@ func (c *TestsApiController) GetTestsSkins(w http.ResponseWriter, r *http.Reques
 }
 
 // GetBackgroundTest - Get testing background
-func (c *TestsApiController) GetBackgroundTest(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetBackgroundTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	testId := params["testId"]
 
@@ -289,7 +289,7 @@ func (c *TestsApiController) GetBackgroundTest(w http.ResponseWriter, r *http.Re
 }
 
 // GetEffectTest - Get testing effect
-func (c *TestsApiController) GetEffectTest(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetEffectTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	testId := params["testId"]
 
@@ -307,7 +307,7 @@ func (c *TestsApiController) GetEffectTest(w http.ResponseWriter, r *http.Reques
 }
 
 // GetEngineTest - Get testing engine
-func (c *TestsApiController) GetEngineTest(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetEngineTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	testId := params["testId"]
 
@@ -325,7 +325,7 @@ func (c *TestsApiController) GetEngineTest(w http.ResponseWriter, r *http.Reques
 }
 
 // GetLevelTest - Get testing level
-func (c *TestsApiController) GetLevelTest(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetLevelTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	testId := params["testId"]
 
@@ -343,7 +343,7 @@ func (c *TestsApiController) GetLevelTest(w http.ResponseWriter, r *http.Request
 }
 
 // GetParticleTest - Get testing particle
-func (c *TestsApiController) GetParticleTest(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetParticleTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	testId := params["testId"]
 
@@ -361,7 +361,7 @@ func (c *TestsApiController) GetParticleTest(w http.ResponseWriter, r *http.Requ
 }
 
 // GetSkinTest - Get testing skin
-func (c *TestsApiController) GetSkinTest(w http.ResponseWriter, r *http.Request) {
+func (c *TestsAPIController) GetSkinTest(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	testId := params["testId"]
 

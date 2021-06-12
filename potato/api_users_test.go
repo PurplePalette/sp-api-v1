@@ -23,9 +23,9 @@ func CreateUsersServer() *httptest.Server {
 	if err := cache.InitCache(); err != nil {
 		panic(err)
 	}
-	usersApiService := potato.NewUsersApiService(firestore, cache)
-	usersApiController := potato.NewUsersApiController(usersApiService)
-	router := server.NewRouterWithTestInject(auth, usersApiController)
+	usersAPIService := potato.NewUsersAPIService(firestore, cache)
+	usersAPIController := potato.NewUsersAPIController(usersAPIService)
+	router := server.NewRouterWithTestInject(auth, usersAPIController)
 	return httptest.NewServer(router)
 }
 

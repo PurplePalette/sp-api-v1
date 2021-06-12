@@ -18,21 +18,21 @@ import (
 	"cloud.google.com/go/firestore"
 )
 
-// InfoApiService is a service that implents the logic for the InfoApiServicer
-// This service should implement the business logic for every endpoint for the InfoApi API.
+// InfoAPIService is a service that implents the logic for the InfoAPIServicer
+// This service should implement the business logic for every endpoint for the InfoAPI API.
 // Include any external packages or services that will be required by this service.
-type InfoApiService struct {
+type InfoAPIService struct {
 	firestore *firestore.Client
 	cache     *CacheService
 }
 
-// NewInfoApiService creates a default api service
-func NewInfoApiService(firestore *firestore.Client, cache *CacheService) InfoApiServicer {
-	return &InfoApiService{firestore: firestore, cache: cache}
+// NewInfoAPIService creates a default api service
+func NewInfoAPIService(firestore *firestore.Client, cache *CacheService) InfoAPIServicer {
+	return &InfoAPIService{firestore: firestore, cache: cache}
 }
 
 // EditInfo - Edit server info
-func (s *InfoApiService) EditInfo(ctx context.Context, serverInfo ServerInfo) (ImplResponse, error) {
+func (s *InfoAPIService) EditInfo(ctx context.Context, serverInfo ServerInfo) (ImplResponse, error) {
 	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
 	//return Response(200, nil),nil
 
@@ -49,7 +49,7 @@ func (s *InfoApiService) EditInfo(ctx context.Context, serverInfo ServerInfo) (I
 }
 
 // GetServerInfo - Get server info
-func (s *InfoApiService) GetServerInfo(ctx context.Context) (ImplResponse, error) {
+func (s *InfoAPIService) GetServerInfo(ctx context.Context) (ImplResponse, error) {
 	welcome, err := s.cache.news.Get("sweetPotatoWelcome")
 	parsedNews := welcome.(News)
 	if err != nil {

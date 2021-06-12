@@ -22,9 +22,9 @@ func CreateEffectsServer() *httptest.Server {
 	if err := cache.InitCache(); err != nil {
 		panic(err)
 	}
-	EffectsApiService := potato.NewEffectsApiService(firestore, cache)
-	EffectsApiController := potato.NewEffectsApiController(EffectsApiService)
-	router := server.NewRouterWithTestInject(auth, EffectsApiController)
+	EffectsAPIService := potato.NewEffectsAPIService(firestore, cache)
+	EffectsAPIController := potato.NewEffectsAPIController(EffectsAPIService)
+	router := server.NewRouterWithTestInject(auth, EffectsAPIController)
 	return httptest.NewServer(router)
 }
 

@@ -20,22 +20,22 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-// SkinsApiService is a service that implents the logic for the SkinsApiServicer
-// This service should implement the business logic for every endpoint for the SkinsApi API.
+// SkinsAPIService is a service that implents the logic for the SkinsAPIServicer
+// This service should implement the business logic for every endpoint for the SkinsAPI API.
 // Include any external packages or services that will be required by this service.
-type SkinsApiService struct {
+type SkinsAPIService struct {
 	firestore *firestore.Client
 	cache     *CacheService
 	validate  *validator.Validate
 }
 
-// NewSkinsApiService creates a default api service
-func NewSkinsApiService(firestore *firestore.Client, cache *CacheService) SkinsApiServicer {
-	return &SkinsApiService{firestore: firestore, cache: cache, validate: validator.New()}
+// NewSkinsAPIService creates a default api service
+func NewSkinsAPIService(firestore *firestore.Client, cache *CacheService) SkinsAPIServicer {
+	return &SkinsAPIService{firestore: firestore, cache: cache, validate: validator.New()}
 }
 
 // AddSkin - Add skin
-func (s *SkinsApiService) AddSkin(ctx context.Context, skinName string, skin Skin) (ImplResponse, error) {
+func (s *SkinsAPIService) AddSkin(ctx context.Context, skinName string, skin Skin) (ImplResponse, error) {
 	if !request.IsValidName(skinName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -61,7 +61,7 @@ func (s *SkinsApiService) AddSkin(ctx context.Context, skinName string, skin Ski
 }
 
 // EditSkin - Edit skin
-func (s *SkinsApiService) EditSkin(ctx context.Context, skinName string, skin Skin) (ImplResponse, error) {
+func (s *SkinsAPIService) EditSkin(ctx context.Context, skinName string, skin Skin) (ImplResponse, error) {
 	if !request.IsValidName(skinName) {
 		return Response(http.StatusBadRequest, nil), nil
 	}
@@ -89,7 +89,7 @@ func (s *SkinsApiService) EditSkin(ctx context.Context, skinName string, skin Sk
 }
 
 // GetSkin - Get skin
-func (s *SkinsApiService) GetSkin(ctx context.Context, skinName string) (ImplResponse, error) {
+func (s *SkinsAPIService) GetSkin(ctx context.Context, skinName string) (ImplResponse, error) {
 	rawSk, err := s.cache.skins.Get(skinName)
 	if err != nil {
 		return Response(http.StatusNotFound, nil), nil
@@ -104,7 +104,7 @@ func (s *SkinsApiService) GetSkin(ctx context.Context, skinName string) (ImplRes
 }
 
 // GetSkinList - Get skin list
-func (s *SkinsApiService) GetSkinList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
+func (s *SkinsAPIService) GetSkinList(ctx context.Context, localization string, page int32, keywords string) (ImplResponse, error) {
 	query := request.ParseSearchQuery(keywords)
 	pages := s.cache.skins.Pages()
 	items, err := s.cache.skins.GetPage(page, query)
