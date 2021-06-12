@@ -9,6 +9,8 @@
 
 package potato
 
+// LevelUseParticle  - struct to define what particle does the level uses.
+// Item can be empty if UseDefault is true.
 type LevelUseParticle struct {
 
 	// If true (recommended), default resource specified by the engine will be used.

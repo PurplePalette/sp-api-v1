@@ -9,6 +9,8 @@
 
 package potato
 
+// LevelUseBackground  - struct to define what background does the level uses.
+// Item can be empty if UseDefault is true.
 type LevelUseBackground struct {
 
 	// If true (recommended), default resource specified by the engine will be used.

@@ -9,6 +9,8 @@
 
 package potato
 
+// LevelUseEffect  - struct to define what effect does the level uses.
+// Item can be empty if UseDefault is true.
 type LevelUseEffect struct {
 
 	// If true (recommended), default resource specified by the engine will be used.
