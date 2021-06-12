@@ -1,4 +1,5 @@
 {
+    "go.lintTool": "golint",
     "cSpell.words": [
         "Omado",
         "joho",
