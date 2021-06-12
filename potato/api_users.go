@@ -132,7 +132,7 @@ func (c *UsersAPIController) Routes() Routes {
 // EditUser - Edit user
 func (c *UsersAPIController) EditUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	user := &User{}
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
@@ -153,7 +153,7 @@ func (c *UsersAPIController) EditUser(w http.ResponseWriter, r *http.Request) {
 // GetUser - Get user
 func (c *UsersAPIController) GetUser(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	result, err := c.service.GetUser(r.Context(), userID)
 	// If an error occurred, encode the error with the status code
@@ -182,7 +182,7 @@ func (c *UsersAPIController) GetUserList(w http.ResponseWriter, r *http.Request)
 // GetUserServerInfo - Get user server info
 func (c *UsersAPIController) GetUserServerInfo(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	result, err := c.service.GetUserServerInfo(r.Context(), userID)
 	// If an error occurred, encode the error with the status code
@@ -199,7 +199,7 @@ func (c *UsersAPIController) GetUserServerInfo(w http.ResponseWriter, r *http.Re
 func (c *UsersAPIController) GetUsersBackgrounds(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userID := params["userID"]
+	userID := params["userId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -223,7 +223,7 @@ func (c *UsersAPIController) GetUsersBackgrounds(w http.ResponseWriter, r *http.
 func (c *UsersAPIController) GetUsersEffects(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userID := params["userID"]
+	userID := params["userId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -247,7 +247,7 @@ func (c *UsersAPIController) GetUsersEffects(w http.ResponseWriter, r *http.Requ
 func (c *UsersAPIController) GetUsersEngines(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userID := params["userID"]
+	userID := params["userId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -271,7 +271,7 @@ func (c *UsersAPIController) GetUsersEngines(w http.ResponseWriter, r *http.Requ
 func (c *UsersAPIController) GetUsersLevels(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userID := params["userID"]
+	userID := params["userId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -295,7 +295,7 @@ func (c *UsersAPIController) GetUsersLevels(w http.ResponseWriter, r *http.Reque
 func (c *UsersAPIController) GetUsersParticles(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userID := params["userID"]
+	userID := params["userId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -319,7 +319,7 @@ func (c *UsersAPIController) GetUsersParticles(w http.ResponseWriter, r *http.Re
 func (c *UsersAPIController) GetUsersSkins(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	query := r.URL.Query()
-	userID := params["userID"]
+	userID := params["userId"]
 
 	localization := query.Get("localization")
 	page, err := parseInt32Parameter(query.Get("page"), false)
@@ -342,7 +342,7 @@ func (c *UsersAPIController) GetUsersSkins(w http.ResponseWriter, r *http.Reques
 // GetUsersBackground - Get users background
 func (c *UsersAPIController) GetUsersBackground(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	backgroundName := params["backgroundName"]
 
@@ -360,7 +360,7 @@ func (c *UsersAPIController) GetUsersBackground(w http.ResponseWriter, r *http.R
 // GetUsersEffect - Get users effect
 func (c *UsersAPIController) GetUsersEffect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	effectName := params["effectName"]
 
@@ -378,7 +378,7 @@ func (c *UsersAPIController) GetUsersEffect(w http.ResponseWriter, r *http.Reque
 // GetUsersEngine - Get users engine
 func (c *UsersAPIController) GetUsersEngine(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	engineName := params["engineName"]
 
@@ -396,7 +396,7 @@ func (c *UsersAPIController) GetUsersEngine(w http.ResponseWriter, r *http.Reque
 // GetUsersLevel - Get users level
 func (c *UsersAPIController) GetUsersLevel(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	levelName := params["levelName"]
 
@@ -414,7 +414,7 @@ func (c *UsersAPIController) GetUsersLevel(w http.ResponseWriter, r *http.Reques
 // GetUsersParticle - Get users particle
 func (c *UsersAPIController) GetUsersParticle(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	particleName := params["particleName"]
 
@@ -432,7 +432,7 @@ func (c *UsersAPIController) GetUsersParticle(w http.ResponseWriter, r *http.Req
 // GetUsersSkin - Get users skin
 func (c *UsersAPIController) GetUsersSkin(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	userID := params["userID"]
+	userID := params["userId"]
 
 	skinName := params["skinName"]
 
