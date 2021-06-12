@@ -52,11 +52,14 @@ func (s *ParticlesAPIService) AddParticle(ctx context.Context, particleName stri
 	col := s.firestore.Collection("particles")
 	// Add particle to firestore
 	if _, err := col.Doc(particleName).Set(ctx, particle); err != nil {
-		log.Fatalln("Error posting particle:", err)
+		log.Fatalln("Error posting particle to firestore:", err)
 		return Response(500, nil), nil
 	}
 	// Add particle to cache
-	s.cache.particles.Add(particleName, particle)
+	if err := s.cache.particles.Add(particleName, particle); err != nil {
+		log.Fatalln("Error posting particle to cache:", err)
+		return Response(500, nil), nil
+	}
 	return Response(200, nil), nil
 }
 

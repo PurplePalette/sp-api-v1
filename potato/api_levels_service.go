@@ -52,11 +52,14 @@ func (s *LevelsAPIService) AddLevel(ctx context.Context, levelName string, level
 	col := s.firestore.Collection("levels")
 	// Add level to firestore
 	if _, err := col.Doc(levelName).Set(ctx, level); err != nil {
-		log.Fatalln("Error posting level:", err)
+		log.Fatalln("Error posting level to firestore:", err)
 		return Response(500, nil), nil
 	}
 	// Add level to cache
-	s.cache.levels.Add(levelName, level)
+	if err := s.cache.levels.Add(levelName, level); err != nil {
+		log.Fatalln("Error posting level to cache:", err)
+		return Response(500, nil), nil
+	}
 	return Response(200, nil), nil
 }
 

@@ -56,11 +56,14 @@ func (s *BackgroundsAPIService) AddBackground(ctx context.Context, backgroundNam
 	col := s.firestore.Collection("backgrounds")
 	// Add background to firestore
 	if _, err := col.Doc(backgroundName).Set(ctx, background); err != nil {
-		log.Fatalln("Error posting background:", err)
+		log.Println("Error posting background to firestore:", err)
 		return Response(500, nil), nil
 	}
 	// Add background to cache
-	s.cache.backgrounds.Add(backgroundName, background)
+	if err := s.cache.backgrounds.Add(backgroundName, background); err != nil {
+		log.Println("Error posting background to cache:", err)
+		return Response(500, nil), nil
+	}
 	return Response(200, nil), nil
 }
 
