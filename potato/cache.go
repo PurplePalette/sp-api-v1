@@ -41,7 +41,7 @@ func NewCacheService(firestore *firestore.Client) *CacheService {
 // InitNews add news to cache instance (using static value for now)
 func (s *CacheService) InitNews() {
 	s.news.Data = make(map[string]interface{})
-	s.news.Add(
+	_ = s.news.Add(
 		"sweetPotatoWelcome",
 		NewNews(
 			"SweetPotatoサーバーへようこそ!",
@@ -54,7 +54,7 @@ func (s *CacheService) InitNews() {
 			"※この譜面は遊べません",
 		),
 	)
-	s.news.Add(
+	_ = s.news.Add(
 		"sweetPotatoUserWelcome",
 		NewNews(
 			"SweetPotatoユーザー個別サーバー",
@@ -67,7 +67,7 @@ func (s *CacheService) InitNews() {
 			"※この譜面は遊べません",
 		),
 	)
-	s.news.Add(
+	_ = s.news.Add(
 		"sweetPotatoUserWelcome2",
 		NewNews(
 			"指定されたユーザーの投稿したデータのみ",
@@ -80,7 +80,7 @@ func (s *CacheService) InitNews() {
 			"※この譜面は遊べません",
 		),
 	)
-	s.news.Add(
+	_ = s.news.Add(
 		"sweetPotatoTestWelcome",
 		NewNews(
 			"SweetPotatoテストサーバー",
@@ -93,7 +93,7 @@ func (s *CacheService) InitNews() {
 			"※この譜面は遊べません",
 		),
 	)
-	s.news.Add(
+	_ = s.news.Add(
 		"sweetPotatoTestWelcome2",
 		NewNews(
 			"まだ公開されていない投稿データのみ",
@@ -212,6 +212,8 @@ func (s *CacheService) Set(name string, data interface{}) error {
 		s.particles.Set(name, v)
 	case Skin:
 		s.skins.Set(name, v)
+	default:
+		return errors.New("unsupported data type")
 	}
 	return nil
 }
