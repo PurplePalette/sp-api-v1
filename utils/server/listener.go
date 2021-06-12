@@ -10,15 +10,19 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// Listener is a struct for read firestore snapshots
 type Listener struct {
 	client *firestore.Client
 	cache  *potato.CacheService
 }
 
+// NewListener creates a new Listener instance for getting firestore snapshots.
 func NewListener(client *firestore.Client, cache *potato.CacheService) *Listener {
 	return &Listener{client: client, cache: cache}
 }
 
+// ListenFirestoreUpdate listens specified collection snapshots forever and updates the cache using the snapshot.
+// This method should be called as goroutine.
 func (l *Listener) ListenFirestoreUpdate(collectionName string) {
 	ctx := context.Background()
 	snapIter := l.client.Collection(collectionName).Snapshots(ctx)
