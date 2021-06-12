@@ -1,16 +1,22 @@
 package potato
 
+// DataList object is a list of something data
 type DataList []interface{}
 
+// Len implements length function for using sort
 func (l DataList) Len() int {
 	return len(l)
 }
+
+// Swap implements swap function for using sort
 func (l DataList) Swap(i, j int) {
 	l[i], l[j] = l[j], l[i]
 }
 
+// ByName is decorator of DataList for sorting by name
 type ByName struct{ DataList }
 
+// Less is compare method for sorting by name
 func (b ByName) Less(i, j int) bool {
 	switch v := b.DataList[i].(type) {
 	case Background:
@@ -30,8 +36,10 @@ func (b ByName) Less(i, j int) bool {
 	}
 }
 
+// ByCreatedTime is decorator of DataList for sorting by created time
 type ByCreatedTime struct{ DataList }
 
+// Less is compare method for sorting by created time
 func (b ByCreatedTime) Less(i, j int) bool {
 	switch v := b.DataList[i].(type) {
 	case Background:
@@ -51,8 +59,10 @@ func (b ByCreatedTime) Less(i, j int) bool {
 	}
 }
 
+// ByUpdatedTime is decorator of DataList for sorting by updated time
 type ByUpdatedTime struct{ DataList }
 
+// Less is compare method for sorting by updated time
 func (b ByUpdatedTime) Less(i, j int) bool {
 	switch v := b.DataList[i].(type) {
 	case Background:
@@ -72,8 +82,10 @@ func (b ByUpdatedTime) Less(i, j int) bool {
 	}
 }
 
+// ByDifficulty is compare method for sorting by difficulty
 type ByDifficulty struct{ DataList }
 
+// Less is compare method for sorting by difficulty
 func (b ByDifficulty) Less(i, j int) bool {
 	switch v := b.DataList[i].(type) {
 	case Level:
@@ -83,8 +95,10 @@ func (b ByDifficulty) Less(i, j int) bool {
 	}
 }
 
+// ByNotes is compare method for sorting by notes
 type ByNotes struct{ DataList }
 
+// Less is compare method for sorting by notes
 func (b ByNotes) Less(i, j int) bool {
 	switch v := b.DataList[i].(type) {
 	case Level:
