@@ -7,10 +7,12 @@ import (
 	"golang.org/x/net/context"
 )
 
+// CacheInitService is service for getting data from firestore
 type CacheInitService struct {
 	firestore *firestore.Client
 }
 
+// NewCacheInitService creates a new instance for getting data from firestore
 func NewCacheInitService(firestore *firestore.Client) *CacheInitService {
 	return &CacheInitService{firestore: firestore}
 }
