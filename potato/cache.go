@@ -6,6 +6,7 @@ import (
 	"cloud.google.com/go/firestore"
 )
 
+// CacheService stores firestore data and provides add and remove methods to handle get request
 type CacheService struct {
 	// cacheInitService
 	init *CacheInitService
@@ -29,6 +30,7 @@ type CacheService struct {
 	news Cache
 }
 
+// NewCacheService creates a instance for stores firestore data
 func NewCacheService(firestore *firestore.Client) *CacheService {
 	s := NewCacheInitService(firestore)
 	return &CacheService{
@@ -36,6 +38,7 @@ func NewCacheService(firestore *firestore.Client) *CacheService {
 	}
 }
 
+// InitNews add news to cache instance (using static value for now)
 func (s *CacheService) InitNews() {
 	s.news.Data = make(map[string]interface{})
 	s.news.Add(
@@ -105,6 +108,7 @@ func (s *CacheService) InitNews() {
 	)
 }
 
+// InitCache initialize caches by getting whole firestore data (this method should only called once when start server)
 func (s *CacheService) InitCache() error {
 	backgrounds, err := s.init.LoadDatabaseFromFirebase("backgrounds")
 	if err != nil {
@@ -150,58 +154,64 @@ func (s *CacheService) InitCache() error {
 	return nil
 }
 
-func (c *CacheService) GetUserIDFromTest(testID string) (string, error) {
-	userID, ok := c.tests[testID]
+// GetUserIDFromTest gets the userID from the testID
+// It returns the error if the testID wasn't valid
+func (s *CacheService) GetUserIDFromTest(testID string) (string, error) {
+	userID, ok := s.tests[testID]
 	if !ok {
 		return "", errors.New("could not find test")
 	}
 	return userID, nil
 }
 
-func (c *CacheService) Add(name string, data interface{}) error {
+// Add adds specified data to cache with using specified name as key.
+// Data type must be background, effect, engine, level, particle, or skin.
+func (s *CacheService) Add(name string, data interface{}) error {
 	switch v := data.(type) {
 	case Background:
-		if err := c.backgrounds.Add(name, v); err != nil {
+		if err := s.backgrounds.Add(name, v); err != nil {
 			return err
 		}
 	case Effect:
-		if err := c.effects.Add(name, v); err != nil {
+		if err := s.effects.Add(name, v); err != nil {
 			return err
 		}
 	case Engine:
-		if err := c.engines.Add(name, v); err != nil {
+		if err := s.engines.Add(name, v); err != nil {
 			return err
 		}
 	case Level:
-		if err := c.levels.Add(name, v); err != nil {
+		if err := s.levels.Add(name, v); err != nil {
 			return err
 		}
 	case Particle:
-		if err := c.particles.Add(name, v); err != nil {
+		if err := s.particles.Add(name, v); err != nil {
 			return err
 		}
 	case Skin:
-		if err := c.skins.Add(name, v); err != nil {
+		if err := s.skins.Add(name, v); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func (c *CacheService) Set(name string, data interface{}) error {
+// Set sets specified data to cache with using specified name as key.
+// Data type must be background, effect, engine, level, particle, or skin.
+func (s *CacheService) Set(name string, data interface{}) error {
 	switch v := data.(type) {
 	case Background:
-		c.backgrounds.Set(name, v)
+		s.backgrounds.Set(name, v)
 	case Effect:
-		c.effects.Set(name, v)
+		s.effects.Set(name, v)
 	case Engine:
-		c.engines.Set(name, v)
+		s.engines.Set(name, v)
 	case Level:
-		c.levels.Set(name, v)
+		s.levels.Set(name, v)
 	case Particle:
-		c.particles.Set(name, v)
+		s.particles.Set(name, v)
 	case Skin:
-		c.skins.Set(name, v)
+		s.skins.Set(name, v)
 	}
 	return nil
 }
