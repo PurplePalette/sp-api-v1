@@ -38,7 +38,7 @@ type Level struct {
 	Artists string `json:"artists,omitempty" validate:"omitempty,min=1,max=100"`
 
 	// author of this content
-	Author string `json:"author,omitempty" validate:"omitempty,alphanumunicode,min=1,max=50"`
+	Author string `json:"author,omitempty" validate:"omitempty,min=1,max=50"`
 
 	Cover SonolusResourceLocator `json:"cover,omitempty" validate:"omitempty"`
 
