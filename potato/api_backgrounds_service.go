@@ -84,6 +84,8 @@ func (s *BackgroundsAPIService) EditBackground(ctx context.Context, backgroundNa
 	}
 	// Update background data in firestore
 	col := s.firestore.Collection("backgrounds")
+	background.Name = backgroundName
+	background.UpdatedTime = int32(time.Now().Unix())
 	if _, err := col.Doc(backgroundName).Set(ctx, background); err != nil {
 		log.Fatalln("Error posting background:", err)
 		return Response(500, nil), nil

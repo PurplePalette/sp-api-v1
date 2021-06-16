@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
@@ -49,6 +50,9 @@ func (s *SkinsAPIService) AddSkin(ctx context.Context, skinName string, skin Ski
 	userID, _ := request.GetUserID(ctx)
 	skin.UserID = userID
 	skin.Name = skinName
+	nowTime := int32(time.Now().Unix())
+	skin.CreatedTime = nowTime
+	skin.UpdatedTime = nowTime
 	col := s.firestore.Collection("skins")
 	// Add skin to cache
 	if err := s.cache.skins.Add(skinName, skin); err != nil {
@@ -79,6 +83,8 @@ func (s *SkinsAPIService) EditSkin(ctx context.Context, skinName string, skin Sk
 		return Response(http.StatusForbidden, nil), nil
 	}
 	skin.Name = skinName
+	nowTime := int32(time.Now().Unix())
+	skin.UpdatedTime = nowTime
 	// Update skin data in firestore
 	col := s.firestore.Collection("skins")
 	if _, err := col.Doc(skinName).Set(ctx, skin); err != nil {

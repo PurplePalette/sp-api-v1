@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
@@ -49,6 +50,9 @@ func (s *ParticlesAPIService) AddParticle(ctx context.Context, particleName stri
 	userID, _ := request.GetUserID(ctx)
 	particle.UserID = userID
 	particle.Name = particleName
+	nowTime := int32(time.Now().Unix())
+	particle.CreatedTime = nowTime
+	particle.UpdatedTime = nowTime
 	col := s.firestore.Collection("particles")
 	// Add particle to cache
 	if err := s.cache.particles.Add(particleName, particle); err != nil {
@@ -79,6 +83,8 @@ func (s *ParticlesAPIService) EditParticle(ctx context.Context, particleName str
 		return Response(http.StatusForbidden, nil), nil
 	}
 	particle.Name = particleName
+	nowTime := int32(time.Now().Unix())
+	particle.UpdatedTime = nowTime
 	// Update particle data in firestore
 	col := s.firestore.Collection("particles")
 	if _, err := col.Doc(particleName).Set(ctx, particle); err != nil {

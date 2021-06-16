@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
@@ -49,6 +50,9 @@ func (s *EnginesAPIService) AddEngine(ctx context.Context, engineName string, en
 	userID, _ := request.GetUserID(ctx)
 	engine.UserID = userID
 	engine.Name = engineName
+	nowTime := int32(time.Now().Unix())
+	engine.CreatedTime = nowTime
+	engine.UpdatedTime = nowTime
 	col := s.firestore.Collection("engines")
 	// Add engine to cache
 	if err := s.cache.engines.Add(engineName, engine); err != nil {
@@ -79,6 +83,9 @@ func (s *EnginesAPIService) EditEngine(ctx context.Context, engineName string, e
 		return Response(http.StatusForbidden, nil), nil
 	}
 	// Update engine data in firestore
+	engine.Name = engineName
+	nowTime := int32(time.Now().Unix())
+	engine.UpdatedTime = nowTime
 	col := s.firestore.Collection("engines")
 	if _, err := col.Doc(engineName).Set(ctx, engine); err != nil {
 		log.Fatalln("Error posting engine:", err)

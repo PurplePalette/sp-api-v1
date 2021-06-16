@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
@@ -49,6 +50,9 @@ func (s *LevelsAPIService) AddLevel(ctx context.Context, levelName string, level
 	userID, _ := request.GetUserID(ctx)
 	level.UserID = userID
 	level.Name = levelName
+	currentTime := time.Now().Unix()
+	level.CreatedTime = int32(currentTime)
+	level.UpdatedTime = int32(currentTime)
 	col := s.firestore.Collection("levels")
 	// Add level to cache
 	if err := s.cache.levels.Add(levelName, level); err != nil {
@@ -79,6 +83,7 @@ func (s *LevelsAPIService) EditLevel(ctx context.Context, levelName string, leve
 		return Response(http.StatusForbidden, nil), nil
 	}
 	level.Name = levelName
+	level.UpdatedTime = int32(time.Now().Unix())
 	// Update level data in firestore
 	col := s.firestore.Collection("levels")
 	if _, err := col.Doc(levelName).Set(ctx, level); err != nil {

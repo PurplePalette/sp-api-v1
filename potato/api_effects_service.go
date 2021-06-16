@@ -14,6 +14,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"cloud.google.com/go/firestore"
 	"github.com/PurplePalette/sonolus-uploader-core/utils/request"
@@ -49,6 +50,9 @@ func (s *EffectsAPIService) AddEffect(ctx context.Context, effectName string, ef
 	userID, _ := request.GetUserID(ctx)
 	effect.UserID = userID
 	effect.Name = effectName
+	nowTime := int32(time.Now().Unix())
+	effect.CreatedTime = nowTime
+	effect.UpdatedTime = nowTime
 	col := s.firestore.Collection("effects")
 	// Add effect to cache
 	if err := s.cache.effects.Add(effectName, effect); err != nil {
@@ -79,6 +83,9 @@ func (s *EffectsAPIService) EditEffect(ctx context.Context, effectName string, e
 		return Response(http.StatusForbidden, nil), nil
 	}
 	// Update effect data in firestore
+	effect.Name = effectName
+	nowTime := int32(time.Now().Unix())
+	effect.UpdatedTime = nowTime
 	col := s.firestore.Collection("effects")
 	if _, err := col.Doc(effectName).Set(ctx, effect); err != nil {
 		log.Fatalln("Error posting effect:", err)
