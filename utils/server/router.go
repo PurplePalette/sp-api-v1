@@ -45,8 +45,29 @@ func injectTestUserToContext(uid string, next http.HandlerFunc) http.HandlerFunc
 	}
 }
 
+// indexHandler handles index page request.
+// It returns redirect if INDEX_CONTENT was url.
+// Otherwise, it return text directly.
+// This endpoint won't support to specify html file, to prevent directory traversal.
+func indexHandler(indexContent string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasPrefix(indexContent, "http") {
+			http.Redirect(w, r, indexContent, 301)
+		} else {
+			w.WriteHeader(200)
+			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+			w.Write([]byte(indexContent))
+		}
+	}
+}
+
 // NewRouterWithInject creates a new router with inject user middleware
 func NewRouterWithInject(auth *auth.Client, routers ...potato.Router) *mux.Router {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Print("Failed to load .env, using os environment")
+	}
+	indexContent := os.Getenv("INDEX_CONTENT")
 	router := mux.NewRouter().StrictSlash(true)
 	for _, api := range routers {
 		for _, route := range api.Routes() {
@@ -61,7 +82,7 @@ func NewRouterWithInject(auth *auth.Client, routers ...potato.Router) *mux.Route
 				Handler(handler)
 		}
 	}
-
+	router.HandleFunc("/", indexHandler(indexContent))
 	return router
 }
 
