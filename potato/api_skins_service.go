@@ -50,14 +50,13 @@ func (s *SkinsAPIService) AddSkin(ctx context.Context, skinName string, skin Ski
 	skin.UserID = userID
 	skin.Name = skinName
 	col := s.firestore.Collection("skins")
+	// Add skin to cache
+	if err := s.cache.skins.Add(skinName, skin); err != nil {
+		return Response(http.StatusConflict, nil), nil
+	}
 	// Add skin to firestore
 	if _, err := col.Doc(skinName).Set(ctx, skin); err != nil {
 		log.Fatalln("Error posting skin to firestore:", err)
-		return Response(500, nil), nil
-	}
-	// Add skin to cache
-	if err := s.cache.skins.Add(skinName, skin); err != nil {
-		log.Fatalln("Error posting skin to cache:", err)
 		return Response(500, nil), nil
 	}
 	return Response(200, nil), nil

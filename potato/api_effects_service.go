@@ -50,14 +50,13 @@ func (s *EffectsAPIService) AddEffect(ctx context.Context, effectName string, ef
 	effect.UserID = userID
 	effect.Name = effectName
 	col := s.firestore.Collection("effects")
+	// Add effect to cache
+	if err := s.cache.effects.Add(effectName, effect); err != nil {
+		return Response(http.StatusConflict, nil), nil
+	}
 	// Add effect to firestore
 	if _, err := col.Doc(effectName).Set(ctx, effect); err != nil {
 		log.Fatalln("Error posting effect to firestore:", err)
-		return Response(500, nil), nil
-	}
-	// Add effect to cache
-	if err := s.cache.effects.Add(effectName, effect); err != nil {
-		log.Fatalln("Error posting effect to cache:", err)
 		return Response(500, nil), nil
 	}
 	return Response(200, nil), nil

@@ -50,14 +50,13 @@ func (s *EnginesAPIService) AddEngine(ctx context.Context, engineName string, en
 	engine.UserID = userID
 	engine.Name = engineName
 	col := s.firestore.Collection("engines")
+	// Add engine to cache
+	if err := s.cache.engines.Add(engineName, engine); err != nil {
+		return Response(http.StatusConflict, nil), nil
+	}
 	// Add engine to firestore
 	if _, err := col.Doc(engineName).Set(ctx, engine); err != nil {
 		log.Fatalln("Error posting engine to firestore:", err)
-		return Response(500, nil), nil
-	}
-	// Add engine to cache
-	if err := s.cache.engines.Add(engineName, engine); err != nil {
-		log.Fatalln("Error posting engine to cache:", err)
 		return Response(500, nil), nil
 	}
 	return Response(200, nil), nil
