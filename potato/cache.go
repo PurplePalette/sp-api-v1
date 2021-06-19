@@ -157,11 +157,13 @@ func (s *CacheService) InitCache() error {
 // GetUserIDFromTest gets the userID from the testID
 // It returns the error if the testID wasn't valid
 func (s *CacheService) GetUserIDFromTest(testID string) (string, error) {
-	userID, ok := s.tests[testID]
-	if !ok {
-		return "", errors.New("could not find test")
+	for _, user := range s.users.Data {
+		parsedUser := user.(User)
+		if parsedUser.TestID == testID {
+			return parsedUser.UserID, nil
+		}
 	}
-	return userID, nil
+	return "", errors.New("could not find test")
 }
 
 // Add adds specified data to cache with using specified name as key.
