@@ -52,7 +52,7 @@ func injectTestUserToContext(uid string, next http.HandlerFunc) http.HandlerFunc
 func indexHandler(indexContent string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if strings.HasPrefix(indexContent, "http") {
-			http.Redirect(w, r, indexContent, 301)
+			http.Redirect(w, r, indexContent, http.StatusMovedPermanently)
 		} else {
 			w.WriteHeader(200)
 			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
