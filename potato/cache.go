@@ -192,6 +192,10 @@ func (s *CacheService) Add(name string, data interface{}) error {
 		if err := s.skins.Add(name, v); err != nil {
 			return err
 		}
+	case User:
+		if err := s.users.Add(name, v); err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -212,6 +216,8 @@ func (s *CacheService) Set(name string, data interface{}) error {
 		s.particles.Set(name, v)
 	case Skin:
 		s.skins.Set(name, v)
+	case User:
+		s.users.Set(name, v)
 	default:
 		return errors.New("unsupported data type")
 	}
