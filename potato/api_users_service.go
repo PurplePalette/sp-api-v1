@@ -35,22 +35,50 @@ func NewUsersAPIService(firestore *firestore.Client, cache *CacheService) UsersA
 
 // EditUser - Edit user
 func (s *UsersAPIService) EditUser(ctx context.Context, userID string, user User) (ImplResponse, error) {
-	//TODO: Uncomment the next line to return response Response(200, {}) or use other options such as http.Ok ...
-	//return Response(200, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(400, {}) or use other options such as http.Ok ...
-	//return Response(400, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(401, {}) or use other options such as http.Ok ...
-	//return Response(401, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(403, {}) or use other options such as http.Ok ...
-	//return Response(403, nil),nil
-
-	//TODO: Uncomment the next line to return response Response(404, {}) or use other options such as http.Ok ...
-	//return Response(404, nil),nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("EditUser method not implemented")
+	// Check testId conflict
+	for _, u := range s.cache.users.Data {
+		cacheUser := u.(User)
+		if cacheUser.TestID == user.TestID {
+			return Response(http.StatusConflict, nil), nil
+		}
+	}
+	reqUserID, _ := request.GetUserID(ctx)
+	// Register a new user to firestore
+	if !s.cache.users.IsExist(reqUserID) {
+		// Force set the data target is self
+		user.UserID = reqUserID
+		// Add to cache
+		if err := s.cache.users.Add(reqUserID, user); err != nil {
+			return Response(http.StatusConflict, nil), nil
+		}
+		// Add to firestore
+		col := s.firestore.Collection("users")
+		if _, err := col.Doc(reqUserID).Set(ctx, user); err != nil {
+			log.Println("Error posting user to firestore:", err)
+			return Response(http.StatusInternalServerError, nil), nil
+		}
+		return Response(200, nil), nil
+	}
+	// Get requested user
+	rawReqUser, _ := s.cache.users.Get(reqUserID)
+	reqUser := rawReqUser.(User)
+	// If not admin, can't edit other user
+	if reqUserID != userID && !reqUser.IsAdmin {
+		return Response(http.StatusForbidden, nil), nil
+	}
+	// If admin and the user was not exist, raise 404
+	if !s.cache.users.IsExist(reqUserID) {
+		return Response(http.StatusNotFound, nil), nil
+	}
+	user.UserID = userID
+	// Set to firestore
+	col := s.firestore.Collection("users")
+	if _, err := col.Doc(user.UserID).Set(ctx, user); err != nil {
+		log.Println("Error posting user to firestore:", err)
+		return Response(http.StatusInternalServerError, nil), nil
+	}
+	// Cache will synced by listener, and don't need to update at here.
+	return Response(200, nil), nil
 }
 
 // GetUser - Get user
