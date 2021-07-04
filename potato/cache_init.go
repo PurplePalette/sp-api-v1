@@ -23,14 +23,14 @@ func (s *CacheInitService) LoadDatabaseFromFirebase(colName string) (map[string]
 	col := s.firestore.Collection(colName)
 	docs, err := col.Documents(context.Background()).GetAll()
 	if err != nil {
-		return nil, errors.New("could not get user collection from firestore")
+		return nil, err
 	}
 	for _, doc := range docs {
 		switch colName {
 		case "backgrounds":
 			var bg Background
 			if err := doc.DataTo(&bg); err != nil {
-				return nil, errors.New("could not parse doc to background struct")
+				return nil, err
 			}
 			data[bg.Name] = bg
 		case "effects":

@@ -112,7 +112,7 @@ func (s *CacheService) InitNews() {
 func (s *CacheService) InitCache() error {
 	backgrounds, err := s.init.LoadDatabaseFromFirebase("backgrounds")
 	if err != nil {
-		return errors.New("could not get backgrounds from firestore")
+		return err
 	}
 	s.backgrounds.Data = backgrounds
 	effects, err := s.init.LoadDatabaseFromFirebase("effects")
