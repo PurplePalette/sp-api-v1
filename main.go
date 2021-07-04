@@ -93,6 +93,6 @@ func main() {
 	})
 	corsSupportedHandler := c.Handler(router)
 
-	log.Printf("Server started")
+	log.Printf("Server started!")
 	log.Fatal(http.ListenAndServe(":8080", corsSupportedHandler))
 }
