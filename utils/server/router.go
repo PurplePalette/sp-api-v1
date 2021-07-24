@@ -15,7 +15,7 @@ import (
 )
 
 // injectUserToContext injects firebase user info to context
-func injectUserToContext(auth *auth.Client, route potato.Route) http.HandlerFunc {
+func injectUserToContext(auth *auth.Client, route potato.Route, sonolusVersion string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := r.Header.Get("Authorization")
 		authorized := false
@@ -31,6 +31,7 @@ func injectUserToContext(auth *auth.Client, route potato.Route) http.HandlerFunc
 		if route.Method != "GET" && !authorized {
 			w.WriteHeader(http.StatusUnauthorized)
 		} else {
+			w.Header().Set("Sonolus-Version", sonolusVersion)
 			route.HandlerFunc.ServeHTTP(w, r)
 		}
 	}
@@ -68,11 +69,12 @@ func NewRouterWithInject(auth *auth.Client, routers ...potato.Router) *mux.Route
 		log.Print("Failed to load .env, using os environment")
 	}
 	indexContent := os.Getenv("INDEX_CONTENT")
+	sonolusVersion := os.Getenv("SONOLUS_VERSION")
 	router := mux.NewRouter().StrictSlash(true)
 	for _, api := range routers {
 		for _, route := range api.Routes() {
 			var handler http.Handler
-			handler = injectUserToContext(auth, route)
+			handler = injectUserToContext(auth, route, sonolusVersion)
 			handler = potato.Logger(handler, route.Name)
 
 			router.
